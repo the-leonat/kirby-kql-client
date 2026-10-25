@@ -1,0 +1,103 @@
+[
+	{
+		"meta": {
+			"title": "About | KQL Test Site",
+			"description": "About the company.",
+			"robots": "all",
+			"canonicalUrl": "http://kql-test-site.example/anorak/about",
+			"jsonld": {
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "WebSite",
+						"@id": "http://kql-test-site.example/#website",
+						"url": "http://kql-test-site.example",
+						"name": "KQL Test Site",
+						"description": ""
+					}
+				]
+			},
+			"social": [
+				{
+					"property": "og:site_name",
+					"content": "KQL Test Site"
+				},
+				{
+					"property": "og:url",
+					"content": "http://kql-test-site.example/anorak/about"
+				},
+				{
+					"property": "og:type",
+					"content": "website"
+				},
+				{
+					"property": "og:title",
+					"content": "About"
+				},
+				{
+					"property": "og:description",
+					"content": "About the company."
+				},
+				{
+					"property": "og:image",
+					"content": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-1200x630-crop.png"
+				},
+				{
+					"property": "og:image:width",
+					"content": 1200
+				},
+				{
+					"property": "og:image:height",
+					"content": 630
+				},
+				{
+					"property": "og:image:alt",
+					"content": "An orange test image"
+				}
+			]
+		},
+		"text": "A production company in <strong>Example City</strong>.",
+		"instagram": "https://instagram.example/anorak"
+	},
+	{
+		"meta": {
+			"title": "Empty | KQL Test Site",
+			"description": null,
+			"robots": "all",
+			"canonicalUrl": "http://kql-test-site.example/anorak/empty",
+			"jsonld": {
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "WebSite",
+						"@id": "http://kql-test-site.example/#website",
+						"url": "http://kql-test-site.example",
+						"name": "KQL Test Site",
+						"description": ""
+					}
+				]
+			},
+			"social": [
+				{
+					"property": "og:site_name",
+					"content": "KQL Test Site"
+				},
+				{
+					"property": "og:url",
+					"content": "http://kql-test-site.example/anorak/empty"
+				},
+				{
+					"property": "og:type",
+					"content": "website"
+				},
+				{
+					"property": "og:title",
+					"content": "Empty"
+				}
+			]
+		},
+		"text": "",
+		"instagram": ""
+	},
+	null
+]

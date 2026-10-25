@@ -1,0 +1,11 @@
+Title: Contact with a PDF logo
+
+----
+
+Tisax_logo:
+
+- file://anorakdoc0000001
+
+----
+
+Uuid: anorakcontact002

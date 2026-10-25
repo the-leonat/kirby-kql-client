@@ -1,0 +1,50 @@
+Title: Film A
+
+----
+
+Customer: Example Customer
+
+----
+
+Director:
+
+- page://anorakjane000001
+
+----
+
+Video_full:
+
+- file://anorakclip000001
+
+----
+
+Video_teaser:
+
+- file://anorakclip000001
+
+----
+
+Video_teaser_mobile:
+
+- file://anorakloop000001
+
+----
+
+Awards:
+
+- file://anorakphoto00001
+- file://anorakdoc0000001
+
+----
+
+Meta_description: Film A, a test film.
+
+----
+
+Og_image:
+
+- file://anorakphoto00001
+
+----
+
+Uuid: anorakfilma00001

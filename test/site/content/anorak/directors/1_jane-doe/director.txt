@@ -1,0 +1,68 @@
+Title: Jane Doe
+
+----
+
+Headline: Director
+
+----
+
+Photo:
+
+- file://anorakphoto00001
+
+----
+
+Text: Jane Doe directs *short films*.
+
+----
+
+Layout: [{"attrs":[],"columns":[{"blocks":[{"content":{"page":["page://anorakfilma00001"],"playType":"loop","customer":"Example Customer"},"id":"ab000000-0000-4000-8000-000000000001","isHidden":false,"type":"film"},{"content":{"page":["page://anorakfilmb00001"],"playType":"click","customer":"Example Customer"},"id":"ab000000-0000-4000-8000-000000000002","isHidden":false,"type":"film"}],"id":"ac000000-0000-4000-8000-000000000001","width":"1/2"},{"blocks":[{"content":{"images":["file://anorakphoto00001","file://anorakclip000001"],"caption":"A gallery"},"id":"ab000000-0000-4000-8000-000000000003","isHidden":false,"type":"gallery"}],"id":"ac000000-0000-4000-8000-000000000002","width":"1/2"}],"id":"al000000-0000-4000-8000-000000000001"}]
+
+----
+
+Press:
+
+- file://anorakdoc0000001
+
+----
+
+Bio:
+
+- file://anorakdoc0000001
+
+----
+
+Social:
+
+-
+  name: Instagram
+  url: https://instagram.example/jane
+-
+  name: Vimeo
+  url: https://vimeo.example/jane
+
+----
+
+Preview_film:
+
+- page://anorakfilma00001
+
+----
+
+Preview_photo:
+
+- file://anorakphoto00001
+
+----
+
+Meta_description: Jane Doe, director.
+
+----
+
+Og_image:
+
+- file://anorakphoto00001
+
+----
+
+Uuid: anorakjane000001

@@ -1,0 +1,27 @@
+Title: John Roe
+
+----
+
+Photo:
+
+- file://anorakdoc0000001
+
+----
+
+Layout: [{"attrs":[],"columns":[{"blocks":[{"content":{"page":["page://anorakfilmc00001"],"playType":"loop","customer":"Example Customer"},"id":"ab000000-0000-4000-8000-000000000004","isHidden":false,"type":"film"}],"id":"ac000000-0000-4000-8000-000000000003","width":"1/1"}],"id":"al000000-0000-4000-8000-000000000002"}]
+
+----
+
+Preview_film:
+
+- page://anorakfilmb00001
+
+----
+
+Preview_photo:
+
+- file://anorakclip000001
+
+----
+
+Uuid: anorakjohn000001

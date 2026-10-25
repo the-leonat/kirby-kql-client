@@ -1,0 +1,27 @@
+Title: Film B
+
+----
+
+Customer: Sample Customer
+
+----
+
+Video_full:
+
+- file://anorakloop000001
+
+----
+
+Video_teaser:
+
+- file://anorakloop000001
+
+----
+
+Video_teaser_mobile:
+
+- file://anorakclip000001
+
+----
+
+Uuid: anorakfilmb00001

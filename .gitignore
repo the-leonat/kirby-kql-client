@@ -9,6 +9,7 @@ test/site/vendor/
 test/site/kirby/
 test/site/site/plugins/kql/
 test/site/site/plugins/kirby-headless/
+test/site/site/plugins/meta/
 test/site/media/
 test/site/site/cache/
 test/site/site/sessions/

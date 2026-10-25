@@ -1,0 +1,376 @@
+[
+	[
+		{
+			"slug": "project-one",
+			"isTeaserFullWidth": "true",
+			"hasPreviewFilm": "true",
+			"playType": "loop",
+			"photo": {
+				"alt": "An orange test image",
+				"src": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo.png",
+				"srcset": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-400x.webp 400w, http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-800x.webp 800w",
+				"width": 4,
+				"height": 3
+			},
+			"previewFilm": {
+				"title": "Film A",
+				"customer": "Example Customer",
+				"slug": "film-a",
+				"embedOnly": false,
+				"videoFull": {
+					"hls": "https://video.example/clip.m3u8",
+					"poster": "https://video.example/clip.jpg",
+					"width": "1920",
+					"height": "1080",
+					"posterTiny": "https://video.example/clip-tiny.jpg",
+					"preview": "https://video.example/clip-preview.mp4",
+					"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+				},
+				"videoTeaser": {
+					"hls": "https://video.example/clip.m3u8",
+					"poster": "https://video.example/clip.jpg",
+					"width": "1920",
+					"height": "1080",
+					"posterTiny": "https://video.example/clip-tiny.jpg",
+					"preview": "https://video.example/clip-preview.mp4",
+					"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+				},
+				"videoTeaserMobile": {
+					"hls": "https://video.example/clip.m3u8",
+					"poster": "https://video.example/clip.jpg",
+					"width": 2,
+					"height": 1,
+					"posterTiny": "https://video.example/clip-tiny.jpg",
+					"preview": "https://video.example/clip-preview.mp4",
+					"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+				},
+				"director": {
+					"slug": "jane-doe",
+					"path": "anorak/directors/jane-doe",
+					"name": "Jane Doe"
+				},
+				"awards": [
+					{
+						"alt": "An orange test image",
+						"src": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo.png",
+						"srcset": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-400x.webp 400w, http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-800x.webp 800w",
+						"width": 4,
+						"height": 3
+					},
+					{
+						"alt": "A test document",
+						"src": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf",
+						"srcset": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 400w, http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 800w",
+						"width": "",
+						"height": ""
+					}
+				]
+			},
+			"awards": [
+				{
+					"alt": "An orange test image",
+					"src": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo.png",
+					"srcset": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-100x.webp 100w, http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-200x.webp 200w",
+					"width": 4,
+					"height": 3
+				},
+				{
+					"alt": "A test document",
+					"src": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf",
+					"srcset": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 100w, http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 200w",
+					"width": "",
+					"height": ""
+				}
+			],
+			"headline": "The *first* project",
+			"subHeadline": "A <strong>sub</strong> headline",
+			"intro": "An intro"
+		},
+		{
+			"slug": "project-two",
+			"isTeaserFullWidth": "false",
+			"hasPreviewFilm": "true",
+			"playType": "",
+			"photo": {
+				"alt": "A test document",
+				"src": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf",
+				"srcset": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 400w, http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 800w",
+				"width": "",
+				"height": ""
+			},
+			"previewFilm": {
+				"title": "Film B",
+				"customer": "Sample Customer",
+				"slug": "film-b",
+				"embedOnly": true,
+				"videoFull": {
+					"hls": "https://video.example/clip.m3u8",
+					"poster": "https://video.example/clip.jpg",
+					"width": 2,
+					"height": 1,
+					"posterTiny": "https://video.example/clip-tiny.jpg",
+					"preview": "https://video.example/clip-preview.mp4",
+					"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+				},
+				"videoTeaser": {
+					"hls": "https://video.example/clip.m3u8",
+					"poster": "https://video.example/clip.jpg",
+					"width": 2,
+					"height": 1,
+					"posterTiny": "https://video.example/clip-tiny.jpg",
+					"preview": "https://video.example/clip-preview.mp4",
+					"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+				},
+				"videoTeaserMobile": {
+					"hls": "https://video.example/clip.m3u8",
+					"poster": "https://video.example/clip.jpg",
+					"width": "1920",
+					"height": "1080",
+					"posterTiny": "https://video.example/clip-tiny.jpg",
+					"preview": "https://video.example/clip-preview.mp4",
+					"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+				},
+				"director": null,
+				"awards": []
+			},
+			"awards": [],
+			"headline": "Project Two",
+			"subHeadline": "",
+			"intro": ""
+		},
+		{
+			"slug": "project-four",
+			"isTeaserFullWidth": "",
+			"hasPreviewFilm": "",
+			"playType": "",
+			"photo": null,
+			"previewFilm": null,
+			"awards": [],
+			"headline": "Project Four",
+			"subHeadline": "",
+			"intro": ""
+		},
+		{
+			"slug": "project-three",
+			"isTeaserFullWidth": "",
+			"hasPreviewFilm": "",
+			"playType": "",
+			"photo": null,
+			"previewFilm": {
+				"title": "Film C",
+				"customer": "",
+				"slug": "film-c",
+				"embedOnly": false,
+				"videoFull": null,
+				"videoTeaser": null,
+				"videoTeaserMobile": null,
+				"director": {
+					"slug": "john-roe",
+					"path": "anorak/directors/john-roe",
+					"name": "John Roe"
+				},
+				"awards": [
+					{
+						"alt": "An orange test image",
+						"src": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo.png",
+						"srcset": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-400x.webp 400w, http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-800x.webp 800w",
+						"width": 4,
+						"height": 3
+					}
+				]
+			},
+			"awards": [],
+			"headline": "Project Three",
+			"subHeadline": "",
+			"intro": ""
+		}
+	],
+	[
+		{
+			"slug": "commercial",
+			"isTeaserFullWidth": "",
+			"hasPreviewFilm": "",
+			"playType": "",
+			"photo": {
+				"alt": "An orange test image",
+				"src": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo.png",
+				"srcset": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-400x.webp 400w, http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-800x.webp 800w",
+				"width": 4,
+				"height": 3
+			},
+			"previewFilm": {
+				"title": "Film A",
+				"customer": "Example Customer",
+				"slug": "film-a",
+				"embedOnly": false,
+				"videoFull": {
+					"hls": "https://video.example/clip.m3u8",
+					"poster": "https://video.example/clip.jpg",
+					"width": "1920",
+					"height": "1080",
+					"posterTiny": "https://video.example/clip-tiny.jpg",
+					"preview": "https://video.example/clip-preview.mp4",
+					"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+				},
+				"videoTeaser": {
+					"hls": "https://video.example/clip.m3u8",
+					"poster": "https://video.example/clip.jpg",
+					"width": "1920",
+					"height": "1080",
+					"posterTiny": "https://video.example/clip-tiny.jpg",
+					"preview": "https://video.example/clip-preview.mp4",
+					"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+				},
+				"videoTeaserMobile": {
+					"hls": "https://video.example/clip.m3u8",
+					"poster": "https://video.example/clip.jpg",
+					"width": 2,
+					"height": 1,
+					"posterTiny": "https://video.example/clip-tiny.jpg",
+					"preview": "https://video.example/clip-preview.mp4",
+					"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+				},
+				"director": {
+					"slug": "jane-doe",
+					"path": "anorak/directors/jane-doe",
+					"name": "Jane Doe"
+				},
+				"awards": [
+					{
+						"alt": "An orange test image",
+						"src": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo.png",
+						"srcset": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-400x.webp 400w, http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-800x.webp 800w",
+						"width": 4,
+						"height": 3
+					},
+					{
+						"alt": "A test document",
+						"src": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf",
+						"srcset": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 400w, http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 800w",
+						"width": "",
+						"height": ""
+					}
+				]
+			},
+			"awards": [
+				{
+					"alt": "A test document",
+					"src": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf",
+					"srcset": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 100w, http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 200w",
+					"width": "",
+					"height": ""
+				}
+			],
+			"headline": "A commercial",
+			"subHeadline": "",
+			"intro": ""
+		},
+		{
+			"slug": "series",
+			"isTeaserFullWidth": "",
+			"hasPreviewFilm": "",
+			"playType": "",
+			"photo": {
+				"alt": "A test document",
+				"src": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf",
+				"srcset": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 400w, http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 800w",
+				"width": "",
+				"height": ""
+			},
+			"previewFilm": {
+				"title": "Film B",
+				"customer": "Sample Customer",
+				"slug": "film-b",
+				"embedOnly": true,
+				"videoFull": {
+					"hls": "https://video.example/clip.m3u8",
+					"poster": "https://video.example/clip.jpg",
+					"width": 2,
+					"height": 1,
+					"posterTiny": "https://video.example/clip-tiny.jpg",
+					"preview": "https://video.example/clip-preview.mp4",
+					"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+				},
+				"videoTeaser": {
+					"hls": "https://video.example/clip.m3u8",
+					"poster": "https://video.example/clip.jpg",
+					"width": 2,
+					"height": 1,
+					"posterTiny": "https://video.example/clip-tiny.jpg",
+					"preview": "https://video.example/clip-preview.mp4",
+					"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+				},
+				"videoTeaserMobile": {
+					"hls": "https://video.example/clip.m3u8",
+					"poster": "https://video.example/clip.jpg",
+					"width": "1920",
+					"height": "1080",
+					"posterTiny": "https://video.example/clip-tiny.jpg",
+					"preview": "https://video.example/clip-preview.mp4",
+					"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+				},
+				"director": null,
+				"awards": []
+			},
+			"awards": [
+				{
+					"alt": "An orange test image",
+					"src": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo.png",
+					"srcset": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-100x.webp 100w, http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-200x.webp 200w",
+					"width": 4,
+					"height": 3
+				}
+			],
+			"headline": "Series",
+			"subHeadline": "",
+			"intro": ""
+		},
+		{
+			"slug": "short",
+			"isTeaserFullWidth": "",
+			"hasPreviewFilm": "",
+			"playType": "",
+			"photo": null,
+			"previewFilm": null,
+			"awards": [],
+			"headline": "Short",
+			"subHeadline": "",
+			"intro": ""
+		},
+		{
+			"slug": "documentary",
+			"isTeaserFullWidth": "",
+			"hasPreviewFilm": "",
+			"playType": "",
+			"photo": null,
+			"previewFilm": {
+				"title": "Film C",
+				"customer": "",
+				"slug": "film-c",
+				"embedOnly": false,
+				"videoFull": null,
+				"videoTeaser": null,
+				"videoTeaserMobile": null,
+				"director": {
+					"slug": "john-roe",
+					"path": "anorak/directors/john-roe",
+					"name": "John Roe"
+				},
+				"awards": [
+					{
+						"alt": "An orange test image",
+						"src": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo.png",
+						"srcset": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-400x.webp 400w, http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-800x.webp 800w",
+						"width": 4,
+						"height": 3
+					}
+				]
+			},
+			"awards": [],
+			"headline": "Documentary",
+			"subHeadline": "",
+			"intro": ""
+		}
+	],
+	[]
+]

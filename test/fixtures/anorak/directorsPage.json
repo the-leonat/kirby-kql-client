@@ -1,0 +1,203 @@
+[
+	{
+		"meta": {
+			"title": "Directors | KQL Test Site",
+			"description": "Our directors.",
+			"robots": "all",
+			"canonicalUrl": "http://kql-test-site.example/anorak/directors",
+			"jsonld": {
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "WebSite",
+						"@id": "http://kql-test-site.example/#website",
+						"url": "http://kql-test-site.example",
+						"name": "KQL Test Site",
+						"description": ""
+					}
+				]
+			},
+			"social": [
+				{
+					"property": "og:site_name",
+					"content": "KQL Test Site"
+				},
+				{
+					"property": "og:url",
+					"content": "http://kql-test-site.example/anorak/directors"
+				},
+				{
+					"property": "og:type",
+					"content": "website"
+				},
+				{
+					"property": "og:title",
+					"content": "Directors"
+				},
+				{
+					"property": "og:description",
+					"content": "Our directors."
+				},
+				{
+					"property": "og:image",
+					"content": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-1200x630-crop.png"
+				},
+				{
+					"property": "og:image:width",
+					"content": 1200
+				},
+				{
+					"property": "og:image:height",
+					"content": 630
+				},
+				{
+					"property": "og:image:alt",
+					"content": "An orange test image"
+				}
+			]
+		},
+		"directors": [
+			{
+				"name": "Hidden Director",
+				"url": "anorak/directors/hidden"
+			},
+			{
+				"name": "Jane Doe",
+				"url": "anorak/directors/jane-doe"
+			},
+			{
+				"name": "John Roe",
+				"url": "anorak/directors/john-roe"
+			},
+			{
+				"name": "Max Mustermann",
+				"url": "anorak/directors/prodco/max-mustermann"
+			},
+			{
+				"name": "Prodco",
+				"url": "anorak/directors/prodco"
+			}
+		]
+	},
+	{
+		"meta": {
+			"title": "Directors | KQL Test Site",
+			"description": "Our directors.",
+			"robots": "all",
+			"canonicalUrl": "http://kql-test-site.example/anorak/directors",
+			"jsonld": {
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "WebSite",
+						"@id": "http://kql-test-site.example/#website",
+						"url": "http://kql-test-site.example",
+						"name": "KQL Test Site",
+						"description": ""
+					}
+				]
+			},
+			"social": [
+				{
+					"property": "og:site_name",
+					"content": "KQL Test Site"
+				},
+				{
+					"property": "og:url",
+					"content": "http://kql-test-site.example/anorak/directors"
+				},
+				{
+					"property": "og:type",
+					"content": "website"
+				},
+				{
+					"property": "og:title",
+					"content": "Directors"
+				},
+				{
+					"property": "og:description",
+					"content": "Our directors."
+				},
+				{
+					"property": "og:image",
+					"content": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-1200x630-crop.png"
+				},
+				{
+					"property": "og:image:width",
+					"content": 1200
+				},
+				{
+					"property": "og:image:height",
+					"content": 630
+				},
+				{
+					"property": "og:image:alt",
+					"content": "An orange test image"
+				}
+			]
+		},
+		"directors": [
+			{
+				"name": "Jane Doe",
+				"url": "anorak/directors/jane-doe"
+			},
+			{
+				"name": "John Roe",
+				"url": "anorak/directors/john-roe"
+			},
+			{
+				"name": "Max Mustermann",
+				"url": "anorak/directors/prodco/max-mustermann"
+			},
+			{
+				"name": "Prodco",
+				"url": "anorak/directors/prodco"
+			}
+		]
+	},
+	{
+		"meta": {
+			"title": "Prodco | KQL Test Site",
+			"description": null,
+			"robots": "all",
+			"canonicalUrl": "http://kql-test-site.example/anorak/directors/prodco",
+			"jsonld": {
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "WebSite",
+						"@id": "http://kql-test-site.example/#website",
+						"url": "http://kql-test-site.example",
+						"name": "KQL Test Site",
+						"description": ""
+					}
+				]
+			},
+			"social": [
+				{
+					"property": "og:site_name",
+					"content": "KQL Test Site"
+				},
+				{
+					"property": "og:url",
+					"content": "http://kql-test-site.example/anorak/directors/prodco"
+				},
+				{
+					"property": "og:type",
+					"content": "website"
+				},
+				{
+					"property": "og:title",
+					"content": "Prodco"
+				}
+			]
+		},
+		"directors": [
+			{
+				"name": "Max Mustermann",
+				"url": "anorak/directors/prodco/max-mustermann"
+			}
+		]
+	},
+	null
+]

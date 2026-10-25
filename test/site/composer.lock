@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7c722195e7adad5122078b142a839677",
+    "content-hash": "81afc6935d474e0b060fe345857dbbd1",
     "packages": [
         {
             "name": "christian-riesen/base32",
@@ -311,6 +311,62 @@
                 }
             ],
             "time": "2026-02-16T13:06:37+00:00"
+        },
+        {
+            "name": "fabianmichael/kirby-meta",
+            "version": "3.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/fabianmichael/kirby-meta.git",
+                "reference": "7c0129e14178c6d987537e219b4cb7525c6b2a26"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/fabianmichael/kirby-meta/zipball/7c0129e14178c6d987537e219b4cb7525c6b2a26",
+                "reference": "7c0129e14178c6d987537e219b4cb7525c6b2a26",
+                "shasum": ""
+            },
+            "require": {
+                "getkirby/cms": "^5.3.0",
+                "getkirby/composer-installer": "^1.2.1",
+                "php": ">=8.4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.8"
+            },
+            "type": "kirby-plugin",
+            "extra": {
+                "installer-name": "meta",
+                "kirby-cms-path": false
+            },
+            "autoload": {
+                "psr-4": {
+                    "FabianMichael\\Meta\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabian Michael",
+                    "email": "hallo@fabianmichael.de"
+                }
+            ],
+            "description": "Your all-in-one powerhouse for any SEO and metadata needs imaginable.",
+            "homepage": "https://github.com/fabianmichael/kirby-meta",
+            "support": {
+                "issues": "https://github.com/fabianmichael/kirby-meta/issues",
+                "source": "https://github.com/fabianmichael/kirby-meta/tree/3.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/fabianmichael",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-10-22T19:01:10+00:00"
         },
         {
             "name": "filp/whoops",

@@ -1,0 +1,23 @@
+Title: About
+
+----
+
+Text: A production company in **Example City**.
+
+----
+
+Instagram: https://instagram.example/anorak
+
+----
+
+Meta_description: About the company.
+
+----
+
+Og_image:
+
+- file://anorakphoto00001
+
+----
+
+Uuid: anorakabout00001

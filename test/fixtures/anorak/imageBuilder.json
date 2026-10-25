@@ -1,0 +1,17 @@
+[
+	{
+		"alt": "An orange test image",
+		"src": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo.png",
+		"srcset": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-400x.webp 400w, http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-800x.webp 800w",
+		"width": 4,
+		"height": 3
+	},
+	{
+		"alt": "A test document",
+		"src": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf",
+		"srcset": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 100w, http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 200w",
+		"width": "",
+		"height": ""
+	},
+	null
+]
