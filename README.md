@@ -380,6 +380,7 @@ try {
 | Missing or wrong credentials | 401 or 403 | the HTTP status |
 | No response (network failure, unreachable URL) | `0` | `'network-error'` |
 | A response that isn't JSON | the HTTP status | `'invalid-json'` |
+| A JSON response that isn't an object (`null`, a number, a list) | the HTTP status | `'invalid-response'` |
 
 The original error, where there is one, is the error's `cause`.
 
