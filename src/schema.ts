@@ -33,6 +33,12 @@ export interface ClassDefinition {
 	item?: string
 	/** Enables content fields: unknown keys read the model's content as a field. */
 	model?: true
+	/**
+	 * Return values that depend on the argument count, by method and count.
+	 * `methods` holds the return value for every other count. Example: `find`
+	 * with one id gives `{ 1: 'page' | null }`, with several ids `'pages'`.
+	 */
+	overloads?: { [method: string]: { [argCount: number]: Returns } }
 }
 
 /** A class name (string literal) or a JSON type, optionally `| null`. */
