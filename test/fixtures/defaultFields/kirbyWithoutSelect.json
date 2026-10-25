@@ -3,6 +3,7 @@
 		"children": [
 			"collections",
 			"home",
+			"pagination",
 			"plugin",
 			"relations",
 			"rich",

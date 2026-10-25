@@ -6,9 +6,23 @@ export interface Query {
 	pagination?: Pagination
 }
 
+/**
+ * Paginates a collection with a select. Without `page`, KQL reads the page
+ * from the request URL, which the client never sets: always pass it.
+ */
 export interface Pagination {
 	limit?: number
 	page?: number
+}
+
+/**
+ * A select without a query string: reads its key from the current object and
+ * selects from it. It is paginated by `options.pagination`; KQL ignores a
+ * `pagination` key here.
+ */
+export interface KeySelect {
+	select?: Select
+	options?: { pagination?: Pagination }
 }
 
 /** A record of keys, a list of keys, or a comma-separated string of keys. */
@@ -19,7 +33,7 @@ export type Select = string | readonly string[] | { readonly [key: string]: Sele
  * is a query string, and an object is a nested query or a select without a
  * query string.
  */
-export type SelectEntry = boolean | string | Query
+export type SelectEntry = boolean | string | Query | KeySelect
 
 /**
  * Defines a query outside a `query()` call while keeping its exact type,

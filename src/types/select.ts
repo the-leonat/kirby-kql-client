@@ -7,13 +7,14 @@
  * - `true`: the key read from the current object,
  * - a string: a query string, starting at the current object,
  * - an object with `query`: a nested query, starting at the current object,
- * - an object without `query`: the key read from the current object, then selected.
+ * - an object without `query`: the key read from the current object, then
+ *   selected; paginated by its `options.pagination` (a `pagination` key is ignored).
  */
 import type { ClassName, Schema } from '../schema.ts'
 import type { Select } from '../query.ts'
 import type { Follow } from './walk.ts'
 import type { NoSelect, Render } from './render.ts'
-import type { Evaluate } from './result.ts'
+import type { Evaluate, HasPagination } from './result.ts'
 import type { Trim } from './parse.ts'
 
 export type SelectShape<C extends ClassName<S>, Sel extends Select, S extends Schema> = EmptyAsArray<
@@ -39,8 +40,10 @@ type Entry<C extends ClassName<S>, Key extends string, Value, S extends Schema> 
 		: Value extends { query: string }
 			? Evaluate<Value, S, C>
 			: Value extends { select: infer Sel }
-				? Render<ReadKey<C, Key, S>, Sel, S>
+				? Render<ReadKey<C, Key, S>, Sel, S, HasPagination<OptionsOf<Value>>>
 				: Render<ReadKey<C, Key, S>, NoSelect, S>
+
+type OptionsOf<Value> = Value extends { options: infer Options } ? Options : {}
 
 /** What `$object->$key()` returns. */
 type ReadKey<C extends string, Key extends string, S extends Schema> = Follow<

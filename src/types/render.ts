@@ -7,28 +7,48 @@
  * - A class without a select renders as its render type, or else its default fields.
  * - A class with a select renders as the select shape: one object per item
  *   for a collection, one object otherwise.
+ * - A collection with a select and a pagination (`Paginated`, from the
+ *   query's `pagination`, or a Paged collection from `paginate(…)`) is wrapped
+ *   in `{ data, pagination }`. Without a select, or on a single object, the
+ *   pagination is ignored.
  */
 import type { ClassName, IsClass, Schema } from '../schema.ts'
 import type { Select } from '../query.ts'
 import type { SelectShape } from './select.ts'
+import type { Paged } from './walk.ts'
 
 /** `NoSelect` stands for a query without a select. */
 export type NoSelect = undefined
 
-export type Render<R, Sel, S extends Schema> = unknown extends R ? unknown : RenderEach<R, Sel, S>
+/** The `pagination` of a paginated result: which page of how many, and its items' place. */
+export interface PaginationInfo {
+	page: number
+	pages: number
+	offset: number
+	limit: number
+	total: number
+}
+
+export type Render<R, Sel, S extends Schema, Paginated extends boolean = false> = unknown extends R
+	? unknown
+	: RenderEach<R, Sel, S, Paginated>
 
 /** Distributes over a union such as `'page' | null`. */
-type RenderEach<R, Sel, S extends Schema> = R extends null
+type RenderEach<R, Sel, S extends Schema, Paginated extends boolean> = R extends null
 	? null
-	: IsClass<R, S> extends true
-		? RenderClass<R & ClassName<S>, Sel, S>
-		: [Sel, R] extends [Select, boolean | number | string]
-			? null
-			: R
+	: R extends Paged<infer C>
+		? RenderEach<C, Sel, S, true>
+		: IsClass<R, S> extends true
+			? RenderClass<R & ClassName<S>, Sel, S, Paginated>
+			: [Sel, R] extends [Select, boolean | number | string]
+				? null
+				: R
 
-type RenderClass<C extends ClassName<S>, Sel, S extends Schema> = Sel extends Select
+type RenderClass<C extends ClassName<S>, Sel, S extends Schema, Paginated extends boolean> = Sel extends Select
 	? S['classes'][C] extends { item: infer Item extends ClassName<S> }
-		? SelectShape<Item, Sel, S>[]
+		? Paginated extends true
+			? { data: SelectShape<Item, Sel, S>[]; pagination: PaginationInfo }
+			: SelectShape<Item, Sel, S>[]
 		: SelectShape<C, Sel, S>
 	: RenderDefault<S['classes'][C], S>
 

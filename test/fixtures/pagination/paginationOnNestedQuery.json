@@ -1,0 +1,36 @@
+[
+	{
+		"title": "Seven children",
+		"children": {
+			"data": [
+				{
+					"title": "Five"
+				},
+				{
+					"title": "Six"
+				}
+			],
+			"pagination": {
+				"page": 3,
+				"pages": 4,
+				"offset": 4,
+				"limit": 2,
+				"total": 7
+			}
+		}
+	},
+	{
+		"title": "No children",
+		"children": {
+			"data": [],
+			"pagination": {
+				"page": 0,
+				"pages": 0,
+				"offset": 0,
+				"limit": 2,
+				"total": 0
+			}
+		}
+	},
+	null
+]
