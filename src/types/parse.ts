@@ -14,6 +14,7 @@
 
 export interface Step {
 	name: string
+	/** The argument count; `number` for a single list argument (see CountArgs). */
 	args: number
 	/** Reached with `?.`: on `null`, the whole query string gives `null`. */
 	optional: boolean
@@ -35,9 +36,17 @@ type ToStep<Part extends string, Optional extends boolean> = Part extends `${inf
 	? { name: Trim<Name>; args: CountArgs<Args>; optional: Optional }
 	: { name: Part; args: 0; optional: Optional }
 
+/**
+ * A single list argument, as in `find(['a', 'b'])`, stands for any number of
+ * arguments: Kirby methods such as `find` spread it. Its count is `number`.
+ */
 type CountArgs<Args extends string> = Trim<Args> extends ''
 	? 0
-	: SplitTopLevel<Args, ','>['length']
+	: SplitTopLevel<Args, ','> extends [infer Only extends string]
+		? Trim<Only> extends `[${string}]`
+			? number
+			: 1
+		: SplitTopLevel<Args, ','>['length']
 
 type Open = '(' | '[' | '{'
 type Close = ')' | ']' | '}'

@@ -11,7 +11,8 @@
  *   `null` loses its `null` when a step follows it with `.`.
  * - A step reached with `?.` on `null` ends the query string: the result is `null`.
  * - Unknown carries forward.
- * - A known method gives its return value.
+ * - A known method gives its return value: the one for the step's argument
+ *   count if the class has an overload for it, else the method's.
  * - An unknown key on a model (page, site, file, user) gives a content field.
  * - Anything else gives Unknown.
  */
@@ -50,10 +51,20 @@ type Call<Current, Next extends Step, S extends Schema> = unknown extends Curren
 type CallEach<Current, Next extends Step, S extends Schema> = Current extends null
 	? never
 	: IsClass<Current, S> extends true
-		? CallMethod<Current & ClassName<S>, Next['name'], S>
+		? CallMethod<Current & ClassName<S>, Next, S>
 		: unknown
 
-type CallMethod<C extends ClassName<S>, Name extends string, S extends Schema> =
+/** The overload for the step's argument count wins over the method's return value. */
+type CallMethod<C extends ClassName<S>, Next extends Step, S extends Schema> =
+	S['classes'][C] extends { overloads: { [M in Next['name']]: infer Overloads } }
+		? number extends Next['args']
+			? MethodReturn<C, Next['name'], S>
+			: Next['args'] extends keyof Overloads
+				? Overloads[Next['args']]
+				: MethodReturn<C, Next['name'], S>
+		: MethodReturn<C, Next['name'], S>
+
+type MethodReturn<C extends ClassName<S>, Name extends string, S extends Schema> =
 	Name extends keyof S['classes'][C]['methods']
 		? S['classes'][C]['methods'][Name]
 		: S['classes'][C] extends { model: true }

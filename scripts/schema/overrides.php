@@ -41,15 +41,24 @@ return [
 		// Test query: added by #8 (a collection without a select renders its keys, the ids).
 		'Kirby\Kql\Interceptors\Cms\Collection::toArray' => 'string[]',
 
-		// Test query: added by #7 (`find` with one id gives one item or null,
-		// with several ids a collection).
+		// Test query: collections/findOne, collections/findSeveral,
+		// collections/findList and collections/filesFindOne. `find` with one id
+		// gives one item or null; with several ids, or one list of ids, a
+		// collection (a single list argument never counts as one argument).
 		'Kirby\Toolkit\Collection::find' => [
 			'return'    => 'static',
 			'overloads' => [1 => 'TValue|null'],
 		],
 
-		// Test query: added by #7 (`page.find` / `site.find` with one id gives
-		// one page or null, with several ids pages).
+		// Test query: collections/usersNextAndPrev. On a collection, `next` and
+		// `prev` move the iterator (`next($this->data)`), which gives `false`
+		// past either end; the docblock only says `TValue`.
+		'Kirby\Toolkit\Collection::next' => 'TValue|false',
+		'Kirby\Toolkit\Collection::prev' => 'TValue|false',
+
+		// Test query: collections/pageFindOne and collections/siteFindSeveral
+		// (`page.find` / `site.find` with one id gives one page or null, with
+		// several ids pages).
 		'Kirby\Cms\HasChildren::find' => [
 			'return'    => '\Kirby\Cms\Pages',
 			'overloads' => [1 => '\Kirby\Cms\Page|null'],

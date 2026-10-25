@@ -27,7 +27,7 @@ export type KirbySchema = {
 				hasNext: boolean
 				hasPrev: boolean
 				id: string
-				indexOf: boolean | number
+				indexOf: false | number
 				isEmpty: boolean
 				isFirst: boolean
 				isHidden: boolean
@@ -68,13 +68,13 @@ export type KirbySchema = {
 				keys: unknown
 				last: 'block' | null
 				limit: 'blocks'
-				next: 'block'
+				next: 'block' | false
 				not: 'blocks'
 				nth: 'block' | null
 				offset: 'blocks'
 				pagination: unknown
 				pluck: unknown
-				prev: 'block'
+				prev: 'block' | false
 				shuffle: 'blocks'
 				slice: 'blocks'
 				sortBy: 'blocks'
@@ -218,7 +218,7 @@ export type KirbySchema = {
 				toPages: 'pages'
 				toQrCode: unknown
 				toStructure: 'structure'
-				toTimestamp: boolean | number
+				toTimestamp: false | number
 				toUrl: string | null
 				toUser: 'user' | null
 				toUsers: 'users'
@@ -268,7 +268,7 @@ export type KirbySchema = {
 				height: 'field' | number
 				html: string
 				id: string
-				indexOf: boolean | number
+				indexOf: false | number
 				isFirst: boolean
 				isLandscape: 'field' | boolean
 				isLast: boolean
@@ -277,12 +277,12 @@ export type KirbySchema = {
 				isSquare: 'field' | boolean
 				mediaUrl: string
 				mime: string
-				modified: boolean | number | string
+				modified: false | number | string
 				name: string
 				next: 'file' | null
 				nextAll: 'files'
 				niceSize: string
-				orientation: 'field' | boolean | string
+				orientation: 'field' | false | string
 				panel: 'panel'
 				parent: 'page' | 'site' | 'user'
 				parentId: string
@@ -329,13 +329,13 @@ export type KirbySchema = {
 				keys: unknown
 				last: 'file' | null
 				limit: 'files'
-				next: 'file'
+				next: 'file' | false
 				not: 'files'
 				nth: 'file' | null
 				offset: 'files'
 				pagination: unknown
 				pluck: unknown
-				prev: 'file'
+				prev: 'file' | false
 				shuffle: 'files'
 				slice: 'files'
 				sortBy: 'files'
@@ -387,7 +387,7 @@ export type KirbySchema = {
 				hasNext: boolean
 				hasPrev: boolean
 				id: string
-				indexOf: boolean | number
+				indexOf: false | number
 				isEmpty: boolean
 				isFirst: boolean
 				isLast: boolean
@@ -414,7 +414,7 @@ export type KirbySchema = {
 				hasNext: boolean
 				hasPrev: boolean
 				id: string
-				indexOf: boolean | number
+				indexOf: false | number
 				isEmpty: boolean
 				isFirst: boolean
 				isLast: boolean
@@ -451,13 +451,13 @@ export type KirbySchema = {
 				keys: unknown
 				last: 'layoutColumn' | null
 				limit: 'layoutColumns'
-				next: 'layoutColumn'
+				next: 'layoutColumn' | false
 				not: 'layoutColumns'
 				nth: 'layoutColumn' | null
 				offset: 'layoutColumns'
 				pagination: unknown
 				pluck: unknown
-				prev: 'layoutColumn'
+				prev: 'layoutColumn' | false
 				shuffle: 'layoutColumns'
 				slice: 'layoutColumns'
 				sortBy: 'layoutColumns'
@@ -490,13 +490,13 @@ export type KirbySchema = {
 				keys: unknown
 				last: 'layout' | null
 				limit: 'layouts'
-				next: 'layout'
+				next: 'layout' | false
 				not: 'layouts'
 				nth: 'layout' | null
 				offset: 'layouts'
 				pagination: unknown
 				pluck: unknown
-				prev: 'layout'
+				prev: 'layout' | false
 				shuffle: 'layouts'
 				slice: 'layouts'
 				sortBy: 'layouts'
@@ -513,7 +513,7 @@ export type KirbySchema = {
 			methods: {
 				isActive: boolean
 				isLocked: boolean
-				modified: boolean | number | string | null
+				modified: false | number | string | null
 				toArray: unknown
 				user: 'user' | null
 			}
@@ -582,7 +582,7 @@ export type KirbySchema = {
 				image: 'file' | null
 				images: 'files'
 				index: 'pages'
-				indexOf: boolean | number
+				indexOf: false | number
 				intendedTemplate: string
 				isDraft: boolean
 				isErrorPage: boolean
@@ -596,7 +596,7 @@ export type KirbySchema = {
 				isSortable: boolean
 				isUnlisted: boolean
 				mediaUrl: string
-				modified: boolean | number | string | null
+				modified: false | number | string | null
 				next: 'page' | null
 				nextAll: 'pages'
 				num: number | null
@@ -660,7 +660,7 @@ export type KirbySchema = {
 				last: 'page' | null
 				limit: 'pages'
 				listed: 'pages'
-				next: 'page'
+				next: 'page' | false
 				not: 'pages'
 				notTemplate: 'pages'
 				nth: 'page' | null
@@ -668,7 +668,7 @@ export type KirbySchema = {
 				offset: 'pages'
 				pagination: unknown
 				pluck: unknown
-				prev: 'page'
+				prev: 'page' | false
 				published: 'pages'
 				search: 'pages'
 				shuffle: 'pages'
@@ -798,13 +798,13 @@ export type KirbySchema = {
 				keys: unknown
 				last: 'structureItem' | null
 				limit: 'structure'
-				next: 'structureItem'
+				next: 'structureItem' | false
 				not: 'structure'
 				nth: 'structureItem' | null
 				offset: 'structure'
 				pagination: unknown
 				pluck: unknown
-				prev: 'structureItem'
+				prev: 'structureItem' | false
 				shuffle: 'structure'
 				slice: 'structure'
 				sortBy: 'structure'
@@ -824,7 +824,7 @@ export type KirbySchema = {
 				hasNext: boolean
 				hasPrev: boolean
 				id: string
-				indexOf: boolean | number
+				indexOf: false | number
 				isFirst: boolean
 				isLast: boolean
 				isNth: boolean
@@ -891,14 +891,14 @@ export type KirbySchema = {
 				id: string
 				image: 'file' | null
 				images: 'files'
-				indexOf: boolean | number
+				indexOf: false | number
 				isAdmin: boolean
 				isFirst: boolean
 				isLast: boolean
 				isNth: boolean
 				language: string
 				mediaUrl: string
-				modified: boolean | number | string
+				modified: false | number | string
 				name: 'field'
 				next: 'user' | null
 				nextAll: 'users'
@@ -938,13 +938,13 @@ export type KirbySchema = {
 				keys: unknown
 				last: 'user' | null
 				limit: 'users'
-				next: 'user'
+				next: 'user' | false
 				not: 'users'
 				nth: 'user' | null
 				offset: 'users'
 				pagination: unknown
 				pluck: unknown
-				prev: 'user'
+				prev: 'user' | false
 				role: 'users'
 				shuffle: 'users'
 				slice: 'users'

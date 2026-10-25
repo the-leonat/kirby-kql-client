@@ -1,0 +1,5 @@
+Title: Collections
+
+----
+
+Uuid: collections00001

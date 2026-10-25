@@ -1,0 +1,13 @@
+[
+	[
+		{
+			"email": "test@example.com",
+			"isAdmin": true
+		},
+		{
+			"email": "editor@example.com",
+			"isAdmin": false
+		}
+	],
+	[]
+]
