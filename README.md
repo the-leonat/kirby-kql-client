@@ -135,6 +135,20 @@ if (page !== null && !Array.isArray(page.content)) {
 
 KQL fails with an error, not `null`, when a query string calls a method on an empty value (`page('missing').children`). That is why a query string that goes on after `page('…')` or `toPage` has no `null` in its type: if the value is missing, `query()` throws a `KqlError` instead. To read from something that may be missing, select from it: `{ query: "page('missing')", select: ['title'] }` gives `null`.
 
+Or use `?.`: on an empty value it ends the query string there, and the whole result is `null` instead of an error. `.` and `?.` differ only on an empty value.
+
+```ts
+import { client } from './client.js'
+
+// With `.`, an empty `cover` field makes KQL answer 400 and `query()` throw.
+const cover = await client.query({ query: "page('about').cover.toFile.url" })
+// typeof cover: string
+
+// With `?.`, an empty `cover` field gives `null`.
+const maybeCover = await client.query({ query: "page('about').cover.toFile?.url" })
+// typeof maybeCover: string | null
+```
+
 ## Selects and nested queries
 
 A select picks the keys of the result. It can be a record, a list of keys or a comma-separated string, and all three give the same shape. A key set to `false` is left out.
@@ -285,6 +299,8 @@ KQL applies pagination only in some places, and the types follow it exactly:
 
 Prefer the `pagination` key. If you use `paginate()`, filter and sort **before** it: `filterBy` and `sortBy` after `paginate()` only see the items of the current page and keep the pagination of the whole collection.
 
+`children`, `drafts` and `index` after `paginate()` give the children, drafts or descendants of the pages on the current page as a new collection, without a pagination: a plain list, not wrapped.
+
 ## Plugins: schema extensions
 
 Plugins add methods and classes that the generated schema doesn't know. A **schema extension** describes them. It has the shape of the schema, with every part optional, and is deep-merged into it: a new class is added, and a method on an existing class is added or overrides the schema's.
@@ -429,7 +445,9 @@ pnpm schema        # regenerate src/kirby-schema.ts from the test site
 pnpm ci:drift      # all of the above; fails if the schema or fixtures drift
 ```
 
-`GLOSSARY.md` defines the project's terms.
+Each test query's result type must equal the type observed in its fixture, exactly, with one deliberate relaxation: where the result type has a string index signature (a page's `content`, a structure item's fields), the fixture's concrete content keys can't be named by any type, so the observed object is compared as that index signature with its values merged (`WidenToIndex` in `test/types/check.ts`).
+
+`GLOSSARY.md` defines the project's terms, and `docs/adr/` records the decisions behind them.
 
 ### Releasing
 
