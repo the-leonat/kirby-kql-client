@@ -1,0 +1,12 @@
+node_modules/
+dist/
+coverage/
+.DS_Store
+*.log
+
+# test site
+test/site/vendor/
+test/site/media/
+test/site/site/cache/
+test/site/site/sessions/
+test/site/site/accounts/.htpasswd
