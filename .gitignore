@@ -12,3 +12,4 @@ test/site/media/
 test/site/site/cache/
 test/site/site/sessions/
 test/site/site/accounts/.htpasswd
+test/site/site/accounts/.logins
