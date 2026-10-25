@@ -5,7 +5,8 @@
   "require": {
     "php": ">=8.2",
     "getkirby/cms": "~5.6.1",
-    "getkirby/kql": "~3.0.0"
+    "getkirby/kql": "~3.0.0",
+    "johannschopplich/kirby-headless": "~8.2.0"
   },
   "config": {
     "allow-plugins": {
