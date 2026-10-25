@@ -34,6 +34,20 @@ test('a forbidden method throws KqlError 403', async () => {
 	})
 })
 
+test('paginate() throws KqlError 403 unless the site allows it', async () => {
+	// The test site allows `Kirby\Cms\Pages::paginate` only (kql.methods.allowed),
+	// for the pagination test queries; on files it keeps KQL's default.
+	await assertThrowsKqlError(
+		testSite,
+		{ query: "page('collections/filled').files.paginate(1)", select: ['filename'] },
+		{
+			status: 403,
+			code: 403,
+			message: 'The method "Kirby\\Cms\\Files::paginate()" is not allowed in the API context',
+		},
+	)
+})
+
 test('an invalid query string throws KqlError 400', async () => {
 	await assertThrowsKqlError(testSite, { query: "page('home'..title" }, {
 		status: 400,

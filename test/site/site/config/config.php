@@ -35,6 +35,14 @@ return [
 		'interceptors' => [
 			'KqlTest\Stats' => 'KqlTest\StatsInterceptor',
 		],
+		// KQL blocks `paginate()` by default (403). The pagination test queries
+		// need it in the query string, so it is allowed on pages only: on files
+		// and users it stays blocked (test/runtime/client.test.ts).
+		'methods' => [
+			'allowed' => [
+				'Kirby\Cms\Pages::paginate',
+			],
+		],
 	],
 	'headless' => [
 		'token' => 'kql-test-token',

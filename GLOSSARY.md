@@ -20,6 +20,10 @@ _Avoid_: Fields, projection
 The JSON value the KQL endpoint returns for a query, and the type the client assigns to it.
 _Avoid_: Response, data
 
+**Paginated result**:
+The result of a collection with a select that has a pagination, from the query's `pagination` key or from `paginate()` in the query string: its items wrapped as `{ data, pagination }`.
+_Avoid_: Paged response, page wrapper
+
 **Default fields**:
 The keys a class renders when a query selects nothing from it.
 _Avoid_: toArray fields, default select

@@ -1,0 +1,58 @@
+[
+	{
+		"childrenAndDrafts": [
+			{
+				"title": "One"
+			},
+			{
+				"title": "Two"
+			},
+			{
+				"title": "Three"
+			},
+			{
+				"title": "Four"
+			},
+			{
+				"title": "Five"
+			},
+			{
+				"title": "Six"
+			},
+			{
+				"title": "Seven"
+			}
+		],
+		"children": {
+			"data": [
+				{
+					"title": "One"
+				},
+				{
+					"title": "Two"
+				}
+			],
+			"pagination": {
+				"page": 1,
+				"pages": 4,
+				"offset": 0,
+				"limit": 2,
+				"total": 7
+			}
+		}
+	},
+	{
+		"childrenAndDrafts": [],
+		"children": {
+			"data": [],
+			"pagination": {
+				"page": 0,
+				"pages": 0,
+				"offset": 0,
+				"limit": 2,
+				"total": 0
+			}
+		}
+	},
+	null
+]

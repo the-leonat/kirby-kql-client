@@ -15,9 +15,25 @@
  *   count if the class has an overload for it, else the method's.
  * - An unknown key on a model (page, site, file, user) gives a content field.
  * - Anything else gives Unknown.
+ * - `paginate(…)` on a collection gives that collection Paged. A method on a
+ *   Paged collection that gives the same collection keeps it Paged (Kirby
+ *   clones the collection together with its pagination, as `filterBy` and
+ *   `sortBy` do); anything else, such as `first`, drops it. `paginate` is in
+ *   no schema because KQL blocks it unless a site allows it
+ *   (`kql.methods.allowed`); this rule types it for the sites that do.
+ *   Not modelled: `children`, `drafts` and `index` on a Paged `pages` build a
+ *   new collection without the pagination, but stay Paged here.
  */
 import type { ClassName, IsClass, Schema } from '../schema.ts'
 import type { Step } from './parse.ts'
+
+/**
+ * A collection class `C` with a pagination, as `paginate(…)` in a query
+ * string gives it. With a select, it renders wrapped in `{ data, pagination }`.
+ */
+export interface Paged<C extends string = string> {
+	paged: C
+}
 
 /** The surrounding object's class in a nested query, or `never` at the top. */
 export type Walk<Steps extends Step[], S extends Schema, Surrounding extends string = never> =
@@ -50,9 +66,16 @@ type Call<Current, Next extends Step, S extends Schema> = unknown extends Curren
 /** Distributes over a union such as `'page' | null`; the `null` member throws. */
 type CallEach<Current, Next extends Step, S extends Schema> = Current extends null
 	? never
-	: IsClass<Current, S> extends true
-		? CallMethod<Current & ClassName<S>, Next, S>
-		: unknown
+	: Current extends Paged<infer C>
+		? KeepPaged<C, Call<C, Next, S>>
+		: IsClass<Current, S> extends true
+			? [Next['name'], S['classes'][Current & ClassName<S>]] extends ['paginate', { item: string }]
+				? Paged<Current & string>
+				: CallMethod<Current & ClassName<S>, Next, S>
+			: unknown
+
+/** A method on a Paged collection `C` that gives `C` again keeps it Paged. */
+type KeepPaged<C extends string, R> = [R] extends [C] ? ([C] extends [R] ? Paged<C> : R) : R
 
 /** The overload for the step's argument count wins over the method's return value. */
 type CallMethod<C extends ClassName<S>, Next extends Step, S extends Schema> =
