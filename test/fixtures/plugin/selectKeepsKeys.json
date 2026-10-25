@@ -1,0 +1,24 @@
+[
+	{
+		"title": "Filled plugin page",
+		"shout": "FILLED PLUGIN PAGE",
+		"stats": {
+			"count": 2,
+			"titles": [
+				"One",
+				"Number two"
+			]
+		},
+		"count": 2
+	},
+	{
+		"title": "Empty plugin page",
+		"shout": "",
+		"stats": {
+			"count": 0,
+			"titles": []
+		},
+		"count": 0
+	},
+	null
+]
