@@ -9,17 +9,16 @@
  */
 import { mkdir, readdir, rm, writeFile } from 'node:fs/promises'
 import { createClient, type Query } from '../src/index.ts'
-import { testSite } from '../test/test-site.ts'
+import { testSite, testSiteByGroup } from '../test/test-site.ts'
 import { observedType } from './observed-type.ts'
 
 const queriesDir = new URL('../test/queries/', import.meta.url)
 const fixturesDir = new URL('../test/fixtures/', import.meta.url)
 
-const client = createClient(testSite)
-
 for (const file of (await readdir(queriesDir)).filter((name) => name.endsWith('.ts')).sort()) {
 	const group = file.replace(/\.ts$/, '')
 	const queries: Record<string, Query> = await import(new URL(file, queriesDir).href)
+	const client = createClient(testSiteByGroup[group] ?? testSite)
 	const groupDir = new URL(`${group}/`, fixturesDir)
 	await rm(groupDir, { recursive: true, force: true })
 	await mkdir(groupDir, { recursive: true })
