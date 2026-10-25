@@ -22,8 +22,8 @@
  *   `sortBy` do); anything else, such as `first`, drops it. `paginate` is in
  *   no schema because KQL blocks it unless a site allows it
  *   (`kql.methods.allowed`); this rule types it for the sites that do.
- *   Not modelled: `children`, `drafts` and `index` on a Paged `pages` build a
- *   new collection without the pagination, but stay Paged here.
+ *   `children`, `drafts` and `index` on a Paged `pages` give `pages` too, but
+ *   build a new collection without the pagination, so they drop it.
  */
 import type { ClassName, IsClass, Schema } from '../schema.ts'
 import type { Step } from './parse.ts'
@@ -68,12 +68,20 @@ type Call<Current, Next extends Step, S extends Schema> = unknown extends Curren
 type CallEach<Current, Next extends Step, S extends Schema> = Current extends null
 	? never
 	: Current extends Paged<infer C>
-		? KeepPaged<C, Call<C, Next, S>>
+		? Next['name'] extends NewCollection
+			? Call<C, Next, S>
+			: KeepPaged<C, Call<C, Next, S>>
 		: IsClass<Current, S> extends true
 			? [Next['name'], S['classes'][Current & ClassName<S>]] extends ['paginate', { item: string }]
 				? Paged<Current & string>
 				: CallMethod<Current & ClassName<S>, Next, S>
 			: unknown
+
+/**
+ * Methods of `pages` that build a new collection (the children, drafts or
+ * descendants of its pages) instead of cloning it, so the pagination is lost.
+ */
+type NewCollection = 'children' | 'drafts' | 'index'
 
 /** A method on a Paged collection `C` that gives `C` again keeps it Paged. */
 type KeepPaged<C extends string, R> = [R] extends [C] ? ([C] extends [R] ? Paged<C> : R) : R
