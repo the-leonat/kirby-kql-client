@@ -16,6 +16,10 @@ _Avoid_: Path, expression
 The part of a query that picks which keys of the current value appear in the result, given as a record, a list of keys, or a comma-separated string.
 _Avoid_: Fields, projection
 
+**Select without a query string**:
+An entry of a record select written as `{ select }`: it reads its key from the current object and selects from that, and takes its pagination from `options.pagination`, not from a `pagination` key. In the code, `KeySelect`.
+_Avoid_: Sub-select, shorthand query
+
 **Result**:
 The JSON value the KQL endpoint returns for a query, and the type the client assigns to it.
 _Avoid_: Response, data

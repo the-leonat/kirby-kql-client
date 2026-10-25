@@ -9,23 +9,22 @@
 #   5. fails if any of src/kirby-schema.ts, test/fixtures or test/site differs
 #      from the committed files, untracked files included
 #
-# The test site runs on the origin in KQL_TEST_ORIGIN (default
-# http://localhost:8765); the port must be free.
+# The test site runs on the origin in KQL_TEST_ORIGIN (default: see
+# test/test-site.ts), served by scripts/site.sh like `pnpm site`; the port must
+# be free.
 #
 # Usage: pnpm ci:drift
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
 
-origin="${KQL_TEST_ORIGIN:-http://localhost:8765}"
+origin="$(node --input-type=module -e "const { testSiteOrigin } = await import('./test/test-site.ts'); console.log(testSiteOrigin)")"
 export KQL_TEST_ORIGIN="$origin"
-host_port="${origin#*://}"
-host_port="${host_port%%/*}"
 
 pnpm site:install
 pnpm schema
 
-php -S "$host_port" -t test/site test/site/kirby/router.php >/dev/null 2>&1 &
+bash scripts/site.sh >/dev/null 2>&1 &
 server=$!
 trap 'kill "$server" 2>/dev/null || true' EXIT
 
@@ -33,7 +32,7 @@ trap 'kill "$server" 2>/dev/null || true' EXIT
 for _ in $(seq 1 50); do
 	if curl -s -o /dev/null -X POST "$origin/api/query"; then break; fi
 	if ! kill -0 "$server" 2>/dev/null; then
-		echo "The test site did not start on $host_port (is the port in use?)" >&2
+		echo "The test site did not start on $origin (is the port in use?)" >&2
 		exit 1
 	fi
 	sleep 0.2

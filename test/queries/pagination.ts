@@ -111,6 +111,27 @@ export const firstAfterPaginate = [
 ]
 
 /**
+ * `children`, `drafts` and `index` after `paginate()` build a new collection
+ * (the children, drafts or descendants of the pages on the page) without the
+ * pagination, so the result is not wrapped. `index` also holds the pages on
+ * the page themselves.
+ */
+export const childrenAfterPaginate = [
+	kql({ query: "page('pagination').children.paginate(2).children", select: ['title'] }),
+	kql({ query: `${filled}.children.paginate(3).children`, select: ['title'] }),
+]
+
+export const draftsAfterPaginate = [
+	kql({ query: "page('selects').children.paginate(1).drafts", select: ['title'] }),
+	kql({ query: `${filled}.children.paginate(3).drafts`, select: ['title'] }),
+]
+
+export const indexAfterPaginate = [
+	kql({ query: "page('pagination').children.paginate(1).index", select: ['title'] }),
+	kql({ query: `${empty}.children.paginate(3).index`, select: ['title'] }),
+]
+
+/**
  * KNOWN LIMITATION (test/types/pagination.test.ts): paginating a page's
  * children leaves the pagination on that page's children for the rest of the
  * request (Kirby keeps one `children` collection per page, and `paginate()`

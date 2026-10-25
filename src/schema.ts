@@ -1,7 +1,7 @@
 /**
  * The schema: everything KQL can reach, as plain type data.
  *
- * A method's return value (a `Returns`) is either
+ * A method's return value (a `ReturnValue`) is either
  * - a class name, written as a string literal such as `'page'` or `'field'`, or
  * - a JSON type, written as the TypeScript type itself such as `string` or `boolean`,
  * either one optionally with `| null`.
@@ -18,15 +18,15 @@
  */
 export interface Schema {
 	/** Names a query string may start with, such as `site` or `page(…)`. */
-	roots: { [name: string]: Returns }
+	roots: { [name: string]: ReturnValue }
 	/** Classes by their KQL alias. */
 	classes: { [name: string]: ClassDefinition }
 }
 
 export interface ClassDefinition {
-	methods: { [name: string]: Returns }
+	methods: { [name: string]: ReturnValue }
 	/** Keys the class renders when a query selects nothing from it. */
-	defaultFields?: { [key: string]: Returns }
+	defaultFields?: { [key: string]: ReturnValue }
 	/** The JSON type the class always renders as, e.g. a field renders as `string`. */
 	render?: unknown
 	/** The class of each item; marks this class as a collection. */
@@ -38,7 +38,7 @@ export interface ClassDefinition {
 	 * `methods` holds the return value for every other count. Example: `find`
 	 * with one id gives `{ 1: 'page' | null }`, with several ids `'pages'`.
 	 */
-	overloads?: { [method: string]: { [argCount: number]: Returns } }
+	overloads?: { [method: string]: { [argCount: number]: ReturnValue } }
 }
 
 /**
@@ -59,7 +59,7 @@ export interface ClassDefinition {
  *   const client = createClient<MyExtension>({ url })
  */
 export interface SchemaExtension {
-	roots?: { [name: string]: Returns }
+	roots?: { [name: string]: ReturnValue }
 	classes?: { [name: string]: Partial<ClassDefinition> }
 }
 
@@ -87,11 +87,7 @@ type MergeClass<Base, Extension> = {
 		? Merge<Part<Base, Key>, Part<Extension, Key>>
 		: Key extends 'overloads'
 			? Merge<Omit<Part<Base, Key>, keyof Part<Extension, 'methods'>>, Part<Extension, Key>>
-			: Key extends keyof Extension
-				? Extension[Key]
-				: Key extends keyof Base
-					? Base[Key]
-					: never
+			: Merge<Base, Extension>[Key & (keyof Base | keyof Extension)]
 }
 
 /** `Extension`'s entries win over `Base`'s. */
@@ -107,12 +103,12 @@ type Merge<Base, Extension> = {
 type Part<T, Key extends PropertyKey> = T extends { [K in Key]: infer Value } ? Value : {}
 
 /** A class name (string literal) or a JSON type, optionally `| null`. */
-export type Returns = unknown
+export type ReturnValue = unknown
 
 /** The class names of a schema. */
 export type ClassName<S extends Schema> = keyof S['classes'] & string
 
-/** True if `R` (one member of a `Returns`) is a class name rather than a JSON type. */
+/** True if `R` (one member of a `ReturnValue`) is a class name rather than a JSON type. */
 export type IsClass<R, S extends Schema> = R extends string
 	? string extends R
 		? false

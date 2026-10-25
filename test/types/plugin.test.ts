@@ -14,11 +14,11 @@ type Expected = {
 	pageMethodAsContentField: { readingTime: string } | null
 }
 
-type Fits = Omit<Expected, 'pageMethodAsContentField'>
+type WithoutKnownLimitation = Omit<Expected, 'pageMethodAsContentField'>
 
 export type ResultTypes = AllMatch<Mismatched<typeof queries, Expected>>
 
-export type Fixtures = AllMatch<Unfit<Fits, Observed>>
+export type Fixtures = AllMatch<Unfit<WithoutKnownLimitation, Observed>>
 
 export type KnownLimitation = AllMatch<
 	// @ts-expect-error the plugin's `readingTime` gives a number, not the content field's string

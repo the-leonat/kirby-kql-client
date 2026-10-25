@@ -32,7 +32,8 @@ export class KqlError extends Error {
 	/**
 	 * KQL's error code, or the HTTP status when KQL sent none.
 	 * `'network-error'` when no response arrived, `'invalid-json'` when the
-	 * response was not JSON.
+	 * response was not JSON, `'invalid-response'` when it was JSON but not an
+	 * object.
 	 */
 	readonly code: number | string
 
@@ -82,6 +83,13 @@ export function createClient<Extension extends SchemaExtension = {}>(
 					'invalid-json',
 					`The KQL endpoint did not answer with JSON (HTTP ${response.status})`,
 					{ cause: error },
+				)
+			}
+			if (typeof body !== 'object' || body === null || Array.isArray(body)) {
+				throw new KqlError(
+					response.status,
+					'invalid-response',
+					`The KQL endpoint did not answer with a JSON object (HTTP ${response.status})`,
 				)
 			}
 			if (!response.ok || body.status === 'error') {

@@ -97,6 +97,18 @@ test('a response that is not JSON throws KqlError with its HTTP status', async (
 	})
 })
 
+for (const body of ['null', '42', '"ok"', '[]']) {
+	test(`a JSON body that is not an object (${body}) throws KqlError with its HTTP status`, async () => {
+		// No KQL endpoint answers like this; a stand-in `fetch` does, as a misconfigured proxy might.
+		const fetch = async () => new Response(body, { status: 200, headers: { 'Content-Type': 'application/json' } })
+		await assertThrowsKqlError({ url: testSite.url, fetch }, { query: 'site.title' }, {
+			status: 200,
+			code: 'invalid-response',
+			message: 'The KQL endpoint did not answer with a JSON object (HTTP 200)',
+		})
+	})
+}
+
 test('a method called on an empty relation throws KqlError 400', async () => {
 	// The filled case is the test query relations/methodAfterToPage. Because the
 	// empty case throws, the result type of `….toPage.title` has no `null`.
