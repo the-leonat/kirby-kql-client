@@ -1,0 +1,16 @@
+{
+	"children": [
+		"collections",
+		"home",
+		"relations",
+		"selects"
+	],
+	"drafts": [
+		"site-draft"
+	],
+	"files": [
+		"site-logo.png"
+	],
+	"title": "KQL Test Site",
+	"url": "http://kql-test-site.example"
+}

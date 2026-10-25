@@ -742,6 +742,11 @@ class KqlSchemaGenerator
 			return 'unknown[]';
 		}
 
+		// `never[]`: an array that is always empty
+		if ($members === []) {
+			return 'never[]';
+		}
+
 		return count($members) === 1 ? $members[0] . '[]' : '(' . implode(' | ', $members) . ')[]';
 	}
 

@@ -11,6 +11,15 @@
  */
 return [
 	'debug' => true,
+	// Fixtures contain URLs (default fields of pages, files and the site). A
+	// fixed base URL keeps them independent of the port the test site runs on,
+	// and a fixed salt keeps the token in media URLs independent of the
+	// checkout path (Kirby salts it with the content root by default). The
+	// other part of a media URL, the file's mtime, is fixed by `pnpm record`.
+	'url' => 'http://kql-test-site.example',
+	'content' => [
+		'salt' => 'kql-test-site',
+	],
 	'api' => [
 		'basicAuth'     => true,
 		'allowInsecure' => true,

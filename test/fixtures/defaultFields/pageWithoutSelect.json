@@ -1,0 +1,75 @@
+[
+	{
+		"children": [
+			"selects/filled/child"
+		],
+		"content": {
+			"title": "Filled",
+			"headline": "A filled page",
+			"cover": "- photo.png",
+			"attachment": "- notes.xyz",
+			"link": "- selects/without-content",
+			"uuid": "selfilled0000001"
+		},
+		"drafts": [
+			"selects/filled/draft"
+		],
+		"files": [
+			"selects/filled/notes.xyz",
+			"selects/filled/photo.png"
+		],
+		"id": "selects/filled",
+		"intendedTemplate": "select",
+		"isHomePage": false,
+		"isErrorPage": false,
+		"num": 1,
+		"template": "default",
+		"title": "Filled",
+		"slug": "filled",
+		"status": "listed",
+		"uid": "filled",
+		"url": "http://kql-test-site.example/selects/filled"
+	},
+	{
+		"children": [],
+		"content": {
+			"title": "Empty",
+			"headline": "",
+			"cover": "",
+			"attachment": "",
+			"link": "",
+			"uuid": "selempty00000001"
+		},
+		"drafts": [],
+		"files": [],
+		"id": "selects/empty",
+		"intendedTemplate": "select",
+		"isHomePage": false,
+		"isErrorPage": false,
+		"num": null,
+		"template": "default",
+		"title": "Empty",
+		"slug": "empty",
+		"status": "unlisted",
+		"uid": "empty",
+		"url": "http://kql-test-site.example/selects/empty"
+	},
+	{
+		"children": [],
+		"content": [],
+		"drafts": [],
+		"files": [],
+		"id": "selects/without-content",
+		"intendedTemplate": "default",
+		"isHomePage": false,
+		"isErrorPage": false,
+		"num": null,
+		"template": "default",
+		"title": "without-content",
+		"slug": "without-content",
+		"status": "unlisted",
+		"uid": "without-content",
+		"url": "http://kql-test-site.example/selects/without-content"
+	},
+	null
+]
