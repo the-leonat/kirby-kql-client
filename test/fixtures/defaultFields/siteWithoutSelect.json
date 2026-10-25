@@ -2,6 +2,7 @@
 	"children": [
 		"collections",
 		"home",
+		"plugin",
 		"relations",
 		"selects"
 	],
