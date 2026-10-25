@@ -19,4 +19,5 @@ export const headlessTestSite = {
  */
 export const testSiteByGroup: Record<string, typeof testSite | typeof headlessTestSite> = {
 	headless: headlessTestSite,
+	anorak: headlessTestSite,
 }

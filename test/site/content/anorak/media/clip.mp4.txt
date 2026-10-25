@@ -1,0 +1,33 @@
+Alt: A test clip
+
+----
+
+Width: 1920
+
+----
+
+Height: 1080
+
+----
+
+Hls: https://video.example/clip.m3u8
+
+----
+
+Poster: https://video.example/clip.jpg
+
+----
+
+Poster_tiny: https://video.example/clip-tiny.jpg
+
+----
+
+Preview: https://video.example/clip-preview.mp4
+
+----
+
+Blurhash: LEHV6nWB2yk8pyo0adR*.7kCMdnj
+
+----
+
+Uuid: anorakclip000001

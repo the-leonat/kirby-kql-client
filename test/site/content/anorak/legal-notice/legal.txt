@@ -1,0 +1,21 @@
+Title: Legal notice
+
+----
+
+Text: ## Company
+
+Example Street 1
+
+----
+
+Meta_description: Who runs this site.
+
+----
+
+Og_image:
+
+- file://anorakphoto00001
+
+----
+
+Uuid: anoraklegal00001

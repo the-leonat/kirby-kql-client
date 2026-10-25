@@ -1,0 +1,37 @@
+Title: Commercial
+
+----
+
+Headline: A commercial
+
+----
+
+Photo:
+
+- file://anorakphoto00001
+
+----
+
+PreviewFilm:
+
+- page://anorakfilma00001
+
+----
+
+Awards:
+
+- file://anorakdoc0000001
+
+----
+
+HasFeaturedFilm: false
+
+----
+
+FeaturedFilm:
+
+- page://anorakfilmc00001
+
+----
+
+Uuid: anorakcommerc001

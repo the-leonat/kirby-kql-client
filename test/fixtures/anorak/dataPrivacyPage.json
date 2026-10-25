@@ -1,0 +1,103 @@
+[
+	{
+		"title": "Data privacy",
+		"meta": {
+			"title": "Data privacy | KQL Test Site",
+			"description": "How data is handled.",
+			"robots": "all",
+			"canonicalUrl": "http://kql-test-site.example/anorak/data-privacy",
+			"jsonld": {
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "WebSite",
+						"@id": "http://kql-test-site.example/#website",
+						"url": "http://kql-test-site.example",
+						"name": "KQL Test Site",
+						"description": ""
+					}
+				]
+			},
+			"social": [
+				{
+					"property": "og:site_name",
+					"content": "KQL Test Site"
+				},
+				{
+					"property": "og:url",
+					"content": "http://kql-test-site.example/anorak/data-privacy"
+				},
+				{
+					"property": "og:type",
+					"content": "website"
+				},
+				{
+					"property": "og:title",
+					"content": "Data privacy"
+				},
+				{
+					"property": "og:description",
+					"content": "How data is handled."
+				},
+				{
+					"property": "og:image",
+					"content": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-1200x630-crop.png"
+				},
+				{
+					"property": "og:image:width",
+					"content": 1200
+				},
+				{
+					"property": "og:image:height",
+					"content": 630
+				},
+				{
+					"property": "og:image:alt",
+					"content": "An orange test image"
+				}
+			]
+		},
+		"text": "<h2>Data</h2>\n<p>We store <strong>nothing</strong>.</p>"
+	},
+	{
+		"title": "Empty",
+		"meta": {
+			"title": "Empty | KQL Test Site",
+			"description": null,
+			"robots": "all",
+			"canonicalUrl": "http://kql-test-site.example/anorak/empty",
+			"jsonld": {
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "WebSite",
+						"@id": "http://kql-test-site.example/#website",
+						"url": "http://kql-test-site.example",
+						"name": "KQL Test Site",
+						"description": ""
+					}
+				]
+			},
+			"social": [
+				{
+					"property": "og:site_name",
+					"content": "KQL Test Site"
+				},
+				{
+					"property": "og:url",
+					"content": "http://kql-test-site.example/anorak/empty"
+				},
+				{
+					"property": "og:type",
+					"content": "website"
+				},
+				{
+					"property": "og:title",
+					"content": "Empty"
+				}
+			]
+		},
+		"text": ""
+	},
+	null
+]

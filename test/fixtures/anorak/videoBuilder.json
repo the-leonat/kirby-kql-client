@@ -1,0 +1,21 @@
+[
+	{
+		"hls": "https://video.example/clip.m3u8",
+		"poster": "https://video.example/clip.jpg",
+		"width": "1920",
+		"height": "1080",
+		"posterTiny": "https://video.example/clip-tiny.jpg",
+		"preview": "https://video.example/clip-preview.mp4",
+		"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+	},
+	{
+		"hls": "https://video.example/clip.m3u8",
+		"poster": "https://video.example/clip.jpg",
+		"width": 2,
+		"height": 1,
+		"posterTiny": "https://video.example/clip-tiny.jpg",
+		"preview": "https://video.example/clip-preview.mp4",
+		"blurhash": "LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+	},
+	null
+]

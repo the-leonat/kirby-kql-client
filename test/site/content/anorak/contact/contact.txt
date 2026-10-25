@@ -1,0 +1,44 @@
+Title: Contact
+
+----
+
+Meta_description: How to reach us.
+
+----
+
+Og_image:
+
+- file://anorakphoto00001
+
+----
+
+Locations:
+
+-
+  address: Example Street 1, Example City
+  global_contact: hello@example.com
+  contacts:
+    -
+      name: Ada Example
+      role: Producer
+      mail: ada@example.com
+      row: 1
+    -
+      name: Bob Example
+      role: Assistant
+      mail: bob@example.com
+      row: 2
+-
+  address: Sample Road 2, Sample Town
+  global_contact: ""
+  contacts: []
+
+----
+
+Tisax_logo:
+
+- file://anorakphoto00001
+
+----
+
+Uuid: anorakcontact001

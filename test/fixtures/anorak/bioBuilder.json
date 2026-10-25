@@ -1,0 +1,37 @@
+[
+	{
+		"bio": {
+			"press": {
+				"url": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf"
+			},
+			"bio": {
+				"url": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf"
+			},
+			"social": [
+				{
+					"name": "Instagram",
+					"url": "https://instagram.example/jane"
+				},
+				{
+					"name": "Vimeo",
+					"url": "https://vimeo.example/jane"
+				}
+			]
+		}
+	},
+	{
+		"bio": {
+			"press": null,
+			"bio": null,
+			"social": []
+		}
+	},
+	{
+		"bio": {
+			"press": null,
+			"bio": null,
+			"social": []
+		}
+	},
+	null
+]

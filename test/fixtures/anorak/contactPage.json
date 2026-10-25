@@ -1,0 +1,179 @@
+[
+	{
+		"meta": {
+			"title": "Contact | KQL Test Site",
+			"description": "How to reach us.",
+			"robots": "all",
+			"canonicalUrl": "http://kql-test-site.example/anorak/contact",
+			"jsonld": {
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "WebSite",
+						"@id": "http://kql-test-site.example/#website",
+						"url": "http://kql-test-site.example",
+						"name": "KQL Test Site",
+						"description": ""
+					}
+				]
+			},
+			"social": [
+				{
+					"property": "og:site_name",
+					"content": "KQL Test Site"
+				},
+				{
+					"property": "og:url",
+					"content": "http://kql-test-site.example/anorak/contact"
+				},
+				{
+					"property": "og:type",
+					"content": "website"
+				},
+				{
+					"property": "og:title",
+					"content": "Contact"
+				},
+				{
+					"property": "og:description",
+					"content": "How to reach us."
+				},
+				{
+					"property": "og:image",
+					"content": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-1200x630-crop.png"
+				},
+				{
+					"property": "og:image:width",
+					"content": 1200
+				},
+				{
+					"property": "og:image:height",
+					"content": 630
+				},
+				{
+					"property": "og:image:alt",
+					"content": "An orange test image"
+				}
+			]
+		},
+		"locations": [
+			{
+				"address": "Example Street 1, Example City",
+				"globalContact": "hello@example.com",
+				"contacts": [
+					{
+						"name": "Ada Example",
+						"role": "Producer",
+						"mail": "ada@example.com",
+						"row": "1"
+					},
+					{
+						"name": "Bob Example",
+						"role": "Assistant",
+						"mail": "bob@example.com",
+						"row": "2"
+					}
+				]
+			},
+			{
+				"address": "Sample Road 2, Sample Town",
+				"globalContact": "",
+				"contacts": []
+			}
+		],
+		"tisaxLogo": {
+			"alt": "An orange test image",
+			"src": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo.png",
+			"srcset": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-100x.webp 100w, http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-200x.webp 200w",
+			"width": 4,
+			"height": 3
+		}
+	},
+	{
+		"meta": {
+			"title": "Contact with a PDF logo | KQL Test Site",
+			"description": null,
+			"robots": "all",
+			"canonicalUrl": "http://kql-test-site.example/anorak/contact-pdf-logo",
+			"jsonld": {
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "WebSite",
+						"@id": "http://kql-test-site.example/#website",
+						"url": "http://kql-test-site.example",
+						"name": "KQL Test Site",
+						"description": ""
+					}
+				]
+			},
+			"social": [
+				{
+					"property": "og:site_name",
+					"content": "KQL Test Site"
+				},
+				{
+					"property": "og:url",
+					"content": "http://kql-test-site.example/anorak/contact-pdf-logo"
+				},
+				{
+					"property": "og:type",
+					"content": "website"
+				},
+				{
+					"property": "og:title",
+					"content": "Contact with a PDF logo"
+				}
+			]
+		},
+		"locations": [],
+		"tisaxLogo": {
+			"alt": "A test document",
+			"src": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf",
+			"srcset": "http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 100w, http://kql-test-site.example/media/pages/anorak/media/d845a514e0-1767225600/document.pdf 200w",
+			"width": "",
+			"height": ""
+		}
+	},
+	{
+		"meta": {
+			"title": "Empty | KQL Test Site",
+			"description": null,
+			"robots": "all",
+			"canonicalUrl": "http://kql-test-site.example/anorak/empty",
+			"jsonld": {
+				"@context": "https://schema.org",
+				"@graph": [
+					{
+						"@type": "WebSite",
+						"@id": "http://kql-test-site.example/#website",
+						"url": "http://kql-test-site.example",
+						"name": "KQL Test Site",
+						"description": ""
+					}
+				]
+			},
+			"social": [
+				{
+					"property": "og:site_name",
+					"content": "KQL Test Site"
+				},
+				{
+					"property": "og:url",
+					"content": "http://kql-test-site.example/anorak/empty"
+				},
+				{
+					"property": "og:type",
+					"content": "website"
+				},
+				{
+					"property": "og:title",
+					"content": "Empty"
+				}
+			]
+		},
+		"locations": [],
+		"tisaxLogo": null
+	},
+	null
+]
