@@ -6,6 +6,8 @@ coverage/
 
 # test site
 test/site/vendor/
+test/site/kirby/
+test/site/site/plugins/kql/
 test/site/media/
 test/site/site/cache/
 test/site/site/sessions/

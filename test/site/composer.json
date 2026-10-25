@@ -1,0 +1,16 @@
+{
+  "name": "kirby-kql-client/test-site",
+  "description": "The test site that answers the test queries of kirby-kql-client",
+  "type": "project",
+  "require": {
+    "php": ">=8.2",
+    "getkirby/cms": "~5.6.1",
+    "getkirby/kql": "~3.0.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "getkirby/composer-installer": true
+    },
+    "optimize-autoloader": true
+  }
+}
