@@ -1,0 +1,60 @@
+[
+	[
+		{
+			"id": "b0000000-0000-4000-8000-000000000001",
+			"type": "heading",
+			"isHidden": false,
+			"text": "Rich heading",
+			"films": [],
+			"image": null,
+			"next": "text"
+		},
+		{
+			"id": "b0000000-0000-4000-8000-000000000002",
+			"type": "text",
+			"isHidden": false,
+			"text": "<p>Rich text</p>",
+			"films": [],
+			"image": null,
+			"next": "line"
+		},
+		{
+			"id": "b0000000-0000-4000-8000-000000000006",
+			"type": "line",
+			"isHidden": false,
+			"text": "",
+			"films": [],
+			"image": null,
+			"next": "image"
+		},
+		{
+			"id": "b0000000-0000-4000-8000-000000000003",
+			"type": "image",
+			"isHidden": false,
+			"text": "",
+			"films": [],
+			"image": {
+				"filename": "photo.png",
+				"alt": "An orange test image"
+			},
+			"next": "films"
+		},
+		{
+			"id": "b0000000-0000-4000-8000-000000000004",
+			"type": "films",
+			"isHidden": false,
+			"text": "",
+			"films": [
+				{
+					"title": "Alpha.Beta"
+				},
+				{
+					"title": "Gamma (3)"
+				}
+			],
+			"image": null,
+			"next": null
+		}
+	],
+	[]
+]

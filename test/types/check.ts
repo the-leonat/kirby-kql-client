@@ -53,8 +53,10 @@ export type Unfit<Expected, Observed> = {
 
 /**
  * Turns each observed object that sits where the result type `R` has a string
- * index signature into that index signature, with its values merged.
- * Everything else stays as observed. Each member of an observed union is paired
+ * index signature into that index signature, with its values merged. Keys
+ * that `R` names beside the index signature are compared as usual, and an
+ * index signature of `unknown` takes any values. Everything else stays as
+ * observed. Each member of an observed union is paired
  * with the member of `R` of the same kind (array, object, or anything else).
  */
 type WidenToIndex<O, R> = O extends readonly (infer Item)[]
@@ -68,8 +70,20 @@ type WidenToIndex<O, R> = O extends readonly (infer Item)[]
 type WidenObject<O extends object, R> = [R] extends [never]
 	? O
 	: string extends keyof R
-		? { [key: string]: WidenToIndex<Required<O>[keyof O], R[string & keyof R]> }
+		? {
+				[K in keyof R]: string extends K
+					? WidenValues<Required<O>[Exclude<keyof O, NamedKeys<R>>], R[K]>
+					: K extends keyof O
+						? WidenToIndex<O[K], R[K]>
+						: never
+			}
 		: { [K in keyof O]: K extends keyof R ? WidenToIndex<O[K], R[K]> : O[K] }
+
+/** An index signature of `unknown` (stored content of any JSON type) takes any values. */
+type WidenValues<O, V> = unknown extends V ? unknown : WidenToIndex<O, V>
+
+/** The keys `R` names beside its index signature, such as a structure item's `id`. */
+type NamedKeys<R> = keyof { [K in keyof R as string extends K ? never : number extends K ? never : K]: 0 }
 
 /**
  * Fails to compile, naming the offending test queries, unless `Names` is `never`.

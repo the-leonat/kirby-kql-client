@@ -13,7 +13,8 @@
  * - Unknown carries forward.
  * - A known method gives its return value: the one for the step's argument
  *   count if the class has an overload for it, else the method's.
- * - An unknown key on a model (page, site, file, user) gives a content field.
+ * - An unknown key on a model (page, site, file, user, block, structure item)
+ *   gives a content field.
  * - Anything else gives Unknown.
  */
 import type { ClassName, IsClass, Schema } from '../schema.ts'

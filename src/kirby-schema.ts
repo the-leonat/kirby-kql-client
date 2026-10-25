@@ -15,13 +15,7 @@ export type KirbySchema = {
 	classes: {
 		block: {
 			model: true
-			defaultFields: {
-				content: 'content'
-				id: string
-				isEmpty: boolean
-				isHidden: boolean
-				type: string
-			}
+			render: { content: Record<string, unknown> | never[]; id: string; isEmpty: boolean; isHidden: boolean; type: string }
 			methods: {
 				content: 'content'
 				hasNext: boolean
@@ -48,7 +42,7 @@ export type KirbySchema = {
 		}
 		blocks: {
 			item: 'block'
-			render: unknown
+			render: { content: Record<string, unknown> | never[]; id: string; isHidden: boolean; type: string }[]
 			methods: {
 				chunk: 'blocks'
 				count: number
@@ -375,12 +369,7 @@ export type KirbySchema = {
 			}
 		}
 		layout: {
-			defaultFields: {
-				attrs: 'content'
-				columns: 'layoutColumns'
-				id: string
-				isEmpty: boolean
-			}
+			render: { attrs: Record<string, unknown> | never[]; columns: { blocks: { content: Record<string, unknown> | never[]; id: string; isHidden: boolean; type: string }[]; id: string; width: string }[]; id: string; isEmpty: boolean }
 			methods: {
 				attrs: 'content'
 				columns: 'layoutColumns'
@@ -432,7 +421,7 @@ export type KirbySchema = {
 		}
 		layoutColumns: {
 			item: 'layoutColumn'
-			render: unknown
+			render: { blocks: { content: Record<string, unknown> | never[]; id: string; isHidden: boolean; type: string }[]; id: string; width: string }[]
 			methods: {
 				chunk: 'layoutColumns'
 				count: number
@@ -471,7 +460,7 @@ export type KirbySchema = {
 		}
 		layouts: {
 			item: 'layout'
-			render: unknown
+			render: { attrs: Record<string, unknown> | never[]; columns: { blocks: { content: Record<string, unknown> | never[]; id: string; isHidden: boolean; type: string }[]; id: string; width: string }[]; id: string }[]
 			methods: {
 				chunk: 'layouts'
 				count: number
@@ -779,7 +768,7 @@ export type KirbySchema = {
 		}
 		structure: {
 			item: 'structureItem'
-			render: unknown
+			render: { id: string; [key: string]: unknown }[]
 			methods: {
 				chunk: 'structure'
 				count: number
@@ -818,7 +807,7 @@ export type KirbySchema = {
 		}
 		structureItem: {
 			model: true
-			render: []
+			render: never[]
 			methods: {
 				content: 'content'
 				hasNext: boolean
