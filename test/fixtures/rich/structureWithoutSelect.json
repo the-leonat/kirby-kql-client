@@ -1,0 +1,17 @@
+[
+	[
+		{
+			"title": "First item",
+			"count": 3,
+			"featured": true,
+			"id": "0"
+		},
+		{
+			"title": "Second item",
+			"count": 5,
+			"featured": false,
+			"id": "1"
+		}
+	],
+	[]
+]

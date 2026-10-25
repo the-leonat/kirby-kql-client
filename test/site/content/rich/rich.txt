@@ -1,0 +1,5 @@
+Title: Rich content
+
+----
+
+Uuid: rich000000000001

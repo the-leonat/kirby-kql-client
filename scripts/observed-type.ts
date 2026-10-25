@@ -1,7 +1,8 @@
 /**
  * The observed type of a fixture: the TypeScript type of a JSON value, with the
  * items of each array merged into one type. An object key seen once as a string
- * and once as `null` becomes `string | null`.
+ * and once as `null` becomes `string | null`. An array that was only ever seen
+ * empty is `[]`.
  */
 
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json }
@@ -54,7 +55,11 @@ function mergeObjects(a: Shape['object'], b: Shape['object']): NonNullable<Shape
 
 function print(shape: Shape, indent: string): string {
 	const members: string[] = [...shape.scalars].filter((s) => s !== 'null')
-	if (shape.array) members.push(`Array<${print(shape.array, indent)}>`)
+	if (shape.array) {
+		// Only empty arrays seen here: an empty tuple, as Kirby renders an empty PHP array
+		const items = print(shape.array, indent)
+		members.push(items === 'never' ? '[]' : `Array<${items}>`)
+	}
 	if (shape.object) members.push(printObject(shape.object, indent))
 	if (shape.scalars.has('null')) members.push('null')
 	return members.length === 0 ? 'never' : members.join(' | ')

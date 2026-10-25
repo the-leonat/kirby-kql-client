@@ -231,10 +231,20 @@ class KqlSchemaGenerator
 
 	/**
 	 * The render type when the interceptor replaces `toResponse` or `toArray`,
-	 * `null` when it renders its `$toArray` keys.
+	 * or an override names one of them for this interceptor; `null` when it
+	 * renders its `$toArray` keys.
 	 */
 	protected function render(ReflectionClass $interceptor, ReflectionClass $core): string|null
 	{
+		foreach (['toResponse', 'toArray'] as $name) {
+			$context  = $this->context($interceptor, $core, $interceptor->getFileName());
+			$override = $this->override($interceptor->getName() . '::' . $name, $context);
+
+			if ($override !== null) {
+				return $override['return'];
+			}
+		}
+
 		foreach (['toResponse', 'toArray'] as $name) {
 			$method = $interceptor->getMethod($name);
 
@@ -668,6 +678,10 @@ class KqlSchemaGenerator
 			return [$this->arrayOf($this->returnsMembers(substr($type, 0, -2), $context))];
 		}
 
+		if (preg_match('/^array\{(.*)\}$/s', $type, $match) === 1) {
+			return [$this->shapeOf($match[1], $context)];
+		}
+
 		if (preg_match('/^([^<{]+)<(.*)>$/s', $type, $match) === 1) {
 			$name = strtolower(trim($match[1]));
 			$args = $this->splitTopLevel($match[2], ',');
@@ -743,6 +757,37 @@ class KqlSchemaGenerator
 		}
 
 		return count($members) === 1 ? $members[0] . '[]' : '(' . implode(' | ', $members) . ')[]';
+	}
+
+	/**
+	 * An array shape (`array{id: string, title?: string, ...<string, mixed>}`)
+	 * as a TS object type. `...<string, V>` adds an index signature for the
+	 * other keys. `array{}` is the empty array that an empty PHP array
+	 * renders as: `[]`.
+	 */
+	protected function shapeOf(string $entries, array|null $context): string
+	{
+		$entries = trim($entries) === '' ? [] : $this->splitTopLevel($entries, ',');
+
+		if ($entries === []) {
+			return '[]';
+		}
+
+		$keys = [];
+
+		foreach ($entries as $entry) {
+			if (preg_match('/^\.\.\.<\s*string\s*,(.*)>$/s', $entry, $match) === 1) {
+				$keys[] = '[key: string]: ' . $this->returns($match[1], $context);
+				continue;
+			}
+
+			[$key, $type] = array_map('trim', explode(':', $entry, 2));
+			$optional = str_ends_with($key, '?');
+			$key      = rtrim($key, '?');
+			$keys[]   = $this->tsKey($key) . ($optional ? '?' : '') . ': ' . $this->returns($type, $context);
+		}
+
+		return '{ ' . implode('; ', $keys) . ' }';
 	}
 
 	protected function recordOf(array $members): string

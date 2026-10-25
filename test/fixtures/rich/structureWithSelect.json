@@ -1,0 +1,25 @@
+[
+	[
+		{
+			"id": "0",
+			"title": "First item",
+			"count": "3",
+			"featured": "1",
+			"missing": "",
+			"countAsNumber": 3,
+			"isFeatured": true,
+			"previous": null
+		},
+		{
+			"id": "1",
+			"title": "Second item",
+			"count": "5",
+			"featured": "",
+			"missing": "",
+			"countAsNumber": 5,
+			"isFeatured": false,
+			"previous": "First item"
+		}
+	],
+	[]
+]

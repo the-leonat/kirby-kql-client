@@ -1,0 +1,26 @@
+Title: Filled rich content
+
+----
+
+Text: [{"content":{"level":"h2","text":"Rich heading"},"id":"b0000000-0000-4000-8000-000000000001","isHidden":false,"type":"heading"},{"content":{"text":"<p>Rich text</p>"},"id":"b0000000-0000-4000-8000-000000000002","isHidden":false,"type":"text"},{"content":[],"id":"b0000000-0000-4000-8000-000000000006","isHidden":false,"type":"line"},{"content":{"location":"kirby","image":["file://richphoto0000001"],"src":"","alt":"","caption":"","link":"","ratio":"","crop":false},"id":"b0000000-0000-4000-8000-000000000003","isHidden":false,"type":"image"},{"content":{"headline":"Related films","films":["page://alpha00000000001","page://gamma00000000001"]},"id":"b0000000-0000-4000-8000-000000000004","isHidden":false,"type":"films"},{"content":{"text":"<p>Hidden text</p>"},"id":"b0000000-0000-4000-8000-000000000005","isHidden":true,"type":"text"}]
+
+----
+
+Layout: [{"attrs":{"theme":"intro"},"columns":[{"blocks":[{"content":{"level":"h1","text":"Layout heading"},"id":"b0000000-0000-4000-8000-000000000011","isHidden":false,"type":"heading"},{"content":{"text":"<p>Layout text</p>"},"id":"b0000000-0000-4000-8000-000000000012","isHidden":false,"type":"text"}],"id":"c0000000-0000-4000-8000-000000000001","width":"1/2"},{"blocks":[{"content":{"headline":"Layout films","films":["page://beta000000000001"]},"id":"b0000000-0000-4000-8000-000000000013","isHidden":false,"type":"films"},{"content":[],"id":"b0000000-0000-4000-8000-000000000014","isHidden":false,"type":"line"}],"id":"c0000000-0000-4000-8000-000000000002","width":"1/2"}],"id":"l0000000-0000-4000-8000-000000000001"},{"attrs":[],"columns":[{"blocks":[],"id":"c0000000-0000-4000-8000-000000000003","width":"1/1"}],"id":"l0000000-0000-4000-8000-000000000002"}]
+
+----
+
+Items:
+
+-
+  title: First item
+  count: 3
+  featured: true
+-
+  title: Second item
+  count: 5
+  featured: false
+
+----
+
+Uuid: richfilled000001
