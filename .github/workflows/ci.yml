@@ -26,6 +26,9 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm test
+      # Packs the package, installs it in a fresh project and type-checks a
+      # consumer and the README's examples with TypeScript 5.4 and current.
+      - run: pnpm test:pack
 
   drift:
     name: Schema and fixture drift

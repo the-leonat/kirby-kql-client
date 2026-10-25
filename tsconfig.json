@@ -18,5 +18,5 @@
     "types": ["node"]
   },
   "include": ["src", "scripts", "test"],
-  "exclude": ["test/site"]
+  "exclude": ["test/site", "test/pack"]
 }
