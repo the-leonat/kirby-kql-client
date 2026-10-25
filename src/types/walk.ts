@@ -1,6 +1,6 @@
 /**
  * Walk: follows the steps of a parsed query string through the schema and
- * gives what the last step returns (a `Returns`: class name or JSON type).
+ * gives what the last step returns (a `ReturnValue`: class name or JSON type).
  *
  * The first step starts at the surrounding object when it names that object's
  * class without arguments (in nested queries, `page.title` inside a select on a
@@ -16,13 +16,13 @@
  * - An unknown key on a model (page, site, file, user, block, structure item)
  *   gives a content field.
  * - Anything else gives Unknown.
- * - `paginate(…)` on a collection gives that collection Paged. A method on a
- *   Paged collection that gives the same collection keeps it Paged (Kirby
+ * - `paginate(…)` on a collection gives that collection Paginated. A method on a
+ *   Paginated collection that gives the same collection keeps it Paginated (Kirby
  *   clones the collection together with its pagination, as `filterBy` and
  *   `sortBy` do); anything else, such as `first`, drops it. `paginate` is in
  *   no schema because KQL blocks it unless a site allows it
  *   (`kql.methods.allowed`); this rule types it for the sites that do.
- *   `children`, `drafts` and `index` on a Paged `pages` give `pages` too, but
+ *   `children`, `drafts` and `index` on a Paginated `pages` give `pages` too, but
  *   build a new collection without the pagination, so they drop it.
  */
 import type { ClassName, IsClass, Schema } from '../schema.ts'
@@ -32,8 +32,8 @@ import type { Step } from './parse.ts'
  * A collection class `C` with a pagination, as `paginate(…)` in a query
  * string gives it. With a select, it renders wrapped in `{ data, pagination }`.
  */
-export interface Paged<C extends string = string> {
-	paged: C
+export interface Paginated<C extends string = string> {
+	paginated: C
 }
 
 /** The surrounding object's class in a nested query, or `never` at the top. */
@@ -67,13 +67,13 @@ type Call<Current, Next extends Step, S extends Schema> = unknown extends Curren
 /** Distributes over a union such as `'page' | null`; the `null` member throws. */
 type CallEach<Current, Next extends Step, S extends Schema> = Current extends null
 	? never
-	: Current extends Paged<infer C>
+	: Current extends Paginated<infer C>
 		? Next['name'] extends NewCollection
 			? Call<C, Next, S>
-			: KeepPaged<C, Call<C, Next, S>>
+			: KeepPaginated<C, Call<C, Next, S>>
 		: IsClass<Current, S> extends true
 			? [Next['name'], S['classes'][Current & ClassName<S>]] extends ['paginate', { item: string }]
-				? Paged<Current & string>
+				? Paginated<Current & string>
 				: CallMethod<Current & ClassName<S>, Next, S>
 			: unknown
 
@@ -83,8 +83,8 @@ type CallEach<Current, Next extends Step, S extends Schema> = Current extends nu
  */
 type NewCollection = 'children' | 'drafts' | 'index'
 
-/** A method on a Paged collection `C` that gives `C` again keeps it Paged. */
-type KeepPaged<C extends string, R> = [R] extends [C] ? ([C] extends [R] ? Paged<C> : R) : R
+/** A method on a Paginated collection `C` that gives `C` again keeps it Paginated. */
+type KeepPaginated<C extends string, R> = [R] extends [C] ? ([C] extends [R] ? Paginated<C> : R) : R
 
 /** The overload for the step's argument count wins over the method's return value. */
 type CallMethod<C extends ClassName<S>, Next extends Step, S extends Schema> =

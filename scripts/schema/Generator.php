@@ -13,7 +13,7 @@ use Kirby\Query\Query;
  * where each part of the schema comes from.
  *
  * Types are handled as PHP/docblock type strings (`\Kirby\Cms\Page|null`,
- * `TValue|static`, `string[]`) until they are converted to a `Returns`:
+ * `TValue|static`, `string[]`) until they are converted to a `ReturnValue`:
  * a union of class names (`'page'`) and JSON types (`string`, `boolean`, …).
  */
 class KqlSchemaGenerator
@@ -542,7 +542,7 @@ class KqlSchemaGenerator
 	// Types
 
 	/**
-	 * The `Returns` of a method or closure: its PHP return type, or its
+	 * The `ReturnValue` of a method or closure: its PHP return type, or its
 	 * docblock `@return` when the PHP type is missing or too vague (`array`,
 	 * `mixed`, or a class KQL cannot render).
 	 */
@@ -609,7 +609,7 @@ class KqlSchemaGenerator
 	}
 
 	/**
-	 * Converts a PHP/docblock type string into a `Returns`.
+	 * Converts a PHP/docblock type string into a `ReturnValue`.
 	 */
 	public function returns(string $type, array|null $context): string
 	{
