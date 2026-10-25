@@ -438,7 +438,7 @@ The types are proven against a small Kirby site in `test/site` (Kirby, KQL, PHP 
 
 ```sh
 pnpm site:install  # Composer install of the test site
-pnpm site          # serve it on http://localhost:8765
+pnpm site          # serve it on http://localhost:8765, or on KQL_TEST_ORIGIN if set
 pnpm record        # re-record the fixtures from the running site
 pnpm test:site     # runtime tests against the running site
 pnpm schema        # regenerate src/kirby-schema.ts from the test site

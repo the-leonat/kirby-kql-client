@@ -37,7 +37,7 @@
     "test": "tsc -p tsconfig.json",
     "test:pack": "bash scripts/test-pack.sh",
     "site:install": "composer install --working-dir=test/site",
-    "site": "php -S localhost:8765 -t test/site test/site/kirby/router.php",
+    "site": "bash scripts/site.sh",
     "record": "node scripts/record.ts",
     "schema": "php scripts/schema/generate.php test/site src/kirby-schema.ts",
     "test:site": "node --test 'test/runtime/**/*.test.ts'",
