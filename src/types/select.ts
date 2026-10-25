@@ -43,7 +43,7 @@ type Entry<C extends ClassName<S>, Key extends string, Value, S extends Schema> 
 /** What `$object->$key()` returns. */
 type ReadKey<C extends string, Key extends string, S extends Schema> = Follow<
 	C,
-	[{ name: Key; args: 0 }],
+	[{ name: Key; args: 0; optional: false }],
 	S
 >
 

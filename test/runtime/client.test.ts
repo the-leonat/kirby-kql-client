@@ -83,6 +83,24 @@ test('a response that is not JSON throws KqlError with its HTTP status', async (
 	})
 })
 
+test('a method called on an empty relation throws KqlError 400', async () => {
+	// The filled case is the test query relations/methodAfterToPage. Because the
+	// empty case throws, the result type of `….toPage.title` has no `null`.
+	await assertThrowsKqlError(testSite, { query: "page('relations/empty').link.toPage.title" }, {
+		status: 400,
+		code: 400,
+		message: 'Access to method/property "title" on null',
+	})
+})
+
+test('a method called on a missing page throws KqlError 400', async () => {
+	await assertThrowsKqlError(testSite, { query: "page('missing').title" }, {
+		status: 400,
+		code: 400,
+		message: 'Access to method/property "title" on null',
+	})
+})
+
 test('a null result resolves to null', async () => {
 	assert.equal(await createClient(testSite).query({ query: "page('missing')" }), null)
 })

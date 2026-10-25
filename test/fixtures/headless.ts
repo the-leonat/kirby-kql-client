@@ -5,5 +5,5 @@ export interface Observed {
 		headline: string
 		slug: string
 		isListed: boolean
-	}
+	} | null
 }

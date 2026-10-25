@@ -5,6 +5,10 @@
  *   test/fixtures/<group>/<query>.json   the fixture
  *   test/fixtures/<group>.ts             the observed type of each fixture
  *
+ * A test query exported as a list of queries has cases (e.g. the same query on
+ * filled and on empty content). Its fixture is the list of their results, and
+ * its observed type merges them like the items of one list.
+ *
  * Every run wipes test/fixtures first.
  *
  * Usage: pnpm record
@@ -12,7 +16,7 @@
 import { mkdir, readdir, rm, writeFile } from 'node:fs/promises'
 import { createClient, type Query } from '../src/index.ts'
 import { testSite, testSiteByGroup } from '../test/test-site.ts'
-import { observedType } from './observed-type.ts'
+import { observedType, observedTypeOfCases } from './observed-type.ts'
 
 const queriesDir = new URL('../test/queries/', import.meta.url)
 const fixturesDir = new URL('../test/fixtures/', import.meta.url)
@@ -22,16 +26,20 @@ await rm(fixturesDir, { recursive: true, force: true })
 
 for (const file of (await readdir(queriesDir)).filter((name) => name.endsWith('.ts')).sort()) {
 	const group = file.replace(/\.ts$/, '')
-	const queries: Record<string, Query> = await import(new URL(file, queriesDir).href)
+	const queries: Record<string, Query | Query[]> = await import(new URL(file, queriesDir).href)
 	const client = createClient(testSiteByGroup[group] ?? testSite)
 	const groupDir = new URL(`${group}/`, fixturesDir)
 	await mkdir(groupDir, { recursive: true })
 
 	const types: string[] = []
 	for (const [name, query] of Object.entries(queries)) {
-		const fixture = await client.query(query)
+		const cases = Array.isArray(query)
+		const fixture = cases
+			? await Promise.all(query.map((single) => client.query(single)))
+			: await client.query(query)
+		const type = cases ? observedTypeOfCases(fixture as unknown[]) : observedType(fixture)
 		await writeFile(new URL(`${name}.json`, groupDir), `${JSON.stringify(fixture, null, '\t')}\n`)
-		types.push(`\t${name}: ${observedType(fixture).replaceAll('\n', '\n\t')}`)
+		types.push(`\t${name}: ${type.replaceAll('\n', '\n\t')}`)
 	}
 
 	await writeFile(

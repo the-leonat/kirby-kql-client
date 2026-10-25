@@ -5,7 +5,7 @@ export type KirbySchema = {
 		collection: 'collection' | null
 		file: 'file' | null
 		kirby: 'kirby'
-		page: 'page'
+		page: 'page' | null
 		qr: unknown
 		site: 'site'
 		t: string | null
@@ -239,7 +239,7 @@ export type KirbySchema = {
 				filename: string
 				height: 'field' | number
 				id: string
-				mime: string | null
+				mime: string
 				niceSize: string
 				template: string | null
 				type: string | null
@@ -276,7 +276,7 @@ export type KirbySchema = {
 				isPortrait: 'field' | boolean
 				isSquare: 'field' | boolean
 				mediaUrl: string
-				mime: string | null
+				mime: string
 				modified: boolean | number | string
 				name: string
 				next: 'file' | null
@@ -865,7 +865,7 @@ export type KirbySchema = {
 				id: string
 				name: 'field'
 				role: 'role'
-				username: string | null
+				username: string
 			}
 			methods: {
 				apiUrl: string
@@ -876,7 +876,7 @@ export type KirbySchema = {
 				content: 'content'
 				documents: 'files'
 				dragText: 'field'
-				email: string | null
+				email: string
 				exists: boolean
 				file: 'file' | null
 				files: 'files'
@@ -911,7 +911,7 @@ export type KirbySchema = {
 				role: 'role'
 				siblings: 'users'
 				url: 'field'
-				username: string | null
+				username: string
 				uuid: string
 				version: 'version'
 				videos: 'files'

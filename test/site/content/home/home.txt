@@ -3,3 +3,7 @@ Title: Home
 ----
 
 Headline: Typed queries for Kirby
+
+----
+
+Uuid: home000000000001

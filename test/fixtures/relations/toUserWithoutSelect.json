@@ -1,0 +1,25 @@
+[
+	{
+		"id": "kqltest1",
+		"name": "Test User",
+		"role": {
+			"description": "The admin has all rights",
+			"id": "admin",
+			"name": "admin",
+			"title": "Admin"
+		},
+		"username": "Test User"
+	},
+	{
+		"id": "kqledit1",
+		"name": "",
+		"role": {
+			"description": null,
+			"id": "editor",
+			"name": "editor",
+			"title": "Editor"
+		},
+		"username": "editor@example.com"
+	},
+	null
+]
