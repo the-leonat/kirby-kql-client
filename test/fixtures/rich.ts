@@ -7,7 +7,7 @@ export interface Observed {
 		text: string
 	} | null
 	blockWithoutSelect: {
-		content: [] | {
+		content: Array<never> | {
 			level: string
 			text: string
 		}
@@ -31,7 +31,7 @@ export interface Observed {
 		next: string | null
 	}>
 	blocksWithoutSelect: Array<{
-		content: [] | {
+		content: Array<never> | {
 			level?: string
 			text?: string
 			location?: string
@@ -57,7 +57,7 @@ export interface Observed {
 	} | null
 	layoutColumnWithoutSelect: {
 		blocks: Array<{
-			content: [] | {
+			content: Array<never> | {
 				level?: string
 				text?: string
 				headline?: string
@@ -73,7 +73,7 @@ export interface Observed {
 	} | null
 	layoutColumnsWithoutSelect: Array<{
 		blocks: Array<{
-			content: [] | {
+			content: Array<never> | {
 				level?: string
 				text?: string
 				headline?: string
@@ -87,12 +87,12 @@ export interface Observed {
 		width: string
 	}>
 	layoutWithoutSelect: {
-		attrs: [] | {
+		attrs: Array<never> | {
 			theme: string
 		}
 		columns: Array<{
 			blocks: Array<{
-				content: [] | {
+				content: Array<never> | {
 					level?: string
 					text?: string
 					headline?: string
@@ -128,12 +128,12 @@ export interface Observed {
 		}>
 	}>
 	layoutsWithoutSelect: Array<{
-		attrs: [] | {
+		attrs: Array<never> | {
 			theme: string
 		}
 		columns: Array<{
 			blocks: Array<{
-				content: [] | {
+				content: Array<never> | {
 					level?: string
 					text?: string
 					headline?: string
@@ -158,7 +158,7 @@ export interface Observed {
 		isFeatured: boolean
 		previous: string | null
 	} | null
-	structureItemWithoutSelect: [] | null
+	structureItemWithoutSelect: Array<never> | null
 	structureWithSelect: Array<{
 		id: string
 		title: string

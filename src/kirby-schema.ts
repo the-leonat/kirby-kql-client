@@ -15,7 +15,7 @@ export type KirbySchema = {
 	classes: {
 		block: {
 			model: true
-			render: { content: Record<string, unknown> | []; id: string; isEmpty: boolean; isHidden: boolean; type: string }
+			render: { content: Record<string, unknown> | never[]; id: string; isEmpty: boolean; isHidden: boolean; type: string }
 			methods: {
 				content: 'content'
 				hasNext: boolean
@@ -42,7 +42,7 @@ export type KirbySchema = {
 		}
 		blocks: {
 			item: 'block'
-			render: { content: Record<string, unknown> | []; id: string; isHidden: boolean; type: string }[]
+			render: { content: Record<string, unknown> | never[]; id: string; isHidden: boolean; type: string }[]
 			methods: {
 				chunk: 'blocks'
 				count: number
@@ -146,7 +146,7 @@ export type KirbySchema = {
 		}
 		content: {
 			model: true
-			render: unknown
+			render: Record<string, string> | never[]
 			methods: {
 				data: unknown
 				fields: unknown
@@ -345,7 +345,7 @@ export type KirbySchema = {
 		kirby: {
 			defaultFields: {
 				site: 'site'
-				url: unknown
+				url: string
 			}
 			methods: {
 				collection: unknown
@@ -362,14 +362,14 @@ export type KirbySchema = {
 				site: 'site'
 				translation: 'translation'
 				translations: 'collection'
-				url: unknown
+				url: string
 				user: 'user' | null
 				users: 'users'
 				version: string | null
 			}
 		}
 		layout: {
-			render: { attrs: Record<string, unknown> | []; columns: { blocks: { content: Record<string, unknown> | []; id: string; isHidden: boolean; type: string }[]; id: string; width: string }[]; id: string; isEmpty: boolean }
+			render: { attrs: Record<string, unknown> | never[]; columns: { blocks: { content: Record<string, unknown> | never[]; id: string; isHidden: boolean; type: string }[]; id: string; width: string }[]; id: string; isEmpty: boolean }
 			methods: {
 				attrs: 'content'
 				columns: 'layoutColumns'
@@ -421,7 +421,7 @@ export type KirbySchema = {
 		}
 		layoutColumns: {
 			item: 'layoutColumn'
-			render: { blocks: { content: Record<string, unknown> | []; id: string; isHidden: boolean; type: string }[]; id: string; width: string }[]
+			render: { blocks: { content: Record<string, unknown> | never[]; id: string; isHidden: boolean; type: string }[]; id: string; width: string }[]
 			methods: {
 				chunk: 'layoutColumns'
 				count: number
@@ -460,7 +460,7 @@ export type KirbySchema = {
 		}
 		layouts: {
 			item: 'layout'
-			render: { attrs: Record<string, unknown> | []; columns: { blocks: { content: Record<string, unknown> | []; id: string; isHidden: boolean; type: string }[]; id: string; width: string }[]; id: string }[]
+			render: { attrs: Record<string, unknown> | never[]; columns: { blocks: { content: Record<string, unknown> | never[]; id: string; isHidden: boolean; type: string }[]; id: string; width: string }[]; id: string }[]
 			methods: {
 				chunk: 'layouts'
 				count: number
@@ -807,7 +807,7 @@ export type KirbySchema = {
 		}
 		structureItem: {
 			model: true
-			render: []
+			render: never[]
 			methods: {
 				content: 'content'
 				hasNext: boolean

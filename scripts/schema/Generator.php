@@ -204,7 +204,7 @@ class KqlSchemaGenerator
 
 			if ($fields === []) {
 				// Kql::select() of no keys gives an empty PHP array: `[]` in JSON
-				$definition['render'] = '[]';
+				$definition['render'] = 'never[]';
 			} else {
 				$definition['defaultFields'] = $fields;
 			}
@@ -756,21 +756,25 @@ class KqlSchemaGenerator
 			return 'unknown[]';
 		}
 
+		// `never[]`: an array that is always empty
+		if ($members === []) {
+			return 'never[]';
+		}
+
 		return count($members) === 1 ? $members[0] . '[]' : '(' . implode(' | ', $members) . ')[]';
 	}
 
 	/**
 	 * An array shape (`array{id: string, title?: string, ...<string, mixed>}`)
 	 * as a TS object type. `...<string, V>` adds an index signature for the
-	 * other keys. `array{}` is the empty array that an empty PHP array
-	 * renders as: `[]`.
+	 * other keys. `array{}` is an empty array: `never[]`.
 	 */
 	protected function shapeOf(string $entries, array|null $context): string
 	{
 		$entries = trim($entries) === '' ? [] : $this->splitTopLevel($entries, ',');
 
 		if ($entries === []) {
-			return '[]';
+			return 'never[]';
 		}
 
 		$keys = [];

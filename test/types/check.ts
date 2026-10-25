@@ -10,6 +10,12 @@ export type Equal<A, B> =
  *
  * A test query given as a list of queries has cases: the result type of every
  * case must equal the observed type merged from all their fixtures.
+ *
+ * Where the result type has a string index signature, such as a page's
+ * `content` (`Record<string, string>`), its keys are content field names that
+ * no type can list, so the fixture shows concrete keys instead. There, the
+ * observed object counts as the index signature of its values merged: it
+ * matches only if every value matches the index signature's value exactly.
  */
 export type Mismatched<Queries, Observed, On extends Client<any> = Client> = {
 	[Name in keyof Queries]: Name extends keyof Observed
@@ -22,45 +28,9 @@ export type Mismatched<Queries, Observed, On extends Client<any> = Client> = {
 /** `true`, `false` or `boolean` (some cases match, some don't). */
 type EqualForEachCase<Observed, Q, On extends Client<any>> = Q extends readonly (infer Case)[]
 	? Case extends unknown
-		? EqualAsRecords<Observed, ResultOn<On, Case>>
+		? Equal<WidenToIndex<Observed, ResultOn<On, Case>>, ResultOn<On, Case>>
 		: never
-	: EqualAsRecords<Observed, ResultOn<On, Q>>
-
-type EqualAsRecords<Observed, R> = Equal<AsRecords<Observed, R>, R>
-
-/**
- * The observed type, read with the records the result type has: where the
- * result type has a record (an index signature, such as the stored content of
- * a block, `Record<string, unknown>`), the observed object at that place
- * becomes a record of its observed values. The keys of a record depend on the
- * content, so only its values are compared; a record of `unknown` takes any
- * values. Keys the record names beside its index signature are compared as
- * usual. Everything else stays as observed.
- */
-export type AsRecords<Observed, R> = Observed extends readonly unknown[]
-	? Observed extends readonly []
-		? Observed
-		: Array<AsRecords<Observed[number], ItemOf<R>>>
-	: Observed extends object
-		? AsRecordObject<Observed, ObjectOf<R>>
-		: Observed
-
-type AsRecordObject<Observed, R> = string extends keyof R
-	? {
-			[Key in keyof R]: string extends Key
-				? RecordValues<Observed[Exclude<keyof Observed, KnownKeys<R>>], R[Key]>
-				: Key extends keyof Observed
-					? AsRecords<Observed[Key], R[Key]>
-					: never
-		}
-	: { [Key in keyof Observed]: AsRecords<Observed[Key], PropertyOf<R, Key>> }
-
-type RecordValues<Observed, Value> = unknown extends Value ? unknown : AsRecords<Observed, Value>
-
-type ItemOf<R> = R extends readonly (infer Item)[] ? Item : never
-type ObjectOf<R> = Exclude<R, readonly unknown[] | boolean | number | string | null | undefined>
-type PropertyOf<R, Key> = R extends unknown ? (Key extends keyof R ? R[Key] : never) : never
-type KnownKeys<R> = keyof { [Key in keyof R as string extends Key ? never : number extends Key ? never : Key]: 0 }
+	: Equal<WidenToIndex<Observed, ResultOn<On, Q>>, ResultOn<On, Q>>
 
 /** The result type the client `On` gives the query `Q`, e.g. `ResultOn<typeof client, typeof query>`. */
 export type ResultOn<On extends Client<any>, Q> = On extends Client<infer S> ? Result<Q, S> : never
@@ -80,6 +50,40 @@ export type Unfit<Expected, Observed> = {
 			: Name
 		: Name
 }[keyof Expected]
+
+/**
+ * Turns each observed object that sits where the result type `R` has a string
+ * index signature into that index signature, with its values merged. Keys
+ * that `R` names beside the index signature are compared as usual, and an
+ * index signature of `unknown` takes any values. Everything else stays as
+ * observed. Each member of an observed union is paired
+ * with the member of `R` of the same kind (array, object, or anything else).
+ */
+type WidenToIndex<O, R> = O extends readonly (infer Item)[]
+	? Extract<R, readonly unknown[]> extends readonly (infer RItem)[]
+		? WidenToIndex<Item, RItem>[]
+		: O
+	: O extends object
+		? WidenObject<O, Exclude<Extract<R, object>, readonly unknown[]>>
+		: O
+
+type WidenObject<O extends object, R> = [R] extends [never]
+	? O
+	: string extends keyof R
+		? {
+				[K in keyof R]: string extends K
+					? WidenValues<Required<O>[Exclude<keyof O, NamedKeys<R>>], R[K]>
+					: K extends keyof O
+						? WidenToIndex<O[K], R[K]>
+						: never
+			}
+		: { [K in keyof O]: K extends keyof R ? WidenToIndex<O[K], R[K]> : O[K] }
+
+/** An index signature of `unknown` (stored content of any JSON type) takes any values. */
+type WidenValues<O, V> = unknown extends V ? unknown : WidenToIndex<O, V>
+
+/** The keys `R` names beside its index signature, such as a structure item's `id`. */
+type NamedKeys<R> = keyof { [K in keyof R as string extends K ? never : number extends K ? never : K]: 0 }
 
 /**
  * Fails to compile, naming the offending test queries, unless `Names` is `never`.

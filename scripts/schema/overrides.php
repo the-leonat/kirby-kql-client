@@ -9,7 +9,7 @@
  * template names such as `TValue`, class names (fully qualified or as imported in
  * that class's file), `string[]`, `array<string, string>`, `X|null`, and
  * array shapes: `array{id: string, title?: string}` (an object),
- * `array{id: string, ...<string, mixed>}` (with any other keys), `array{}` (`[]`).
+ * `array{id: string, ...<string, mixed>}` (with any other keys).
  *
  * - methods: `Class::method` => type, or ['return' => type, 'overloads' => [argument count => type]].
  *   The key matches the interceptor, the Kirby class, their parents and traits;
@@ -25,8 +25,8 @@
 
 // Rich content renders through Kirby's own `toArray()`, with the stored content
 // values as they are. The content of a block without fields, and a layout
-// without attributes, is an empty PHP array: `[]`.
-$stored = 'array<string, mixed>|array{}';
+// without attributes, is an empty PHP array: `[]` in JSON.
+$stored = 'array<string, mixed>|never[]';
 $block  = "array{content: $stored, id: string, isHidden: bool, type: string}";
 $column = "array{blocks: list<$block>, id: string, width: string}";
 $layout = "array{attrs: $stored, columns: list<$column>, id: string}";
@@ -51,8 +51,20 @@ return [
 		'Kirby\Cms\User::email'    => 'string',
 		'Kirby\Cms\User::username' => 'string',
 
-		// Test query: added by #8 (a collection without a select renders its keys, the ids).
+		// Test query: defaultFields/collectionsWithoutSelect (a collection
+		// without a select renders its keys, the ids of its items).
 		'Kirby\Kql\Interceptors\Cms\Collection::toArray' => 'string[]',
+
+		// Test query: defaultFields/pageWithoutSelect. A model's content renders
+		// as its raw data: content fields by name, all strings in a content
+		// file. Without a content file, the empty PHP array gives `[]` in JSON.
+		'Kirby\Kql\Interceptors\Content\Content::toArray' => 'array<string, string>|never[]',
+
+		// Test query: defaultFields/kirbyWithoutSelect. `url()` is
+		// `string|Uri|null`: a `Uri` only with `$object = true` (which KQL
+		// cannot render), `null` only for an unknown URL type such as
+		// `url('nope')`. `kirby.url` and the default fields give the index URL.
+		'Kirby\Cms\App::url' => 'string',
 
 		// Test query: rich/blocksWithoutSelect.
 		'Kirby\Kql\Interceptors\Cms\Blocks::toArray' => "list<$block>",
