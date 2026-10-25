@@ -23,11 +23,15 @@ export class KqlError extends Error {
 	override name = 'KqlError'
 	/** The HTTP status, or 0 when no response arrived. */
 	readonly status: number
-	/** KQL's error code, or the HTTP status when KQL sent none. */
+	/**
+	 * KQL's error code, or the HTTP status when KQL sent none.
+	 * `'network-error'` when no response arrived, `'invalid-json'` when the
+	 * response was not JSON.
+	 */
 	readonly code: number | string
 
-	constructor(status: number, code: number | string, message: string) {
-		super(message)
+	constructor(status: number, code: number | string, message: string, options?: ErrorOptions) {
+		super(message, options)
 		this.status = status
 		this.code = code
 	}
@@ -45,18 +49,44 @@ export function createClient(config: ClientConfig): Client {
 
 	return {
 		async query(query) {
-			const response = await fetch(config.url, {
-				method: 'POST',
-				headers,
-				body: JSON.stringify(query),
-			})
-			const body = await response.json()
-			if (!response.ok || body.status === 'error') {
-				throw new KqlError(response.status, body.code ?? response.status, body.message)
+			let response: Response
+			try {
+				response = await fetch(config.url, {
+					method: 'POST',
+					headers,
+					body: JSON.stringify(query),
+				})
+			} catch (error) {
+				throw new KqlError(0, 'network-error', errorMessage(error), { cause: error })
 			}
-			return body.result
+			let body
+			try {
+				body = await response.json()
+			} catch (error) {
+				throw new KqlError(
+					response.status,
+					'invalid-json',
+					`The KQL endpoint did not answer with JSON (HTTP ${response.status})`,
+					{ cause: error },
+				)
+			}
+			if (!response.ok || body.status === 'error') {
+				// kirby-headless answers a rejected token with only `{ code, status: 'Unauthorized' }`.
+				const message = body.message ?? (body.status === 'error' ? undefined : body.status)
+				throw new KqlError(
+					response.status,
+					body.code ?? response.status,
+					message ?? response.statusText,
+				)
+			}
+			// kirby-headless leaves `result` out when it is null.
+			return body.result ?? null
 		},
 	}
+}
+
+function errorMessage(error: unknown): string {
+	return error instanceof Error ? error.message : String(error)
 }
 
 function authorizationHeader(auth: ClientConfig['auth']): Record<string, string> {
