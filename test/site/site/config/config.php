@@ -31,6 +31,10 @@ return [
 	],
 	'kql' => [
 		'auth' => 'bearer',
+		// The test plugin's own class (site/plugins/kql-test).
+		'interceptors' => [
+			'KqlTest\Stats' => 'KqlTest\StatsInterceptor',
+		],
 	],
 	'headless' => [
 		'token' => 'kql-test-token',

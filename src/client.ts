@@ -1,4 +1,6 @@
+import type { KirbySchema } from './kirby-schema.ts'
 import type { Query } from './query.ts'
+import type { ExtendSchema, Schema, SchemaExtension } from './schema.ts'
 import type { Result } from './types/result.ts'
 
 export interface ClientConfig {
@@ -14,9 +16,13 @@ export interface ClientConfig {
 	language?: string
 }
 
-export interface Client {
-	query<const Q extends Query>(query: Q): Promise<Result<Q>>
+/** A client whose results are typed by the schema `S`. */
+export interface Client<S extends Schema = KirbySchema> {
+	query<const Q extends Query>(query: Q): Promise<Result<Q, S>>
 }
+
+/** The schema for Kirby and KQL with a schema extension deep-merged into it. */
+export type ExtendedSchema<Extension extends SchemaExtension> = ExtendSchema<KirbySchema, Extension>
 
 /** Thrown for every failed query. */
 export class KqlError extends Error {
@@ -37,7 +43,15 @@ export class KqlError extends Error {
 	}
 }
 
-export function createClient(config: ClientConfig): Client {
+/**
+ * Creates a client. Pass a schema extension as the type parameter to type the
+ * methods and classes your plugins add; each client keeps its own.
+ *
+ *   const client = createClient<MyExtension>({ url: 'https://example.com/api/query' })
+ */
+export function createClient<Extension extends SchemaExtension = {}>(
+	config: ClientConfig,
+): Client<ExtendedSchema<Extension>> {
 	const fetch = config.fetch ?? globalThis.fetch
 	const headers: Record<string, string> = {
 		'Content-Type': 'application/json',
