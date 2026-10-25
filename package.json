@@ -1,0 +1,32 @@
+{
+  "name": "kirby-kql-client",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A typed client for the Kirby Query Language: the result type of every query is derived from the query itself.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "test": "tsc -p tsconfig.json",
+    "site:install": "composer install --working-dir=test/site",
+    "site": "php -S localhost:8765 -t test/site test/site/kirby/router.php",
+    "record": "node scripts/record.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^7.0.2"
+  },
+  "packageManager": "pnpm@12.6.0"
+}
