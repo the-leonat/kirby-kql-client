@@ -22,7 +22,8 @@
     "test": "tsc -p tsconfig.json",
     "site:install": "composer install --working-dir=test/site",
     "site": "php -S localhost:8765 -t test/site test/site/kirby/router.php",
-    "record": "node scripts/record.ts"
+    "record": "node scripts/record.ts",
+    "test:site": "node --test 'test/runtime/**/*.test.ts'"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
