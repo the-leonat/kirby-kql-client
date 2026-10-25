@@ -1,0 +1,41 @@
+[
+	{
+		"children": [
+			{
+				"title": "Alpha.Beta"
+			},
+			{
+				"title": "Beta"
+			},
+			{
+				"title": "Gamma (3)"
+			},
+			{
+				"title": "Delta"
+			}
+		],
+		"images": [
+			{
+				"filename": "photo.png"
+			}
+		],
+		"team": [
+			{
+				"email": "editor@example.com"
+			},
+			{
+				"email": "test@example.com"
+			}
+		],
+		"firstChild": {
+			"title": "Alpha.Beta"
+		}
+	},
+	{
+		"children": [],
+		"images": [],
+		"team": [],
+		"firstChild": null
+	},
+	null
+]

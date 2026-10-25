@@ -2,6 +2,8 @@
  * Render: turns what a query string returns into its JSON type.
  *
  * - `null` renders as `null`, a JSON type as itself, Unknown as `unknown`.
+ * - A select on a boolean, number or string gives `null` (e.g. on the `false`
+ *   that `next` gives past the end of a collection).
  * - A class without a select renders as its render type, or else its default fields.
  * - A class with a select renders as the select shape: one object per item
  *   for a collection, one object otherwise.
@@ -20,7 +22,9 @@ type RenderEach<R, Sel, S extends Schema> = R extends null
 	? null
 	: IsClass<R, S> extends true
 		? RenderClass<R & ClassName<S>, Sel, S>
-		: R
+		: [Sel, R] extends [Select, boolean | number | string]
+			? null
+			: R
 
 type RenderClass<C extends ClassName<S>, Sel, S extends Schema> = Sel extends Select
 	? S['classes'][C] extends { item: infer Item extends ClassName<S> }

@@ -1,0 +1,9 @@
+Alt: An orange test image
+
+----
+
+Template: image
+
+----
+
+Uuid: colphoto00000001

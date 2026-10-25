@@ -631,6 +631,13 @@ class KqlSchemaGenerator
 	{
 		$members = array_values(array_unique(array_map('trim', $members)));
 
+		// `true | false` is `boolean`, which already contains both.
+		if (in_array('boolean', $members, true) === true || array_diff(['true', 'false'], $members) === []) {
+			$members = array_values(array_diff($members, ['true', 'false']));
+			$members[] = 'boolean';
+			$members = array_values(array_unique($members));
+		}
+
 		if (in_array('unknown', $members, true) === true) {
 			return ['unknown'];
 		}
@@ -702,9 +709,10 @@ class KqlSchemaGenerator
 				return ['number'];
 			case 'bool':
 			case 'boolean':
+				return ['boolean'];
 			case 'true':
 			case 'false':
-				return ['boolean'];
+				return [$lower];
 			case 'static':
 			case '$this':
 				return $context['static'] ? $this->aliases($context['static']->getName()) : ['unknown'];

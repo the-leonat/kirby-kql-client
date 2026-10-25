@@ -1,0 +1,26 @@
+Title: Filled collections
+
+----
+
+Related:
+
+- collections/filled/alpha
+- collections/filled/gamma
+
+----
+
+Gallery:
+
+- photo.png
+- notes.xyz
+
+----
+
+Team:
+
+- test@example.com
+- editor@example.com
+
+----
+
+Uuid: colfilled0000001
