@@ -38,8 +38,20 @@ return [
 		'Kirby\Cms\User::email'    => 'string',
 		'Kirby\Cms\User::username' => 'string',
 
-		// Test query: added by #8 (a collection without a select renders its keys, the ids).
+		// Test query: defaultFields/collectionsWithoutSelect (a collection
+		// without a select renders its keys, the ids of its items).
 		'Kirby\Kql\Interceptors\Cms\Collection::toArray' => 'string[]',
+
+		// Test query: defaultFields/pageWithoutSelect. A model's content renders
+		// as its raw data: content fields by name, all strings in a content
+		// file. Without a content file, the empty PHP array gives `[]` in JSON.
+		'Kirby\Kql\Interceptors\Content\Content::toArray' => 'array<string, string>|never[]',
+
+		// Test query: defaultFields/kirbyWithoutSelect. `url()` is
+		// `string|Uri|null`: a `Uri` only with `$object = true` (which KQL
+		// cannot render), `null` only for an unknown URL type such as
+		// `url('nope')`. `kirby.url` and the default fields give the index URL.
+		'Kirby\Cms\App::url' => 'string',
 
 		// Test query: collections/findOne, collections/findSeveral,
 		// collections/findList and collections/filesFindOne. `find` with one id

@@ -11,9 +11,14 @@
  *
  * Every run wipes test/fixtures first.
  *
+ * Every run also sets the modification time of every content file of the test
+ * site to the same fixed date. A file's media URL (`file.url`, a default field
+ * of files) contains its mtime, which a git checkout sets to the checkout
+ * time. With a fixed mtime, the recorded URL is the same in every checkout.
+ *
  * Usage: pnpm record
  */
-import { mkdir, readdir, rm, writeFile } from 'node:fs/promises'
+import { mkdir, readdir, rm, utimes, writeFile } from 'node:fs/promises'
 import { createClient, type Query } from '../src/index.ts'
 import { testSite, testSiteByGroup } from '../test/test-site.ts'
 import { observedType, observedTypeOfCases } from './observed-type.ts'
@@ -21,8 +26,15 @@ import { observedType, observedTypeOfCases } from './observed-type.ts'
 const queriesDir = new URL('../test/queries/', import.meta.url)
 const fixturesDir = new URL('../test/fixtures/', import.meta.url)
 
+const contentDir = new URL('../test/site/content/', import.meta.url)
+const contentMtime = new Date('2026-01-01T00:00:00Z')
+
 // Start from nothing, so fixtures of removed test queries or groups disappear.
 await rm(fixturesDir, { recursive: true, force: true })
+
+for (const entry of await readdir(contentDir, { recursive: true, withFileTypes: true })) {
+	if (entry.isFile()) await utimes(`${entry.parentPath}/${entry.name}`, contentMtime, contentMtime)
+}
 
 for (const file of (await readdir(queriesDir)).filter((name) => name.endsWith('.ts')).sort()) {
 	const group = file.replace(/\.ts$/, '')

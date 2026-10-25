@@ -1,0 +1,59 @@
+[
+	{
+		"parent": {
+			"title": "Filled",
+			"num": 1
+		},
+		"content": {
+			"title": "Child",
+			"headline": ""
+		},
+		"children": [],
+		"files": []
+	},
+	{
+		"parent": {
+			"title": "Select forms and default fields",
+			"num": null
+		},
+		"content": {
+			"title": "Filled",
+			"headline": "A filled page"
+		},
+		"children": [
+			{
+				"title": "Child"
+			}
+		],
+		"files": [
+			{
+				"filename": "notes.xyz",
+				"type": null
+			},
+			{
+				"filename": "photo.png",
+				"type": "image"
+			}
+		]
+	},
+	{
+		"parent": null,
+		"content": {
+			"title": "Select forms and default fields",
+			"headline": ""
+		},
+		"children": [
+			{
+				"title": "Filled"
+			},
+			{
+				"title": "Empty"
+			},
+			{
+				"title": "without-content"
+			}
+		],
+		"files": []
+	},
+	null
+]

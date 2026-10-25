@@ -152,7 +152,7 @@ export type KirbySchema = {
 		}
 		content: {
 			model: true
-			render: unknown
+			render: Record<string, string> | never[]
 			methods: {
 				data: unknown
 				fields: unknown
@@ -351,7 +351,7 @@ export type KirbySchema = {
 		kirby: {
 			defaultFields: {
 				site: 'site'
-				url: unknown
+				url: string
 			}
 			methods: {
 				collection: unknown
@@ -368,7 +368,7 @@ export type KirbySchema = {
 				site: 'site'
 				translation: 'translation'
 				translations: 'collection'
-				url: unknown
+				url: string
 				user: 'user' | null
 				users: 'users'
 				version: string | null

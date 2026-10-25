@@ -2,7 +2,8 @@
  * SelectShape: the object a select produces on one object of class `C`.
  *
  * The select may be a record, a list of keys or a comma-separated string; all
- * three give the same shape. Keys set to `false` are left out. Each entry is
+ * three give the same shape. Keys set to `false` are left out; a select without
+ * any key left gives an empty array. Each entry is
  * - `true`: the key read from the current object,
  * - a string: a query string, starting at the current object,
  * - an object with `query`: a nested query, starting at the current object,
@@ -15,11 +16,12 @@ import type { NoSelect, Render } from './render.ts'
 import type { Evaluate } from './result.ts'
 import type { Trim } from './parse.ts'
 
-export type SelectShape<C extends ClassName<S>, Sel extends Select, S extends Schema> = Shape<
-	C,
-	AsRecord<Sel>,
-	S
+export type SelectShape<C extends ClassName<S>, Sel extends Select, S extends Schema> = EmptyAsArray<
+	Shape<C, AsRecord<Sel>, S>
 >
+
+/** KQL builds the object as a PHP array, so one without keys is `[]` in JSON. */
+type EmptyAsArray<Object> = [keyof Object] extends [never] ? never[] : Object
 
 type Shape<C extends ClassName<S>, Entries, S extends Schema> = {
 	-readonly [Key in keyof Entries as Entries[Key] extends false ? never : Key]: Entry<

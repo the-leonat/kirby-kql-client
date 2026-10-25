@@ -1,0 +1,21 @@
+Title: Empty
+
+----
+
+Headline: 
+
+----
+
+Cover: 
+
+----
+
+Attachment: 
+
+----
+
+Link: 
+
+----
+
+Uuid: selempty00000001

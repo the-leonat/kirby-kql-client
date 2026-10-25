@@ -10,6 +10,12 @@ export type Equal<A, B> =
  *
  * A test query given as a list of queries has cases: the result type of every
  * case must equal the observed type merged from all their fixtures.
+ *
+ * Where the result type has a string index signature, such as a page's
+ * `content` (`Record<string, string>`), its keys are content field names that
+ * no type can list, so the fixture shows concrete keys instead. There, the
+ * observed object counts as the index signature of its values merged: it
+ * matches only if every value matches the index signature's value exactly.
  */
 export type Mismatched<Queries, Observed, On extends Client<any> = Client> = {
 	[Name in keyof Queries]: Name extends keyof Observed
@@ -22,9 +28,9 @@ export type Mismatched<Queries, Observed, On extends Client<any> = Client> = {
 /** `true`, `false` or `boolean` (some cases match, some don't). */
 type EqualForEachCase<Observed, Q, On extends Client<any>> = Q extends readonly (infer Case)[]
 	? Case extends unknown
-		? Equal<Observed, ResultOn<On, Case>>
+		? Equal<WidenToIndex<Observed, ResultOn<On, Case>>, ResultOn<On, Case>>
 		: never
-	: Equal<Observed, ResultOn<On, Q>>
+	: Equal<WidenToIndex<Observed, ResultOn<On, Q>>, ResultOn<On, Q>>
 
 /** The result type the client `On` gives the query `Q`, e.g. `ResultOn<typeof client, typeof query>`. */
 export type ResultOn<On extends Client<any>, Q> = On extends Client<infer S> ? Result<Q, S> : never
@@ -44,6 +50,26 @@ export type Unfit<Expected, Observed> = {
 			: Name
 		: Name
 }[keyof Expected]
+
+/**
+ * Turns each observed object that sits where the result type `R` has a string
+ * index signature into that index signature, with its values merged.
+ * Everything else stays as observed. Each member of an observed union is paired
+ * with the member of `R` of the same kind (array, object, or anything else).
+ */
+type WidenToIndex<O, R> = O extends readonly (infer Item)[]
+	? Extract<R, readonly unknown[]> extends readonly (infer RItem)[]
+		? WidenToIndex<Item, RItem>[]
+		: O
+	: O extends object
+		? WidenObject<O, Exclude<Extract<R, object>, readonly unknown[]>>
+		: O
+
+type WidenObject<O extends object, R> = [R] extends [never]
+	? O
+	: string extends keyof R
+		? { [key: string]: WidenToIndex<Required<O>[keyof O], R[string & keyof R]> }
+		: { [K in keyof O]: K extends keyof R ? WidenToIndex<O[K], R[K]> : O[K] }
 
 /**
  * Fails to compile, naming the offending test queries, unless `Names` is `never`.
