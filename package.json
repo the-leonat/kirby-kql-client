@@ -24,7 +24,8 @@
     "site": "php -S localhost:8765 -t test/site test/site/kirby/router.php",
     "record": "node scripts/record.ts",
     "schema": "php scripts/schema/generate.php test/site src/kirby-schema.ts",
-    "test:site": "node --test 'test/runtime/**/*.test.ts'"
+    "test:site": "node --test 'test/runtime/**/*.test.ts'",
+    "ci:drift": "bash scripts/ci-drift.sh"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
