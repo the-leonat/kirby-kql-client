@@ -1,0 +1,5 @@
+Title: Plugin
+
+----
+
+Uuid: plugin0000000001
