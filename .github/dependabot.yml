@@ -1,0 +1,14 @@
+version: 2
+updates:
+  # Kirby, KQL and kirby-headless on the test site. A bump changes the
+  # generated schema (its header names the versions) and maybe the fixtures:
+  # run `pnpm ci:drift` on the Dependabot branch and commit what it regenerates.
+  - package-ecosystem: composer
+    directory: /test/site
+    schedule:
+      interval: daily
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
