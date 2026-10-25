@@ -5,6 +5,7 @@
  */
 import type { homeBasics } from '../queries/fields.ts'
 import type { toPageWithSelect } from '../queries/relations.ts'
+import type { blocksWithoutSelect, structureWithoutSelect } from '../queries/rich.ts'
 import { kql } from '../../src/index.ts'
 import type { AllMatch, Mismatched } from './check.ts'
 
@@ -78,4 +79,43 @@ export type IndexNotAnObject = AllMatch<
 export type IndexMissingEmpty = AllMatch<
 	// @ts-expect-error the observed type lacks the `[]` of a page without content
 	Mismatched<IndexQueries, { content: { title: string } }>
+>
+
+/**
+ * A record in the result type (here the stored content of a block,
+ * `Record<string, unknown> | never[]`) takes any observed keys, but everything
+ * around it is still compared exactly.
+ */
+type RecordQueries = { blocksWithoutSelect: typeof blocksWithoutSelect }
+type Block<Content> = { content: Content; id: string; isHidden: boolean; type: string }
+
+export type RecordCorrect = AllMatch<
+	Mismatched<RecordQueries, { blocksWithoutSelect: Block<{ text?: string; crop?: boolean } | Array<never>>[] }>
+>
+
+export type RecordMissingEmpty = AllMatch<
+	// @ts-expect-error without a block whose content is `[]`, the result type is wider
+	Mismatched<RecordQueries, { blocksWithoutSelect: Block<{ text?: string }>[] }>
+>
+
+export type RecordBesideWrongKey = AllMatch<
+	// @ts-expect-error keys beside the record are compared exactly
+	Mismatched<RecordQueries, { blocksWithoutSelect: { content: { text?: string } | Array<never>; id: number; isHidden: boolean; type: string }[] }>
+>
+
+/** A key the record names beside its index signature (a structure item's `id`) must be observed. */
+type StructureQueries = { structureWithoutSelect: typeof structureWithoutSelect }
+
+export type StructureCorrect = AllMatch<
+	Mismatched<StructureQueries, { structureWithoutSelect: { id: string; title: string; count: number }[] }>
+>
+
+export type StructureWithoutId = AllMatch<
+	// @ts-expect-error the observed items lack `id`
+	Mismatched<StructureQueries, { structureWithoutSelect: { title: string; count: number }[] }>
+>
+
+export type StructureWrongId = AllMatch<
+	// @ts-expect-error the observed `id` is a number
+	Mismatched<StructureQueries, { structureWithoutSelect: { id: number; title: string }[] }>
 >

@@ -1,0 +1,57 @@
+[
+	[
+		{
+			"content": {
+				"level": "h2",
+				"text": "Rich heading"
+			},
+			"id": "b0000000-0000-4000-8000-000000000001",
+			"isHidden": false,
+			"type": "heading"
+		},
+		{
+			"content": {
+				"text": "<p>Rich text</p>"
+			},
+			"id": "b0000000-0000-4000-8000-000000000002",
+			"isHidden": false,
+			"type": "text"
+		},
+		{
+			"content": [],
+			"id": "b0000000-0000-4000-8000-000000000006",
+			"isHidden": false,
+			"type": "line"
+		},
+		{
+			"content": {
+				"location": "kirby",
+				"image": [
+					"file://richphoto0000001"
+				],
+				"src": "",
+				"alt": "",
+				"caption": "",
+				"link": "",
+				"ratio": "",
+				"crop": false
+			},
+			"id": "b0000000-0000-4000-8000-000000000003",
+			"isHidden": false,
+			"type": "image"
+		},
+		{
+			"content": {
+				"headline": "Related films",
+				"films": [
+					"page://alpha00000000001",
+					"page://gamma00000000001"
+				]
+			},
+			"id": "b0000000-0000-4000-8000-000000000004",
+			"isHidden": false,
+			"type": "films"
+		}
+	],
+	[]
+]

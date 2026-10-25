@@ -1,0 +1,17 @@
+Title: Empty rich content
+
+----
+
+Text:
+
+----
+
+Layout:
+
+----
+
+Items:
+
+----
+
+Uuid: richempty0000001

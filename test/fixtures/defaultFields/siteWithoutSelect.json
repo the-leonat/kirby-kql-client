@@ -5,6 +5,7 @@
 		"pagination",
 		"plugin",
 		"relations",
+		"rich",
 		"selects"
 	],
 	"drafts": [

@@ -39,7 +39,7 @@ One kind of value in the schema, named by its KQL alias, such as `page`, `files`
 _Avoid_: Model, type, interceptor
 
 **Content field**:
-A key on a page, site, file or user that is not a method, and therefore reads that model's stored content as a string.
+A key on a page, site, file, user, block or structure item that is not a method, and therefore reads that model's stored content as a string.
 _Avoid_: Custom field, blueprint field
 
 **Schema extension**:
@@ -47,7 +47,7 @@ Classes and methods a project adds to the schema to describe what its plugins pr
 _Avoid_: Custom types, plugin types, registration
 
 **Unknown method**:
-A method on a class other than page, site, file or user that neither the schema nor a schema extension describes; its result, and everything after it in the query string, is unknown. On those four classes the same key is a content field instead.
+A method on a class other than page, site, file, user, block or structure item that neither the schema nor a schema extension describes; its result, and everything after it in the query string, is unknown. On those classes the same key is a content field instead.
 _Avoid_: Custom method, unregistered method
 
 ## Verification

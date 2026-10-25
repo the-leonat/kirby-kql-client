@@ -1,0 +1,57 @@
+[
+	[
+		{
+			"blocks": [
+				{
+					"content": {
+						"level": "h1",
+						"text": "Layout heading"
+					},
+					"id": "b0000000-0000-4000-8000-000000000011",
+					"isHidden": false,
+					"type": "heading"
+				},
+				{
+					"content": {
+						"text": "<p>Layout text</p>"
+					},
+					"id": "b0000000-0000-4000-8000-000000000012",
+					"isHidden": false,
+					"type": "text"
+				}
+			],
+			"id": "c0000000-0000-4000-8000-000000000001",
+			"width": "1/2"
+		},
+		{
+			"blocks": [
+				{
+					"content": {
+						"headline": "Layout films",
+						"films": [
+							"page://beta000000000001"
+						]
+					},
+					"id": "b0000000-0000-4000-8000-000000000013",
+					"isHidden": false,
+					"type": "films"
+				},
+				{
+					"content": [],
+					"id": "b0000000-0000-4000-8000-000000000014",
+					"isHidden": false,
+					"type": "line"
+				}
+			],
+			"id": "c0000000-0000-4000-8000-000000000002",
+			"width": "1/2"
+		}
+	],
+	[
+		{
+			"blocks": [],
+			"id": "c0000000-0000-4000-8000-000000000003",
+			"width": "1/1"
+		}
+	]
+]
