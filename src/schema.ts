@@ -87,11 +87,7 @@ type MergeClass<Base, Extension> = {
 		? Merge<Part<Base, Key>, Part<Extension, Key>>
 		: Key extends 'overloads'
 			? Merge<Omit<Part<Base, Key>, keyof Part<Extension, 'methods'>>, Part<Extension, Key>>
-			: Key extends keyof Extension
-				? Extension[Key]
-				: Key extends keyof Base
-					? Base[Key]
-					: never
+			: Merge<Base, Extension>[Key & (keyof Base | keyof Extension)]
 }
 
 /** `Extension`'s entries win over `Base`'s. */
