@@ -36,14 +36,17 @@ pnpm pack --pack-destination "$tmp" >/dev/null
 tarball="$(ls "$tmp"/kirby-kql-client-*.tgz)"
 
 # The tarball holds the build, the README and the license, and nothing else.
-unexpected="$(tar -tzf "$tarball" | grep -Ev '^package/(dist/.*\.(js|d\.ts)|package\.json|README\.md|LICENSE)$' || true)"
+# Listed once: piping tar into `grep -q` under pipefail fails when grep exits
+# early and tar dies of SIGPIPE.
+contents="$(tar -tzf "$tarball")"
+unexpected="$(grep -Ev '^package/(dist/.*\.(js|d\.ts)|package\.json|README\.md|LICENSE)$' <<<"$contents" || true)"
 if [ -n "$unexpected" ]; then
 	echo "Unexpected files in the tarball:" >&2
 	echo "$unexpected" >&2
 	exit 1
 fi
 for file in package/LICENSE package/README.md package/dist/index.js package/dist/index.d.ts; do
-	tar -tzf "$tarball" | grep -qx "$file" || { echo "Missing from the tarball: $file" >&2; exit 1; }
+	grep -qx "$file" <<<"$contents" || { echo "Missing from the tarball: $file" >&2; exit 1; }
 done
 
 project="$tmp/consumer"
