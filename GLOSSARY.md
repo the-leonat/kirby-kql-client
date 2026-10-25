@@ -56,6 +56,10 @@ _Avoid_: Demo instance, demo site, backend
 A query kept in the repo whose result type is checked against what the test site really returns.
 _Avoid_: Example query, sample
 
+**Case**:
+One of several queries that make up a single test query, such as the same query on filled and on empty content. Every case must have the same result type, and it must equal the observed type of all their fixtures merged.
+_Avoid_: Variant, scenario
+
 **Fixture**:
 The recorded result of one test query from the test site.
 _Avoid_: Snapshot, recording, response

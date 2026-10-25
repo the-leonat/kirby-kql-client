@@ -19,17 +19,24 @@
  * query does not exist yet names the ticket that adds it.
  */
 return [
-	'roots' => [
-		// Test query: fields/homeBasics.
-		// Kirby returns null for a missing page (`Page|null`), but no test query
-		// shows it yet. Until #6 decides how nullable roots are verified, the
-		// root stays non-null.
-		'page' => '\Kirby\Cms\Page',
-	],
+	'roots' => [],
 
 	'methods' => [
 		// Test query: fields/homeBasics (a content field renders as its string value).
 		'Kirby\Kql\Interceptors\Content\Field::toResponse' => 'string',
+
+		// Test query: relations/toFileWithSelect. `Mime::type()` is `string|null`,
+		// but it only gives `null` when the file cannot be read; a file that
+		// Kirby lists exists, so finfo always detects a type (`text/plain` for
+		// an unknown extension).
+		'Kirby\Cms\File::mime' => 'string',
+
+		// Test query: relations/toUserWithSelect and relations/toUserWithoutSelect.
+		// `email()` and `username()` (the name, else the email) are `string|null`
+		// for a user object without credentials, but Kirby requires an email
+		// for every stored user (UserRules::validEmail).
+		'Kirby\Cms\User::email'    => 'string',
+		'Kirby\Cms\User::username' => 'string',
 
 		// Test query: added by #8 (a collection without a select renders its keys, the ids).
 		'Kirby\Kql\Interceptors\Cms\Collection::toArray' => 'string[]',

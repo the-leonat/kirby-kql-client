@@ -1,37 +1,54 @@
 /**
  * Proves the type test can fail: a wrong observed type for a real test query
- * is rejected whether it is narrower or wider than the result type.
+ * is rejected whether it is narrower or wider than the result type, and a
+ * test query with cases is rejected unless every case matches.
  */
 import type { homeBasics } from '../queries/fields.ts'
+import type { toPageWithSelect } from '../queries/relations.ts'
 import type { AllMatch, Mismatched } from './check.ts'
 
 type Queries = { homeBasics: typeof homeBasics }
 
 export type Correct = AllMatch<
-	Mismatched<Queries, { homeBasics: { headline: string; slug: string; isListed: boolean } }>
+	Mismatched<Queries, { homeBasics: { headline: string; slug: string; isListed: boolean } | null }>
 >
 
 export type TooNarrow = AllMatch<
 	// @ts-expect-error `isListed: false` is narrower than `boolean`
-	Mismatched<Queries, { homeBasics: { headline: string; slug: string; isListed: false } }>
+	Mismatched<Queries, { homeBasics: { headline: string; slug: string; isListed: false } | null }>
 >
 
 export type TooWide = AllMatch<
 	// @ts-expect-error `headline: string | null` is wider than `string`
-	Mismatched<Queries, { homeBasics: { headline: string | null; slug: string; isListed: boolean } }>
+	Mismatched<Queries, { homeBasics: { headline: string | null; slug: string; isListed: boolean } | null }>
 >
 
 export type MissingKey = AllMatch<
 	// @ts-expect-error the observed type lacks `slug`
-	Mismatched<Queries, { homeBasics: { headline: string; isListed: boolean } }>
+	Mismatched<Queries, { homeBasics: { headline: string; isListed: boolean } | null }>
 >
 
 export type ExtraKey = AllMatch<
 	// @ts-expect-error the observed type has a key the select does not ask for
-	Mismatched<Queries, { homeBasics: { headline: string; slug: string; isListed: boolean; title: string } }>
+	Mismatched<Queries, { homeBasics: { headline: string; slug: string; isListed: boolean; title: string } | null }>
 >
 
 export type MissingFixture = AllMatch<
 	// @ts-expect-error a test query without a fixture fails
 	Mismatched<Queries, {}>
+>
+
+type CaseQueries = { toPageWithSelect: typeof toPageWithSelect }
+type PageTitle = { title: string; slug: string; isListed: boolean }
+
+export type CasesCorrect = AllMatch<Mismatched<CaseQueries, { toPageWithSelect: PageTitle | null }>>
+
+export type CasesTooNarrow = AllMatch<
+	// @ts-expect-error the cases' result type is wider than an observed type without `null`
+	Mismatched<CaseQueries, { toPageWithSelect: PageTitle }>
+>
+
+export type OneCaseDiffers = AllMatch<
+	// @ts-expect-error one case (`homeBasics`) has a different result type than the other
+	Mismatched<{ mixed: [(typeof toPageWithSelect)[0], (typeof homeBasics)[0]] }, { mixed: PageTitle | null }>
 >

@@ -1,0 +1,29 @@
+[
+	{
+		"email": "test@example.com",
+		"username": "Test User",
+		"name": "Test User",
+		"bio": "Writes the test queries.",
+		"isAdmin": true,
+		"role": {
+			"description": "The admin has all rights",
+			"id": "admin",
+			"name": "admin",
+			"title": "Admin"
+		}
+	},
+	{
+		"email": "editor@example.com",
+		"username": "editor@example.com",
+		"name": "",
+		"bio": "",
+		"isAdmin": false,
+		"role": {
+			"description": null,
+			"id": "editor",
+			"name": "editor",
+			"title": "Editor"
+		}
+	},
+	null
+]

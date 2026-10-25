@@ -1,26 +1,39 @@
 /**
  * Parse: turns a query string into steps of method name plus argument count.
  *
- *   Parse<"page('a.b').children.filterBy('x', 'in', ['y'])">
- *   = [{ name: 'page'; args: 1 }, { name: 'children'; args: 0 }, { name: 'filterBy'; args: 3 }]
+ *   Parse<"page('a.b').children?.filterBy('x', 'in', ['y'])">
+ *   = [
+ *       { name: 'page'; args: 1; optional: false },
+ *       { name: 'children'; args: 0; optional: false },
+ *       { name: 'filterBy'; args: 3; optional: true },
+ *     ]
  *
  * Dots and commas only separate steps and arguments outside brackets and quotes.
+ * A step reached with `?.` instead of `.` is `optional`.
  */
 
 export interface Step {
 	name: string
 	args: number
+	/** Reached with `?.`: on `null`, the whole query string gives `null`. */
+	optional: boolean
 }
 
 export type Parse<QueryString extends string> = ToSteps<SplitTopLevel<QueryString, '.'>>
 
-type ToSteps<Parts extends string[]> = {
-	[I in keyof Parts]: ToStep<Parts[I]>
-}
+/** A part ending in `?` was followed by `?.`, which makes the next step optional. */
+type ToSteps<Parts extends string[], Optional extends boolean = false> = Parts extends [
+	infer Part extends string,
+	...infer Rest extends string[],
+]
+	? Trim<Part> extends `${infer Body}?`
+		? [ToStep<Trim<Body>, Optional>, ...ToSteps<Rest, true>]
+		: [ToStep<Trim<Part>, Optional>, ...ToSteps<Rest, false>]
+	: []
 
-type ToStep<Part extends string> = Part extends `${infer Name}(${infer Args})`
-	? { name: Trim<Name>; args: CountArgs<Args> }
-	: { name: Trim<Part>; args: 0 }
+type ToStep<Part extends string, Optional extends boolean> = Part extends `${infer Name}(${infer Args})`
+	? { name: Trim<Name>; args: CountArgs<Args>; optional: Optional }
+	: { name: Part; args: 0; optional: Optional }
 
 type CountArgs<Args extends string> = Trim<Args> extends ''
 	? 0

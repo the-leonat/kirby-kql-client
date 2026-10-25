@@ -18,6 +18,11 @@ export function observedType(value: unknown): string {
 	return print(describe(value as Json), '')
 }
 
+/** The observed type of the results of several cases of one test query, merged like list items. */
+export function observedTypeOfCases(values: unknown[]): string {
+	return print((values as Json[]).map(describe).reduce(merge, empty()), '')
+}
+
 const empty = (): Shape => ({ scalars: new Set() })
 
 function describe(value: Json): Shape {
