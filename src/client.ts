@@ -26,7 +26,7 @@ export interface ClientConfig {
 /** A client whose results are typed by the schema `S`. */
 export interface Client<S extends Schema = KirbySchema> {
 	/** A query KQL can never answer fails to compile, and its result type is `never`. */
-	query<const Q extends Query>(query: Checked<Q, S>): Promise<Result<Q, S>>
+	query<const Q extends Query>(query: Q & Checked<Q, S>): Promise<Result<Q, S>>
 }
 
 /** The schema for Kirby and KQL with a schema extension deep-merged into it. */

@@ -15,8 +15,9 @@ import type { AllMatch, Equal, Mismatched, ResultOn } from './check.ts'
 
 const strict = createClient({ ...testSite, strict: true })
 
-/** What `strict.query` accepts for the query `Q`. */
-type Accepted<Q extends Query> = Parameters<typeof strict.query<Q>>[0]
+/** The problem `strict.query` names for the query `Q`; `never` when it accepts `Q`. */
+type ProblemOf<Q extends Query> =
+	Parameters<typeof strict.query<Q>>[0] extends { 'Impossible query': infer Problem } ? Problem : never
 
 export function unknownFieldMethod() {
 	// @ts-expect-error `shout` is an unknown method of `field`
@@ -41,8 +42,8 @@ export const unknownMethods: [
 	Equal<Awaited<ReturnType<typeof unknownFieldMethod>>, never>,
 	Equal<ResultOn<typeof strict, CollectionMethod>, never>,
 	Equal<ResultOn<typeof strict, (typeof plugin.selectKeepsKeys)[0]>, never>,
-	Equal<Accepted<FieldMethod>, 'Impossible query: unknown method "shout" on "field"'>,
-	Equal<Accepted<CollectionMethod>, 'Impossible query: unknown method "stats" on "pages"'>,
+	Equal<ProblemOf<FieldMethod>, 'unknown method "shout" on "field"'>,
+	Equal<ProblemOf<CollectionMethod>, 'unknown method "stats" on "pages"'>,
 ] = [true, true, true, true, true, true]
 
 /** Without `strict`, the same methods stay `unknown`. */

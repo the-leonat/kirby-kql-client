@@ -15,11 +15,17 @@ import type { Walk } from './walk.ts'
 export type Result<Q, S extends Schema = KirbySchema> = Possible<Evaluate<Q, S>>
 
 /**
- * What `client.query` accepts for the query `Q`: `Q` itself, or, for a query
- * KQL can never answer, the message naming the problem, so that the query
- * fails to compile.
+ * What `client.query` requires of the query `Q` besides being a query:
+ * nothing, or, for a query KQL can never answer, a property naming the
+ * problem, which no query has, so that the query fails to compile.
+ *
+ * It is intersected with `Q` rather than given in place of it, so `Q` is
+ * inferred from the argument directly: cheaper than inferring it through a
+ * conditional type.
  */
-export type Checked<Q, S extends Schema> = [Problem<Evaluate<Q, S>>] extends [never] ? Q : Problem<Evaluate<Q, S>>
+export type Checked<Q, S extends Schema> = [Problem<Evaluate<Q, S>>] extends [never]
+	? unknown
+	: { 'Impossible query': Problem<Evaluate<Q, S>> }
 
 /** Evaluates a query, at the top or nested inside an object of class `Surrounding`. */
 export type Evaluate<Q, S extends Schema, Surrounding extends string = never> = Render<

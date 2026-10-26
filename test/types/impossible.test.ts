@@ -9,8 +9,9 @@ import type { Equal, ResultOn } from './check.ts'
 
 const client = createClient(testSite)
 
-/** What `client.query` accepts for the query `Q`: `Q` itself, or the problem when it is impossible. */
-type Accepted<Q extends Query> = Parameters<typeof client.query<Q>>[0]
+/** The problem `client.query` names for the query `Q`; `never` when it accepts `Q`. */
+type ProblemOf<Q extends Query> =
+	Parameters<typeof client.query<Q>>[0] extends { 'Impossible query': infer Problem } ? Problem : never
 
 export function unclosedBracket() {
 	// @ts-expect-error the bracket of `page(` is never closed
@@ -67,9 +68,9 @@ export const nested: [
 	Equal<Awaited<ReturnType<typeof inQueryString>>, never>,
 	Equal<ResultOn<typeof client, typeof impossible.inNestedQuery>, never>,
 	Equal<ResultOn<typeof client, typeof impossible.inSelectWithoutQueryString>, never>,
-	Equal<Accepted<typeof impossible.inQueryString>, 'Impossible query: unknown root "nothing"'>,
-	Equal<Accepted<typeof impossible.inNestedQuery>, 'Impossible query: method "upper" called on a string'>,
-	Equal<Accepted<typeof impossible.inSelectWithoutQueryString>, 'Impossible query: method "not" called on a boolean'>,
+	Equal<ProblemOf<typeof impossible.inQueryString>, 'unknown root "nothing"'>,
+	Equal<ProblemOf<typeof impossible.inNestedQuery>, 'method "upper" called on a string'>,
+	Equal<ProblemOf<typeof impossible.inSelectWithoutQueryString>, 'method "not" called on a boolean'>,
 ] = [true, true, true, true, true, true, true]
 
 export const results: [
@@ -86,13 +87,13 @@ export const results: [
 ] = [true, true, true, true, true, true, true, true, true, true]
 
 export const problems: [
-	Equal<Accepted<typeof impossible.unclosedBracket>, `Impossible query: unclosed bracket in "page('home'.title"`>,
-	Equal<Accepted<typeof impossible.unclosedQuote>, `Impossible query: unclosed quote in "page('home).title"`>,
-	Equal<Accepted<typeof impossible.unopenedBracket>, `Impossible query: unopened bracket in "page('home').title)"`>,
-	Equal<Accepted<typeof impossible.unknownRoot>, 'Impossible query: unknown root "nothing"'>,
-	Equal<Accepted<typeof impossible.methodOnString>, 'Impossible query: method "upper" called on a string'>,
-	Equal<Accepted<typeof impossible.methodOnBoolean>, 'Impossible query: method "not" called on a boolean'>,
-	Equal<Accepted<typeof impossible.methodOnNumber>, 'Impossible query: method "round" called on a number'>,
+	Equal<ProblemOf<typeof impossible.unclosedBracket>, `unclosed bracket in "page('home'.title"`>,
+	Equal<ProblemOf<typeof impossible.unclosedQuote>, `unclosed quote in "page('home).title"`>,
+	Equal<ProblemOf<typeof impossible.unopenedBracket>, `unopened bracket in "page('home').title)"`>,
+	Equal<ProblemOf<typeof impossible.unknownRoot>, 'unknown root "nothing"'>,
+	Equal<ProblemOf<typeof impossible.methodOnString>, 'method "upper" called on a string'>,
+	Equal<ProblemOf<typeof impossible.methodOnBoolean>, 'method "not" called on a boolean'>,
+	Equal<ProblemOf<typeof impossible.methodOnNumber>, 'method "round" called on a number'>,
 ] = [true, true, true, true, true, true, true]
 
 /**
@@ -102,7 +103,7 @@ export const problems: [
  */
 type Empty = { query: '' }
 
-export const empty: [Equal<ResultOn<typeof client, Empty>, unknown>, Equal<Accepted<Empty>, Empty>] = [true, true]
+export const empty: [Equal<ResultOn<typeof client, Empty>, unknown>, Equal<ProblemOf<Empty>, never>] = [true, true]
 
 /**
  * A method after a value that is a JSON scalar only sometimes is not
@@ -112,5 +113,5 @@ type WidthThenMethod = { query: "page('collections/filled').files.first.width.is
 
 export const possible: [
 	Equal<ResultOn<typeof client, WidthThenMethod>, boolean>,
-	Equal<Accepted<WidthThenMethod>, WidthThenMethod>,
+	Equal<ProblemOf<WidthThenMethod>, never>,
 ] = [true, true]
