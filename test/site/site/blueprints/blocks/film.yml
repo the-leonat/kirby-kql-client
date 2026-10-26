@@ -6,3 +6,10 @@ fields:
     type: pages
   autoplay:
     type: toggle
+  credits:
+    type: structure
+    fields:
+      name:
+        type: text
+      role:
+        type: text

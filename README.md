@@ -427,7 +427,7 @@ const posts: Blog = await kirby.query(blog)
 
 Without a select, a block renders as `{ id; type; isHidden; content }`, with its content as Kirby stores it. By default that is one generic shape for every block: `type` is a `string` and `content` is `Record<string, unknown> | never[]`.
 
-Add a `blocks` key to the schema extension to type blocks by their block type. It maps a block type to its content as Kirby stores it. The core blocks (code, gallery, heading, image, line, list, markdown, quote, table, text, video) are built in; the key adds your custom blocks, redefines a core block, or removes one with `never`:
+Add a `blocks` key to the schema extension to type blocks by their block type. It maps a block type to its content as Kirby stores it. Kirby ships the core blocks (code, gallery, heading, image, line, list, markdown, quote, table, text, video), and the client knows their content already; the key adds your custom blocks, redefines a core block, or removes one with `never`:
 
 ```ts
 // site.ts
@@ -437,8 +437,8 @@ export type Site = {
 	blocks: {
 		// A custom block with a pages field and a toggle.
 		film: { film: string[]; autoplay: string }
-		// Redefines the core heading block.
-		heading: { level: 'h2' | 'h3'; text: string }
+		// Redefines the core heading block. An empty heading stores `level: ''`.
+		heading: { level: '' | 'h2' | 'h3'; text: string }
 		// Removes the core markdown block.
 		markdown: never
 	}
@@ -467,7 +467,7 @@ const film: FilmBlock = { id: 'a', type: 'film', isHidden: false, content: { fil
 
 - **The block union is closed**: the core blocks, plus your custom blocks, minus the ones set to `never`. So `block.type === …` narrows `content`, and a block type outside the union doesn't compile. `Block<Site>` is the whole union, `Block<Site, 'film'>` one block type of it.
 - **One block union per site.** Every blocks field and every layout uses it: `toBlocks`, a single block (`first`, `findBy(…)`, which add `isEmpty`), and the blocks in the columns of `toLayouts`. A field that allows fewer block types is typed slightly too wide.
-- **Content is typed as stored**, which is not always the JSON type you'd expect: a toggle is stored as `'true'` or `'false'`, a files, pages or users field as a list of UUIDs (`file://…`), a select, radio or toggles field as its value or `''`. A block without fields stores `[]`: write it as `{}` or `never[]`. The core blocks' content is generated from Kirby's own blueprints and checked against what KQL returns.
+- **Content is typed as stored**, which is not always the JSON type you'd expect: a toggle is stored as `'true'` or `'false'`, a files, pages or users field as a list of UUIDs (`file://…`), a select, radio or toggles field as its value or `''`, a structure as a list of objects with their fields stored the same way (`{ name: string; role: string }[]`, `[]` when empty). A block without fields stores `[]`: write it as `{}` or `never[]`. The core blocks' content is generated from Kirby's own blueprints and checked against what KQL returns.
 - **Selects are unchanged.** Through a select, a block's fields are content fields (`string`), as without block types.
 - **Without a `blocks` key** blocks keep the generic shape. `blocks: {}` gives you the core blocks only.
 

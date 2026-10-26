@@ -70,7 +70,12 @@ export async function narrows() {
 export const block: [
 	Equal<
 		Block<BlocksExtension, 'film'>,
-		{ id: string; type: 'film'; isHidden: boolean; content: { film: string[]; autoplay: string } }
+		{
+			id: string
+			type: 'film'
+			isHidden: boolean
+			content: { film: string[]; autoplay: string; credits: { name: string; role: string }[] }
+		}
 	>,
 	Equal<Block<BlocksExtension, 'divider'>, { id: string; type: 'divider'; isHidden: boolean; content: never[] }>,
 	Equal<Block<BlocksExtension, 'table'>, { id: string; type: 'table'; isHidden: boolean; content: never[] }>,

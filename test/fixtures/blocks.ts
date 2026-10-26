@@ -20,6 +20,10 @@ export interface Observed {
 		content: {
 			film: Array<string>
 			autoplay: string
+			credits: Array<{
+				name: string
+				role: string
+			}>
 		}
 		id: string
 		isEmpty: boolean
@@ -148,6 +152,10 @@ export interface Observed {
 		content: {
 			film: Array<string>
 			autoplay: string
+			credits: Array<{
+				name: string
+				role: string
+			}>
 		}
 		id: string
 		isHidden: boolean
@@ -257,6 +265,10 @@ export interface Observed {
 		content: {
 			film: Array<string>
 			autoplay: string
+			credits: Array<{
+				name: string
+				role: string
+			}>
 		}
 		id: string
 		isHidden: boolean
@@ -367,6 +379,10 @@ export interface Observed {
 			content: {
 				film: Array<string>
 				autoplay: string
+				credits: Array<{
+					name: string
+					role: string
+				}>
 			}
 			id: string
 			isHidden: boolean
@@ -481,6 +497,10 @@ export interface Observed {
 			content: {
 				film: Array<string>
 				autoplay: string
+				credits: Array<{
+					name: string
+					role: string
+				}>
 			}
 			id: string
 			isHidden: boolean
@@ -598,6 +618,10 @@ export interface Observed {
 				content: {
 					film: Array<string>
 					autoplay: string
+					credits: Array<{
+						name: string
+						role: string
+					}>
 				}
 				id: string
 				isHidden: boolean
@@ -728,6 +752,10 @@ export interface Observed {
 				content: {
 					film: Array<string>
 					autoplay: string
+					credits: Array<{
+						name: string
+						role: string
+					}>
 				}
 				id: string
 				isHidden: boolean

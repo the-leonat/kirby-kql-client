@@ -5,8 +5,8 @@
  *
  * Content: `blocks/filled` has
  * - `text`: one block of every core block and of the custom blocks `film` (a
- *   pages field and a toggle) and `divider` (no fields), each once filled and
- *   once empty, plus a hidden text block that `toBlocks` leaves out,
+ *   pages field, a toggle and a structure) and `divider` (no fields), each
+ *   once filled and once empty, plus a hidden text block that `toBlocks` leaves out,
  * - `layout`: a layout with two columns that hold one filled block of every
  *   block type, and a layout with one empty column.
  * `blocks/empty` has the same fields left empty. The content is stored as the
@@ -15,10 +15,14 @@
  */
 import { kql } from '../../src/index.ts'
 
-/** The test site's custom blocks, as Kirby stores them. A toggle is stored as `'true'` or `'false'`. */
+/**
+ * The test site's custom blocks, as Kirby stores them. A toggle is stored as
+ * `'true'` or `'false'`, a structure as a list of objects, one per item, with
+ * its fields stored the same way.
+ */
 export type BlocksExtension = {
 	blocks: {
-		film: { film: string[]; autoplay: string }
+		film: { film: string[]; autoplay: string; credits: { name: string; role: string }[] }
 		divider: {}
 	}
 }

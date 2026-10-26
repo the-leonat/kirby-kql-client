@@ -226,7 +226,17 @@
 				"film": [
 					"page://alpha00000000001"
 				],
-				"autoplay": "true"
+				"autoplay": "true",
+				"credits": [
+					{
+						"name": "Ada",
+						"role": "Director"
+					},
+					{
+						"name": "Grace",
+						"role": ""
+					}
+				]
 			},
 			"id": "d0000000-0000-4000-8000-000000000023",
 			"isHidden": false,
@@ -235,7 +245,8 @@
 		{
 			"content": {
 				"film": [],
-				"autoplay": "false"
+				"autoplay": "false",
+				"credits": []
 			},
 			"id": "d0000000-0000-4000-8000-000000000024",
 			"isHidden": false,
