@@ -1,4 +1,5 @@
 import type { Client, Result } from '../../src/index.ts'
+import type { Checked } from '../../src/types/result.ts'
 
 /** True only if `A` and `B` are identical types: neither is narrower or wider. */
 export type Equal<A, B> =
@@ -79,6 +80,16 @@ type EqualForEachCase<Observed, Q, On extends Client<any>> = Q extends readonly 
 
 /** The result type the client `On` gives the query `Q`, e.g. `ResultOn<typeof client, typeof query>`. */
 export type ResultOn<On extends Client<any>, Q> = On extends Client<infer S> ? Result<Q, S> : never
+
+/**
+ * The problem the client `On` names for the query `Q`, e.g.
+ * `ProblemOn<typeof client, typeof query>`; `never` when it accepts `Q`.
+ */
+export type ProblemOn<On extends Client<any>, Q> = On extends Client<infer S>
+	? Checked<Q, S> extends { 'Impossible query': infer Problem }
+		? Problem
+		: never
+	: never
 
 /**
  * The names of the test queries whose fixture does not fit the expected type

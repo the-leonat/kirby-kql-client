@@ -2,7 +2,7 @@
  * `strict` on `createClient`: an unknown method is an impossible query, not
  * `unknown`. Content fields and described methods type as without it.
  */
-import { createClient, type Query } from '../../src/index.ts'
+import { createClient } from '../../src/index.ts'
 import * as plugin from '../queries/plugin.ts'
 import type * as extension from '../queries/extension.ts'
 import type { PluginExtension } from '../queries/extension.ts'
@@ -11,13 +11,9 @@ import type { AnorakExtension } from '../queries/anorak.ts'
 import type { Observed as ObservedExtension } from '../fixtures/extension.ts'
 import type { Observed as ObservedAnorak } from '../fixtures/anorak.ts'
 import { headlessTestSite, testSite } from '../test-site.ts'
-import type { AllMatch, Equal, Mismatched, ResultOn } from './check.ts'
+import type { AllMatch, Equal, Mismatched, ProblemOn, ResultOn } from './check.ts'
 
 const strict = createClient({ ...testSite, strict: true })
-
-/** The problem `strict.query` names for the query `Q`; `never` when it accepts `Q`. */
-type ProblemOf<Q extends Query> =
-	Parameters<typeof strict.query<Q>>[0] extends { 'Impossible query': infer Problem } ? Problem : never
 
 export function unknownFieldMethod() {
 	// @ts-expect-error `shout` is an unknown method of `field`
@@ -42,8 +38,8 @@ export const unknownMethods: [
 	Equal<Awaited<ReturnType<typeof unknownFieldMethod>>, never>,
 	Equal<ResultOn<typeof strict, CollectionMethod>, never>,
 	Equal<ResultOn<typeof strict, (typeof plugin.selectKeepsKeys)[0]>, never>,
-	Equal<ProblemOf<FieldMethod>, 'unknown method "shout" on "field"'>,
-	Equal<ProblemOf<CollectionMethod>, 'unknown method "stats" on "pages"'>,
+	Equal<ProblemOn<typeof strict, FieldMethod>, 'unknown method "shout" on "field"'>,
+	Equal<ProblemOn<typeof strict, CollectionMethod>, 'unknown method "stats" on "pages"'>,
 ] = [true, true, true, true, true, true]
 
 /** Without `strict`, the same methods stay `unknown`. */
