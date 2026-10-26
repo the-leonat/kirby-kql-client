@@ -70,6 +70,7 @@ No result types written by hand, no `as const`, no `any`. The types come from a 
 - [Reusable queries and query builders](#reusable-queries-and-query-builders)
 - [Pagination](#pagination)
 - [Plugins: schema extensions](#plugins-schema-extensions)
+- [Block types](#block-types)
 - [Impossible queries](#impossible-queries)
 - [Errors](#errors)
 - [Known limitations](#known-limitations)
@@ -233,7 +234,7 @@ const project = await client.query({
 // typeof project: { title: string; client: string; gallery: { url: string; alt: string }[]; children: { title: string; slug: string }[] } | null
 ```
 
-Blocks, layouts and structures are typed too: `page.text.toBlocks`, `page.layout.toLayouts` and `page.items.toStructure` give collections you can select from, with each block's or structure item's fields as content fields (`block.heading`, `structureItem.title`).
+Blocks, layouts and structures are typed too: `page.text.toBlocks`, `page.layout.toLayouts` and `page.items.toStructure` give collections you can select from, with each block's or structure item's fields as content fields (`block.heading`, `structureItem.title`). Without a select, blocks render their stored content; to type it by block type, see [Block types](#block-types).
 
 ## Reusable queries and query builders
 
@@ -422,6 +423,54 @@ const posts: Blog = await kirby.query(blog)
 ],
 ```
 
+## Block types
+
+Without a select, a block renders as `{ id; type; isHidden; content }`, with its content as Kirby stores it. By default that is one generic shape for every block: `type` is a `string` and `content` is `Record<string, unknown> | never[]`.
+
+Add a `blocks` key to the schema extension to type blocks by their block type. It maps a block type to its content as Kirby stores it. The core blocks (code, gallery, heading, image, line, list, markdown, quote, table, text, video) are built in; the key adds your custom blocks, redefines a core block, or removes one with `never`:
+
+```ts
+// site.ts
+import { createClient } from 'kirby-kql-client'
+
+export type Site = {
+	blocks: {
+		// A custom block with a pages field and a toggle.
+		film: { film: string[]; autoplay: string }
+		// Redefines the core heading block.
+		heading: { level: 'h2' | 'h3'; text: string }
+		// Removes the core markdown block.
+		markdown: never
+	}
+}
+
+export const kirby = createClient<Site>({ url: 'https://example.com/api/query' })
+```
+
+```ts
+import type { Block } from 'kirby-kql-client'
+import { kirby, type Site } from './site.js'
+
+const text = await kirby.query({ query: "page('home').text.toBlocks" })
+// typeof text: Block<Site>[]
+
+for (const block of text) {
+	if (block.type === 'film') {
+		const films = block.content.film
+		// typeof films: string[]
+	}
+}
+
+type FilmBlock = Block<Site, 'film'>
+const film: FilmBlock = { id: 'a', type: 'film', isHidden: false, content: { film: ['page://b'], autoplay: 'true' } }
+```
+
+- **The block union is closed**: the core blocks, plus your custom blocks, minus the ones set to `never`. So `block.type === …` narrows `content`, and a block type outside the union doesn't compile. `Block<Site>` is the whole union, `Block<Site, 'film'>` one block type of it.
+- **One block union per site.** Every blocks field and every layout uses it: `toBlocks`, a single block (`first`, `findBy(…)`, which add `isEmpty`), and the blocks in the columns of `toLayouts`. A field that allows fewer block types is typed slightly too wide.
+- **Content is typed as stored**, which is not always the JSON type you'd expect: a toggle is stored as `'true'` or `'false'`, a files, pages or users field as a list of UUIDs (`file://…`), a select, radio or toggles field as its value or `''`. A block without fields stores `[]`: write it as `{}` or `never[]`. The core blocks' content is generated from Kirby's own blueprints and checked against what KQL returns.
+- **Selects are unchanged.** Through a select, a block's fields are content fields (`string`), as without block types.
+- **Without a `blocks` key** blocks keep the generic shape. `blocks: {}` gives you the core blocks only.
+
 ## Impossible queries
 
 Some queries KQL can never answer, whatever the content: it rejects them with a 400. Such a query is a compile error at the query, and its result type is `never`:
@@ -519,6 +568,7 @@ The original error, where there is one, is the error's `cause`.
 | `Result<Q, S?>` | The result type of the query `Q`, on the schema `S` (default: Kirby's). |
 | `Query` | What a query may contain. |
 | `Schema`, `SchemaExtension` | The shape of the schema and of an extension. |
+| `Block<Extension?, Type?>`, `BlockType<Extension?>` | A block as it renders without a select on a client with that extension, and its block types. See [Block types](#block-types). |
 | `ExtendedSchema<Extension>` | Kirby's schema with an extension merged in, for `Result<Q, ExtendedSchema<E>>`. |
 | `StrictSchema<S>` | The schema `S` with `strict` on, for `Result<Q, StrictSchema<ExtendedSchema<E>>>`. |
 | `Client<S?>`, `ClientConfig` | The client's type and its config. |

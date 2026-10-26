@@ -65,7 +65,7 @@ _Avoid_: Strict mode, exact mode
 ## Blocks
 
 **Stored content**:
-The content of a block or layout as Kirby saves it, each value as its JSON type (a toggle as a boolean, a files field as a list of UUIDs), which is how it renders without a select. Through a select, the same value is a content field.
+The content of a block or layout as Kirby saves it, each value as the JSON type its field stores (a files field as a list of UUIDs, a toggle as the string `'true'` or `'false'`), which is how it renders without a select. Through a select, the same value is a content field.
 _Avoid_: Raw content, block data
 
 **Block type**:

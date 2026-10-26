@@ -34,6 +34,9 @@
  *   list), the collection's `TValue` template.
  * - roots: Kirby's query entries (`site`, `page(…)`, `kirby`, …), without those
  *   plugins register.
+ * - blocks: the core blocks, from the block blueprints Kirby registers
+ *   (`kirby/config/blocks`, not the site's), each field typed by what its
+ *   field type stores in a block's content.
  */
 
 use Kirby\Cms\App;
