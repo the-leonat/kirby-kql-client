@@ -47,7 +47,7 @@ A key on a page, site, file, user, block or structure item that is not a method,
 _Avoid_: Custom field, blueprint field
 
 **Schema extension**:
-Classes and methods a project adds to the schema to describe what its plugins provide.
+Classes, methods and block types a project adds to the schema to describe what its plugins and blueprints provide.
 _Avoid_: Custom types, plugin types, registration
 
 **Unknown method**:
@@ -61,6 +61,28 @@ _Avoid_: Invalid query, broken query
 **Strict**:
 The opt-in client option under which an unknown method makes the query impossible instead of unknown. In the code, a schema with strict on is a `StrictSchema`.
 _Avoid_: Strict mode, exact mode
+
+## Blocks
+
+**Stored content**:
+The content of a block or layout as Kirby saves it, each value as its JSON type (a toggle as a boolean, a files field as a list of UUIDs), which is how it renders without a select. Through a select, the same value is a content field.
+_Avoid_: Raw content, block data
+
+**Block type**:
+One kind of block, named by the block's `type`, together with the stored content it holds. It is not a class: every block is of the class `block`, whatever its block type.
+_Avoid_: Block kind, fieldset, block definition
+
+**Core block**:
+A block type that Kirby itself ships, such as heading, text or image, and that every site has unless the project removes it.
+_Avoid_: Default block, built-in block, standard block
+
+**Custom block**:
+A block type a project adds in its schema extension, or a core block it redefines there.
+_Avoid_: Plugin block, registered block
+
+**Block union**:
+The closed set of block types a site's blocks can have: the core blocks plus the custom blocks, minus the core blocks the project removes. There is one per site, shared by every blocks field and every layout.
+_Avoid_: Block list, AnyBlock
 
 ## Verification
 
