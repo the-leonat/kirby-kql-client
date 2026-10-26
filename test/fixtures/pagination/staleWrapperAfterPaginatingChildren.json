@@ -1,0 +1,105 @@
+[
+	{
+		"paged": {
+			"data": [
+				{
+					"title": "One"
+				},
+				{
+					"title": "Two"
+				}
+			],
+			"pagination": {
+				"page": 1,
+				"pages": 4,
+				"offset": 0,
+				"limit": 2,
+				"total": 7
+			}
+		},
+		"again": {
+			"data": [
+				{
+					"title": "One"
+				},
+				{
+					"title": "Two"
+				},
+				{
+					"title": "Three"
+				},
+				{
+					"title": "Four"
+				},
+				{
+					"title": "Five"
+				},
+				{
+					"title": "Six"
+				},
+				{
+					"title": "Seven"
+				}
+			],
+			"pagination": {
+				"page": 1,
+				"pages": 4,
+				"offset": 0,
+				"limit": 2,
+				"total": 7
+			}
+		}
+	},
+	{
+		"paged": {
+			"data": [
+				{
+					"title": "One"
+				},
+				{
+					"title": "Two"
+				}
+			],
+			"pagination": {
+				"page": 1,
+				"pages": 4,
+				"offset": 0,
+				"limit": 2,
+				"total": 7
+			}
+		},
+		"again": {
+			"data": [
+				{
+					"title": "One"
+				},
+				{
+					"title": "Two"
+				},
+				{
+					"title": "Three"
+				},
+				{
+					"title": "Four"
+				},
+				{
+					"title": "Five"
+				},
+				{
+					"title": "Six"
+				},
+				{
+					"title": "Seven"
+				}
+			],
+			"pagination": {
+				"page": 1,
+				"pages": 4,
+				"offset": 0,
+				"limit": 2,
+				"total": 7
+			}
+		}
+	},
+	null
+]

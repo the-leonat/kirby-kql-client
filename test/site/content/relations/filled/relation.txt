@@ -1,0 +1,35 @@
+Title: Filled relations
+
+----
+
+Link:
+
+- home
+
+----
+
+Cover:
+
+- photo.png
+
+----
+
+Attachment:
+
+- notes.xyz
+
+----
+
+Author:
+
+- test@example.com
+
+----
+
+Reviewer:
+
+- editor@example.com
+
+----
+
+Uuid: relfilled0000001

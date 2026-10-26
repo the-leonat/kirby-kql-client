@@ -1,0 +1,51 @@
+{
+  "name": "kirby-kql-client",
+  "version": "0.0.0",
+  "private": true,
+  "description": "A typed client for the Kirby Query Language: the result type of every query is derived from the query itself.",
+  "keywords": [
+    "kirby",
+    "kirby-cms",
+    "kql",
+    "headless",
+    "typescript"
+  ],
+  "license": "MIT",
+  "author": "Leonard Puhl",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/the-leonat/kirby-kql-client.git"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node -e \"require('fs').rmSync('dist', { recursive: true, force: true })\" && tsc -p tsconfig.build.json",
+    "prepack": "pnpm build",
+    "test": "tsc -p tsconfig.json",
+    "test:pack": "bash scripts/test-pack.sh",
+    "site:install": "composer install --working-dir=test/site",
+    "site": "bash scripts/site.sh",
+    "record": "node scripts/record.ts",
+    "schema": "php scripts/schema/generate.php test/site src/kirby-schema.ts",
+    "test:site": "node --test 'test/runtime/**/*.test.ts'",
+    "ci:drift": "bash scripts/ci-drift.sh"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^7.0.2"
+  },
+  "packageManager": "pnpm@12.6.0"
+}

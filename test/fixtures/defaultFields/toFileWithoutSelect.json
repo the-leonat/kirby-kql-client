@@ -1,0 +1,27 @@
+[
+	{
+		"extension": "png",
+		"filename": "photo.png",
+		"height": 3,
+		"id": "selects/filled/photo.png",
+		"mime": "image/png",
+		"niceSize": "73 B",
+		"template": "image",
+		"type": "image",
+		"url": "http://kql-test-site.example/media/pages/selects/filled/1aa5b12597-1767225600/photo.png",
+		"width": 4
+	},
+	{
+		"extension": "xyz",
+		"filename": "notes.xyz",
+		"height": "",
+		"id": "selects/filled/notes.xyz",
+		"mime": "text/plain",
+		"niceSize": "23 B",
+		"template": null,
+		"type": null,
+		"url": "http://kql-test-site.example/media/pages/selects/filled/cd62cf462b-1767225600/notes.xyz",
+		"width": ""
+	},
+	null
+]

@@ -1,0 +1,35 @@
+Title: Project Two
+
+----
+
+IsTeaserFullWidth: false
+
+----
+
+HasPreviewFilm: true
+
+----
+
+Photo:
+
+- file://anorakdoc0000001
+
+----
+
+PreviewFilm:
+
+- page://anorakfilmb00001
+
+----
+
+HasFeaturedFilm: true
+
+----
+
+FeaturedFilm:
+
+- page://anorakfilmb00001
+
+----
+
+Uuid: anorakproj200001

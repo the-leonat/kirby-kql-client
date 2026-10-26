@@ -16,9 +16,17 @@ _Avoid_: Path, expression
 The part of a query that picks which keys of the current value appear in the result, given as a record, a list of keys, or a comma-separated string.
 _Avoid_: Fields, projection
 
+**Select without a query string**:
+An entry of a record select written as `{ select }`: it reads its key from the current object and selects from that, and takes its pagination from `options.pagination`, not from a `pagination` key. In the code, `KeySelect`.
+_Avoid_: Sub-select, shorthand query
+
 **Result**:
 The JSON value the KQL endpoint returns for a query, and the type the client assigns to it.
 _Avoid_: Response, data
+
+**Paginated result**:
+The result of a collection with a select that has a pagination, from the query's `pagination` key or from `paginate()` in the query string: its items wrapped as `{ data, pagination }`.
+_Avoid_: Paged response, page wrapper
 
 **Default fields**:
 The keys a class renders when a query selects nothing from it.
@@ -35,7 +43,7 @@ One kind of value in the schema, named by its KQL alias, such as `page`, `files`
 _Avoid_: Model, type, interceptor
 
 **Content field**:
-A key on a page, site, file or user that is not a method, and therefore reads that model's stored content as a string.
+A key on a page, site, file, user, block or structure item that is not a method, and therefore reads that model's stored content as a string.
 _Avoid_: Custom field, blueprint field
 
 **Schema extension**:
@@ -43,8 +51,16 @@ Classes and methods a project adds to the schema to describe what its plugins pr
 _Avoid_: Custom types, plugin types, registration
 
 **Unknown method**:
-A method on a class other than page, site, file or user that neither the schema nor a schema extension describes; its result, and everything after it in the query string, is unknown. On those four classes the same key is a content field instead.
+A method on a class other than page, site, file, user, block or structure item that neither the schema nor a schema extension describes; its result, and everything after it in the query string, is unknown, or, on a strict client, the query is impossible. On those classes the same key is a content field instead.
 _Avoid_: Custom method, unregistered method
+
+**Impossible query**:
+A query KQL can never answer: a query string that doesn't parse, a root no schema declares, or a method on a string, number or boolean, anywhere in the query. It is a compile error at the query, and its result type is `never`.
+_Avoid_: Invalid query, broken query
+
+**Strict**:
+The opt-in client option under which an unknown method makes the query impossible instead of unknown. In the code, a schema with strict on is a `StrictSchema`.
+_Avoid_: Strict mode, exact mode
 
 ## Verification
 
@@ -55,6 +71,10 @@ _Avoid_: Demo instance, demo site, backend
 **Test query**:
 A query kept in the repo whose result type is checked against what the test site really returns.
 _Avoid_: Example query, sample
+
+**Case**:
+One of several queries that make up a single test query, such as the same query on filled and on empty content. Every case must have the same result type, and it must equal the observed type of all their fixtures merged.
+_Avoid_: Variant, scenario
 
 **Fixture**:
 The recorded result of one test query from the test site.

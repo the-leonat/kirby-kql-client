@@ -1,0 +1,23 @@
+Title: Series
+
+----
+
+Photo:
+
+- file://anorakdoc0000001
+
+----
+
+PreviewFilm:
+
+- page://anorakfilmb00001
+
+----
+
+Awards:
+
+- file://anorakphoto00001
+
+----
+
+Uuid: anorakseries0001

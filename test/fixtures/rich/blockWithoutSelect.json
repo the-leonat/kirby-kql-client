@@ -1,0 +1,20 @@
+[
+	{
+		"content": {
+			"level": "h2",
+			"text": "Rich heading"
+		},
+		"id": "b0000000-0000-4000-8000-000000000001",
+		"isEmpty": false,
+		"isHidden": false,
+		"type": "heading"
+	},
+	{
+		"content": [],
+		"id": "b0000000-0000-4000-8000-000000000006",
+		"isEmpty": true,
+		"isHidden": false,
+		"type": "line"
+	},
+	null
+]

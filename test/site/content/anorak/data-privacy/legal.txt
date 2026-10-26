@@ -1,0 +1,21 @@
+Title: Data privacy
+
+----
+
+Text: ## Data
+
+We store **nothing**.
+
+----
+
+Meta_description: How data is handled.
+
+----
+
+Og_image:
+
+- file://anorakphoto00001
+
+----
+
+Uuid: anorakprivacy001

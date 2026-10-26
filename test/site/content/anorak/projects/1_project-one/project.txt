@@ -1,0 +1,76 @@
+Title: Project One
+
+----
+
+Headline: The *first* project
+
+----
+
+Sub_headline: A **sub** headline
+
+----
+
+Text_intro: An intro
+
+----
+
+IsTeaserFullWidth: true
+
+----
+
+HasPreviewFilm: true
+
+----
+
+PlayType: loop
+
+----
+
+Photo:
+
+- file://anorakphoto00001
+
+----
+
+PreviewFilm:
+
+- page://anorakfilma00001
+
+----
+
+Awards:
+
+- file://anorakphoto00001
+- file://anorakdoc0000001
+
+----
+
+HasFeaturedFilm: true
+
+----
+
+FeaturedFilm:
+
+- page://anorakfilma00001
+
+----
+
+Layout: [{"attrs":[],"columns":[{"blocks":[{"content":{"page":["page://anorakfilma00001"],"playType":"loop","customer":"Example Customer"},"id":"ab000000-0000-4000-8000-000000000005","isHidden":false,"type":"film"},{"content":{"text":"<p>Beside the film</p>"},"id":"ab000000-0000-4000-8000-000000000006","isHidden":false,"type":"text"}],"id":"ac000000-0000-4000-8000-000000000004","width":"1/2"},{"blocks":[{"content":{"page":["page://anorakfilmb00001"],"playType":"click","customer":"Example Customer"},"id":"ab000000-0000-4000-8000-000000000007","isHidden":false,"type":"film"},{"content":{"images":["file://anorakphoto00001","file://anorakclip000001"],"caption":"A gallery"},"id":"ab000000-0000-4000-8000-000000000008","isHidden":false,"type":"gallery"},{"content":{"page":["page://anorakfilmc00001"],"playType":"loop","customer":"Example Customer"},"id":"ab000000-0000-4000-8000-000000000020","isHidden":false,"type":"film"}],"id":"ac000000-0000-4000-8000-000000000005","width":"1/2"}],"id":"al000000-0000-4000-8000-000000000003"},{"attrs":[],"columns":[{"blocks":[],"id":"ac000000-0000-4000-8000-000000000006","width":"1/1"}],"id":"al000000-0000-4000-8000-000000000004"}]
+
+----
+
+Text: [{"attrs":[],"columns":[{"blocks":[{"content":{"level":"h2","text":"A heading","align":"left"},"id":"ab000000-0000-4000-8000-000000000009","isHidden":false,"type":"heading"},{"content":{"text":"<p>Some text</p>"},"id":"ab000000-0000-4000-8000-000000000010","isHidden":false,"type":"text"},{"content":{"text":"A quote","author":"Someone"},"id":"ab000000-0000-4000-8000-000000000011","isHidden":false,"type":"quote"},{"content":{"link":"https://example.com","heading":"Watch"},"id":"ab000000-0000-4000-8000-000000000012","isHidden":false,"type":"button"}],"id":"ac000000-0000-4000-8000-000000000007","width":"2/3"},{"blocks":[{"content":{"image":["file://anorakphoto00001"],"caption":"An image"},"id":"ab000000-0000-4000-8000-000000000013","isHidden":false,"type":"image"},{"content":{"image":["file://anorakdoc0000001"],"caption":"A document"},"id":"ab000000-0000-4000-8000-000000000014","isHidden":false,"type":"image"},{"content":{"logo":["file://anorakphoto00001"]},"id":"ab000000-0000-4000-8000-000000000015","isHidden":false,"type":"logo"},{"content":{"logo":["file://anorakclip000001"]},"id":"ab000000-0000-4000-8000-000000000016","isHidden":false,"type":"logo"}],"id":"ac000000-0000-4000-8000-000000000008","width":"1/3"}],"id":"al000000-0000-4000-8000-000000000005"},{"attrs":[],"columns":[{"blocks":[{"content":{"page":["page://anorakfilma00001"],"playType":"loop","customer":"Example Customer"},"id":"ab000000-0000-4000-8000-000000000017","isHidden":false,"type":"film"},{"content":{"page":["page://anorakfilmc00001"],"playType":"click","customer":"Example Customer"},"id":"ab000000-0000-4000-8000-000000000021","isHidden":false,"type":"film"},{"content":{"page":["page://anorakfilmb00001"],"playType":"click","customer":"Example Customer"},"id":"ab000000-0000-4000-8000-000000000018","isHidden":false,"type":"film"},{"content":{"images":["file://anorakphoto00001","file://anorakclip000001"],"caption":"A gallery"},"id":"ab000000-0000-4000-8000-000000000019","isHidden":false,"type":"gallery"}],"id":"ac000000-0000-4000-8000-000000000009","width":"1/1"}],"id":"al000000-0000-4000-8000-000000000006"}]
+
+----
+
+Meta_description: Project One, a test project.
+
+----
+
+Og_image:
+
+- file://anorakphoto00001
+
+----
+
+Uuid: anorakproj100001

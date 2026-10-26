@@ -1,0 +1,25 @@
+[
+	{
+		"link": {
+			"title": "Home"
+		},
+		"cover": {
+			"filename": "photo.png"
+		},
+		"author": {
+			"name": "Test User"
+		},
+		"linkTitle": "Home",
+		"coverFilename": "photo.png",
+		"authorIsAdmin": true
+	},
+	{
+		"link": null,
+		"cover": null,
+		"author": null,
+		"linkTitle": null,
+		"coverFilename": null,
+		"authorIsAdmin": null
+	},
+	null
+]

@@ -1,0 +1,25 @@
+[
+	[
+		{
+			"title": "Alpha.Beta",
+			"slug": "alpha",
+			"isListed": true
+		},
+		{
+			"title": "Beta",
+			"slug": "beta",
+			"isListed": true
+		},
+		{
+			"title": "Gamma (3)",
+			"slug": "gamma",
+			"isListed": true
+		},
+		{
+			"title": "Delta",
+			"slug": "delta",
+			"isListed": false
+		}
+	],
+	[]
+]
