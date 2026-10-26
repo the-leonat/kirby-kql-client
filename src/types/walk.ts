@@ -16,6 +16,10 @@
  *   count if the class has an overload for it, else the method's.
  * - An unknown key on a model (page, site, file, user, block, structure item)
  *   gives a content field.
+ * - A method on a JSON scalar (`string`, `number`, `boolean`) is Impossible
+ *   (KQL answers 400). On a value that is a scalar only sometimes, such as
+ *   `'field' | number`, the other members decide.
+ * - An unknown method is Impossible on a strict schema (`strict: true`).
  * - Anything else gives Unknown.
  * - `paginate(…)` on a collection gives that collection Paginated. A method on a
  *   Paginated collection that gives the same collection keeps it Paginated (Kirby
@@ -122,4 +126,6 @@ type MethodReturn<C extends ClassName<S>, Name extends string, S extends Schema>
 		? S['classes'][C]['methods'][Name]
 		: S['classes'][C] extends { model: true }
 			? 'field'
-			: unknown
+			: S extends { strict: true }
+				? Impossible<`unknown method "${Name}" on "${C}"`>
+				: unknown

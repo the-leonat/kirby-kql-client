@@ -1,6 +1,6 @@
 import type { KirbySchema } from './kirby-schema.ts'
 import type { Query } from './query.ts'
-import type { ExtendSchema, Schema, SchemaExtension } from './schema.ts'
+import type { ExtendSchema, Schema, SchemaExtension, StrictSchema } from './schema.ts'
 import type { Checked, Result } from './types/result.ts'
 
 export interface ClientConfig {
@@ -14,6 +14,13 @@ export interface ClientConfig {
 	headers?: Record<string, string>
 	/** The content language, sent as `X-Language`. */
 	language?: string
+	/**
+	 * Makes an unknown method (on a class without content fields, described by
+	 * neither the schema nor the schema extension) a compile error at the
+	 * query, with the result type `never`, instead of `unknown`. Types only:
+	 * pass it as the literal `true`.
+	 */
+	strict?: boolean
 }
 
 /** A client whose results are typed by the schema `S`. */
@@ -47,13 +54,19 @@ export class KqlError extends Error {
 
 /**
  * Creates a client. Pass a schema extension as the type parameter to type the
- * methods and classes your plugins add; each client keeps its own.
+ * roots, methods and classes your plugins add; each client keeps its own.
  *
  *   const client = createClient<MyExtension>({ url: 'https://example.com/api/query' })
+ *
+ * With `strict: true`, an unknown method is a compile error instead of `unknown`.
  */
 export function createClient<Extension extends SchemaExtension = {}>(
+	config: ClientConfig & { strict: true },
+): Client<StrictSchema<ExtendedSchema<Extension>>>
+export function createClient<Extension extends SchemaExtension = {}>(
 	config: ClientConfig,
-): Client<ExtendedSchema<Extension>> {
+): Client<ExtendedSchema<Extension>>
+export function createClient(config: ClientConfig): Client<any> {
 	const fetch = config.fetch ?? globalThis.fetch
 	const headers: Record<string, string> = {
 		'Content-Type': 'application/json',

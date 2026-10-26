@@ -21,7 +21,15 @@ export interface Schema {
 	roots: { [name: string]: ReturnValue }
 	/** Classes by their KQL alias. */
 	classes: { [name: string]: ClassDefinition }
+	/**
+	 * `true` makes an unknown method an impossible query instead of
+	 * `unknown`. Set by `createClient({ …, strict: true })`.
+	 */
+	strict?: boolean
 }
+
+/** `S` with `strict` on. */
+export type StrictSchema<S extends Schema> = { roots: S['roots']; classes: S['classes']; strict: true }
 
 export interface ClassDefinition {
 	methods: { [name: string]: ReturnValue }

@@ -18,6 +18,7 @@ import type {
 	Result,
 	Schema,
 	SchemaExtension,
+	StrictSchema,
 } from 'kirby-kql-client'
 // The type layers and the generated schema are internal.
 // @ts-expect-error
@@ -97,6 +98,23 @@ function teaser<const Q extends string>(query: Q) {
 const teaserQuery = teaser("page('home')")
 assert<Equal<Result<typeof teaserQuery>, { title: string; url: string } | null>>()
 assert<Equal<typeof teaserQuery extends Query ? true : false, true>>()
+
+/**
+ * An impossible query fails to compile at the query, and its result is
+ * `never`. With `strict`, so does an unknown method.
+ */
+export function impossible() {
+	const client = createClient(config)
+	// @ts-expect-error `nothing` is no root
+	const nothing = client.query({ query: 'nothing.title' })
+	assert<Equal<Awaited<typeof nothing>, never>>()
+
+	const strict: Client<StrictSchema<ExtendedSchema<{}>>> = createClient({ ...config, strict: true })
+	// @ts-expect-error `foo` is an unknown method of `pages`
+	const foo = strict.query({ query: 'site.children.foo' })
+	assert<Equal<Awaited<typeof foo>, never>>()
+	assert<Equal<Result<{ query: 'site.children.foo' }>, unknown>>()
+}
 
 /** Errors carry the HTTP status and KQL's code. */
 export async function errors() {
