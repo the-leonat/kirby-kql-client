@@ -67,6 +67,9 @@ export async function narrows() {
 	return undefined
 }
 
+/** The block types Kirby ships. */
+type CoreBlockType = 'code' | 'gallery' | 'heading' | 'image' | 'line' | 'list' | 'markdown' | 'quote' | 'table' | 'text' | 'video'
+
 export const block: [
 	Equal<
 		Block<BlocksExtension, 'film'>,
@@ -79,22 +82,7 @@ export const block: [
 	>,
 	Equal<Block<BlocksExtension, 'divider'>, { id: string; type: 'divider'; isHidden: boolean; content: never[] }>,
 	Equal<Block<BlocksExtension, 'table'>, { id: string; type: 'table'; isHidden: boolean; content: never[] }>,
-	Equal<
-		BlockType<BlocksExtension>,
-		| 'code'
-		| 'divider'
-		| 'film'
-		| 'gallery'
-		| 'heading'
-		| 'image'
-		| 'line'
-		| 'list'
-		| 'markdown'
-		| 'quote'
-		| 'table'
-		| 'text'
-		| 'video'
-	>,
+	Equal<BlockType<BlocksExtension>, CoreBlockType | 'divider' | 'film'>,
 	Equal<ResultOn<typeof client, TextBlocks>, Block<BlocksExtension>[]>,
 ] = [true, true, true, true, true]
 
@@ -111,8 +99,6 @@ const changed = createClient<Changed>(testSite)
 /** A single block renders its block plus `isEmpty`. */
 type SingleBlock<B> = B extends unknown ? { [K in keyof B | 'isEmpty']: K extends keyof B ? B[K] : boolean } : never
 
-type CoreBlockType = 'code' | 'gallery' | 'heading' | 'image' | 'line' | 'list' | 'markdown' | 'quote' | 'table' | 'text' | 'video'
-
 export const overrideAndRemove: [
 	Equal<BlockType<Changed>, Exclude<CoreBlockType, 'markdown'>>,
 	Equal<Block<Changed, 'heading'>, { id: string; type: 'heading'; isHidden: boolean; content: { level: 'h2' | 'h3'; text: string } }>,
@@ -122,9 +108,18 @@ export const overrideAndRemove: [
 		ResultOn<typeof changed, { query: "page('blocks/filled').text.toBlocks.first" }>,
 		SingleBlock<Block<Changed>> | null
 	>,
+	// The blocks of layout columns use the same block union.
+	Equal<
+		ResultOn<typeof changed, { query: "page('blocks/filled').layout.toLayouts" }>[number]['columns'][number]['blocks'],
+		Block<Changed>[]
+	>,
+	Equal<
+		ResultOn<typeof changed, { query: "page('blocks/filled').layout.toLayouts.first.columns.first.blocks" }>,
+		Block<Changed>[]
+	>,
 	// Only the core blocks: an empty `blocks` key.
 	Equal<BlockType<{ blocks: {} }>, CoreBlockType>,
-] = [true, true, true, true, true, true]
+] = [true, true, true, true, true, true, true, true]
 
 // @ts-expect-error `markdown` is removed from the block union
 export type Removed = Block<Changed, 'markdown'>
