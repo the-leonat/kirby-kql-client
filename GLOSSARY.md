@@ -59,8 +59,8 @@ A query KQL can never answer: a query string that doesn't parse, a root no schem
 _Avoid_: Invalid query, broken query
 
 **Strict**:
-The opt-in client option under which an unknown method makes the query impossible instead of unknown.
-_Avoid_: Strict mode schema, exact mode
+The opt-in client option under which an unknown method makes the query impossible instead of unknown. In the code, a schema with strict on is a `StrictSchema`.
+_Avoid_: Strict mode, exact mode
 
 ## Verification
 
