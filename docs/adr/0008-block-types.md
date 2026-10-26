@@ -11,11 +11,11 @@ Which block types a site has is not in Kirby's source: core blocks can be remove
 - The schema generator reads the core blocks from the blueprints Kirby registers (not the site's own), with each field's stored value by field type. It only knows the field types the core blocks use; another one fails the generator until a test query proves what it stores. The drift check covers the result.
 - A schema extension's `blocks` key maps a block type to its stored content. It adds custom blocks, a custom block replaces the core block of the same block type, and `never` removes a core block.
 - The **block union is closed**: core blocks plus custom blocks minus the removed ones. So `type === …` narrows, and an unknown block type doesn't compile.
-- **One block union per site**, used wherever a block renders without a select: `toBlocks`, a single block (with `isEmpty`) and the blocks in layout columns. Not per field (fieldsets): simpler, and slightly too wide where a field allows fewer block types.
+- **One block union per site**, used wherever a block renders without a select: `toBlocks`, a single block (with `isEmpty`) and the blocks in layout columns. Not per blocks field (by the block types its `fieldsets` option allows): simpler, and slightly too wide where a field allows fewer block types.
 - **Selects are unchanged**: through a select, block fields are content fields (`string`), as ADR 0003 says.
 - **Without a `blocks` key, nothing changes**: blocks keep the generic shape, so existing clients don't break. `blocks: {}` opts into the core blocks only.
 - `Block<Extension, Type>` names a block of the union. It is the block as it renders in `toBlocks`; a single block renders the same plus `isEmpty`.
-- Content is typed as Kirby's blocks field stores it (`Form::toStoredValues()`, the path every Panel save takes), not as one might expect: a toggle is the string `'true'` or `'false'`, a select or toggles field `''` until set. The test site's block content is stored through that path, so the fixtures show what a Panel-edited site returns.
+- Content is typed as Kirby's blocks field stores it (`Form::toStoredValues()`, the path every Panel save takes), not as one might expect: a toggle is the string `'true'` or `'false'`, a select or toggles field `''` until set, a structure a list of objects with their fields stored the same way. The test site's block content is stored through that path, so the fixtures show what a Panel-edited site returns.
 
 ## Consequences
 
