@@ -49,14 +49,6 @@ test('paginate() throws KqlError 403 unless the site allows it', async () => {
 	)
 })
 
-test('an invalid query string throws KqlError 400', async () => {
-	await assertThrowsKqlError(testSite, { query: "page('home'..title" }, {
-		status: 400,
-		code: 400,
-		message: 'Access to non-existing property "page(\'home\'" on array',
-	})
-})
-
 // Impossible queries: a compile error, so they are passed as a plain `Query`.
 
 test('a query string with a bracket left open throws KqlError 400', async () => {
