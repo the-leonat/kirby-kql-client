@@ -10,6 +10,22 @@ import type * as anorak from '../queries/anorak.ts'
 import type { AnorakExtension } from '../queries/anorak.ts'
 import type { Observed as ObservedExtension } from '../fixtures/extension.ts'
 import type { Observed as ObservedAnorak } from '../fixtures/anorak.ts'
+import type * as fields from '../queries/fields.ts'
+import type { Observed as ObservedFields } from '../fixtures/fields.ts'
+import type * as relations from '../queries/relations.ts'
+import type { Observed as ObservedRelations } from '../fixtures/relations.ts'
+import type * as rich from '../queries/rich.ts'
+import type { Observed as ObservedRich } from '../fixtures/rich.ts'
+import type * as collections from '../queries/collections.ts'
+import type { Observed as ObservedCollections } from '../fixtures/collections.ts'
+import type * as selects from '../queries/selects.ts'
+import type { Observed as ObservedSelects } from '../fixtures/selects.ts'
+import type * as pagination from '../queries/pagination.ts'
+import type { Observed as ObservedPagination } from '../fixtures/pagination.ts'
+import type * as defaultFields from '../queries/defaultFields.ts'
+import type { Observed as ObservedDefaultFields } from '../fixtures/defaultFields.ts'
+import type * as headless from '../queries/headless.ts'
+import type { Observed as ObservedHeadless } from '../fixtures/headless.ts'
 import { headlessTestSite, testSite } from '../test-site.ts'
 import type { AllMatch, Equal, Mismatched, ProblemOn, ResultOn } from './check.ts'
 
@@ -71,3 +87,17 @@ const strictAnorak = createClient<AnorakExtension>({ ...headlessTestSite, strict
 
 export type Extension = AllMatch<Mismatched<typeof extension, ObservedExtension, typeof strictExtension>>
 export type Anorak = AllMatch<Mismatched<typeof anorak, ObservedAnorak, typeof strictAnorak>>
+
+/** The base test queries describe every method they call, so they type exactly as without `strict` too. */
+export type Fields = AllMatch<Mismatched<typeof fields, ObservedFields, typeof strict>>
+export type Relations = AllMatch<Mismatched<typeof relations, ObservedRelations, typeof strict>>
+export type Rich = AllMatch<Mismatched<typeof rich, ObservedRich, typeof strict>>
+export type Collections = AllMatch<Mismatched<typeof collections, ObservedCollections, typeof strict>>
+export type Selects = AllMatch<Mismatched<typeof selects, ObservedSelects, typeof strict>>
+export type DefaultFields = AllMatch<Mismatched<typeof defaultFields, ObservedDefaultFields, typeof strict>>
+export type Headless = AllMatch<Mismatched<typeof headless, ObservedHeadless, typeof strict>>
+
+/** Without the queries whose fixture KQL wraps differently (see pagination.test.ts). */
+export type Pagination = AllMatch<
+	Mismatched<Omit<typeof pagination, 'staleWrapperAfterPaginatingChildren'>, ObservedPagination, typeof strict>
+>
