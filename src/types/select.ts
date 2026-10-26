@@ -16,10 +16,20 @@ import type { Follow } from './walk.ts'
 import type { NoSelect, Render } from './render.ts'
 import type { Evaluate, HasPagination } from './result.ts'
 import type { Trim } from './parse.ts'
+import type { Impossible } from './impossible.ts'
 
-export type SelectShape<C extends ClassName<S>, Sel extends Select, S extends Schema> = EmptyAsArray<
-	Shape<C, AsRecord<Sel>, S>
->
+export type SelectShape<C extends ClassName<S>, Sel extends Select, S extends Schema> = Shape<
+	C,
+	AsRecord<Sel>,
+	S
+> extends infer Object
+	? [ImpossibleEntries<Object>] extends [never]
+		? EmptyAsArray<Object>
+		: ImpossibleEntries<Object>
+	: never
+
+/** An impossible entry makes the whole select impossible: KQL rejects the whole request. */
+type ImpossibleEntries<Object> = Extract<Object[keyof Object], Impossible>
 
 /** KQL builds the object as a PHP array, so one without keys is `[]` in JSON. */
 type EmptyAsArray<Object> = [keyof Object] extends [never] ? never[] : Object

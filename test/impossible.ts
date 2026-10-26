@@ -20,3 +20,18 @@ export const unknownRoot = kql({ query: 'nothing.title' })
 export const methodOnString = kql({ query: "page('home').slug.upper" })
 export const methodOnBoolean = kql({ query: "page('home').isListed.not" })
 export const methodOnNumber = kql({ query: "page('home').children.count.round" })
+
+/**
+ * An impossible query string inside a select makes the whole query
+ * impossible: KQL rejects the whole request. (Only when it evaluates it,
+ * though: a select on a missing page or an empty collection never is.)
+ */
+export const inQueryString = kql({ query: "page('home')", select: { title: true, teaser: 'nothing.title' } })
+export const inNestedQuery = kql({
+	query: 'site',
+	select: { children: { query: 'site.children', select: { title: true, slug: 'page.slug.upper' } } },
+})
+export const inSelectWithoutQueryString = kql({
+	query: 'site',
+	select: { children: { select: { listed: 'page.isListed.not' } } },
+})

@@ -48,11 +48,16 @@ type RenderEach<R, Sel, S extends Schema, IsPaginated extends boolean> = R exten
 
 type RenderClass<C extends ClassName<S>, Sel, S extends Schema, IsPaginated extends boolean> = Sel extends Select
 	? S['classes'][C] extends { item: infer Item extends ClassName<S> }
-		? IsPaginated extends true
-			? { data: SelectShape<Item, Sel, S>[]; pagination: PaginationInfo }
-			: SelectShape<Item, Sel, S>[]
+		? Collect<SelectShape<Item, Sel, S>, IsPaginated>
 		: SelectShape<C, Sel, S>
 	: RenderDefault<S['classes'][C], S>
+
+/** One object per item, wrapped when paginated. An impossible select stays impossible. */
+type Collect<Shape, IsPaginated extends boolean> = [Shape] extends [Impossible]
+	? Shape
+	: IsPaginated extends true
+		? { data: Shape[]; pagination: PaginationInfo }
+		: Shape[]
 
 type RenderDefault<Definition, S extends Schema> = Definition extends { render: infer R }
 	? R

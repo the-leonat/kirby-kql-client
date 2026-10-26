@@ -47,6 +47,31 @@ export function methodOnNumber() {
 	return client.query(impossible.methodOnNumber)
 }
 
+export function inQueryString() {
+	// @ts-expect-error the select's `teaser` starts at no root
+	return client.query(impossible.inQueryString)
+}
+
+export function inNestedQuery() {
+	// @ts-expect-error the nested query's `slug` calls a method on a string
+	return client.query(impossible.inNestedQuery)
+}
+
+export function inSelectWithoutQueryString() {
+	// @ts-expect-error the inner select's `listed` calls a method on a boolean
+	return client.query(impossible.inSelectWithoutQueryString)
+}
+
+export const nested: [
+	Equal<ResultOn<typeof client, typeof impossible.inQueryString>, never>,
+	Equal<Awaited<ReturnType<typeof inQueryString>>, never>,
+	Equal<ResultOn<typeof client, typeof impossible.inNestedQuery>, never>,
+	Equal<ResultOn<typeof client, typeof impossible.inSelectWithoutQueryString>, never>,
+	Equal<Accepted<typeof impossible.inQueryString>, 'Impossible query: unknown root "nothing"'>,
+	Equal<Accepted<typeof impossible.inNestedQuery>, 'Impossible query: method "upper" called on a string'>,
+	Equal<Accepted<typeof impossible.inSelectWithoutQueryString>, 'Impossible query: method "not" called on a boolean'>,
+] = [true, true, true, true, true, true, true]
+
 export const results: [
 	Equal<ResultOn<typeof client, typeof impossible.unclosedBracket>, never>,
 	Equal<Awaited<ReturnType<typeof unclosedBracket>>, never>,

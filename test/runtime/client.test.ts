@@ -114,6 +114,37 @@ for (const [name, type] of [
 	})
 }
 
+test('an impossible query string in a select throws KqlError 400', async () => {
+	await assertThrowsKqlError(testSite, impossible.inQueryString as Query, {
+		status: 400,
+		code: 400,
+		message: 'Access to non-existing property "nothing" on array',
+	})
+})
+
+test('an impossible query string in a nested query throws KqlError 400', async () => {
+	await assertThrowsKqlError(testSite, impossible.inNestedQuery as Query, {
+		status: 400,
+		code: 400,
+		message: 'Access to method/property "upper" on string',
+	})
+})
+
+test('an impossible query string in a select without a query string throws KqlError 400', async () => {
+	await assertThrowsKqlError(testSite, impossible.inSelectWithoutQueryString as Query, {
+		status: 400,
+		code: 400,
+		message: 'Access to method/property "not" on boolean',
+	})
+})
+
+test('an impossible select on a missing page resolves to null', async () => {
+	// KQL never evaluates it, but it would fail on every page there is: the
+	// query is typed impossible all the same.
+	const query = { query: "page('missing')", select: { teaser: 'nothing.title' } }
+	assert.equal(await createClient(testSite).query(query as Query), null)
+})
+
 test('wrong Basic credentials throw KqlError 403', async () => {
 	await assertThrowsKqlError(
 		{ ...testSite, auth: { email: 'nobody@example.com', password: 'wrong-password' } },
