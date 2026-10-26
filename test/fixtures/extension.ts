@@ -13,6 +13,9 @@ export interface Observed {
 			title: string
 		} | null
 	}
+	newRoot: {
+		title: string
+	} | null
 	overriddenMethod: Array<{
 		filename: string
 		width: number

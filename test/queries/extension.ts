@@ -2,8 +2,9 @@
  * The test plugin's methods on a client WITH a schema extension
  * (`PluginExtension`, used in test/types/extension.test.ts).
  *
- * The extension adds the plugin's methods to the `field`, `page` and `pages`
- * classes, adds the plugin's own class `stats`, and overrides the existing
+ * The extension adds the plugin's root `pluginPage(…)`, the plugin's methods
+ * to the `field`, `page` and `pages` classes, adds the plugin's own class
+ * `stats`, and overrides the existing
  * method `file.width`: the base schema allows for the content field a
  * non-image gives, a site with only images knows it is a number.
  *
@@ -12,6 +13,7 @@
 import { kql } from '../../src/index.ts'
 
 export type PluginExtension = {
+	roots: { pluginPage: 'page' | null }
 	classes: {
 		field: { methods: { shout: 'field' } }
 		page: { methods: { readingTime: number } }
@@ -54,6 +56,12 @@ export const newClassWithSelect = [
 export const newClassMethod = [
 	kql({ query: `${filled}.children.stats.titles` }),
 	kql({ query: `${empty}.children.stats.titles` }),
+]
+
+/** The plugin's root `pluginPage(…)`, which gives a child of `plugin` or `null`. */
+export const newRoot = [
+	kql({ query: "pluginPage('filled')", select: ['title'] }),
+	kql({ query: "pluginPage('missing')", select: ['title'] }),
 ]
 
 /** `file.width`, overridden to a number. */

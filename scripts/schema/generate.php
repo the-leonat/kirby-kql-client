@@ -10,9 +10,9 @@
  * Without <output.ts> the schema is printed to stdout.
  *
  * What it reads:
- * The schema describes Kirby and KQL only: methods registered by plugins and
- * KQL options in the site's config (`kql.interceptors`, `kql.methods.*`) are
- * left out.
+ * The schema describes Kirby and KQL only: roots and methods registered by
+ * plugins and KQL options in the site's config (`kql.interceptors`,
+ * `kql.methods.*`) are left out.
  *
  * - classes: every built-in KQL interceptor, named by its CLASS_ALIAS. The
  *   Kirby class an interceptor wraps is its own name without `Kql\Interceptors\`.
@@ -32,7 +32,8 @@
  *   type of that method.
  * - item: for subclasses of Kirby\Cms\Collection (the ones KQL renders as a
  *   list), the collection's `TValue` template.
- * - roots: Kirby's query entries (`site`, `page(…)`, `kirby`, …).
+ * - roots: Kirby's query entries (`site`, `page(…)`, `kirby`, …), without those
+ *   plugins register.
  */
 
 use Kirby\Cms\App;

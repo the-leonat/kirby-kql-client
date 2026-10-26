@@ -34,3 +34,16 @@ export const separate: [
 	Equal<ResultOn<typeof plain, Shout>, unknown>,
 	Equal<ResultOn<typeof other, { query: "page('plugin/filled').title.shout" }>, string>,
 ] = [true, true, true, true]
+
+/** A root only the extension declares: without it, the query is impossible. */
+type PluginPage = { query: "pluginPage('filled')"; select: ['title'] }
+
+export const root: [
+	Equal<ResultOn<typeof client, PluginPage>, { title: string } | null>,
+	Equal<ResultOn<typeof plain, PluginPage>, never>,
+] = [true, true]
+
+export function rootWithoutExtension() {
+	// @ts-expect-error `pluginPage` is no root of the base schema
+	return plain.query({ query: "pluginPage('filled')", select: ['title'] })
+}

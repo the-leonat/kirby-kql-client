@@ -130,6 +130,11 @@ class KqlSchemaGenerator
 		$context = $this->context(new ReflectionClass(Query::class), null, null);
 
 		foreach (Query::$entries as $name => $entry) {
+			// Roots registered by plugins are left out, like their methods.
+			if ($entry instanceof Closure && $this->isKirbyCore($entry) === false) {
+				continue;
+			}
+
 			if (isset($this->overrides['roots'][$name]) === true) {
 				$roots[$name] = $this->returns($this->overrides['roots'][$name], $context);
 				continue;

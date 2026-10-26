@@ -2,19 +2,30 @@
 
 /**
  * The test plugin: one field method, one page method and one collection method,
- * each allowed for KQL, and a class of its own (`stats`) with its interceptor,
- * registered in the test site's `kql.interceptors` config.
+ * each allowed for KQL, a class of its own (`stats`) with its interceptor,
+ * registered in the test site's `kql.interceptors` config, and a root
+ * (`pluginPage(…)`).
  *
  * The schema generator leaves all of this out of the base schema. Test queries
  * prove how it is typed without and with a schema extension.
  */
 
 use Kirby\Cms\App;
+use Kirby\Cms\Page;
 use Kirby\Content\Field;
+use Kirby\Query\Query;
 use Kirby\Toolkit\Str;
 
 require_once __DIR__ . '/src/Stats.php';
 require_once __DIR__ . '/src/StatsInterceptor.php';
+
+/**
+ * A root of its own: `pluginPage('filled')` gives the child `filled` of the
+ * page `plugin`, or null.
+ */
+Query::$entries['pluginPage'] = function (string $slug): Page|null {
+	return page('plugin/' . $slug);
+};
 
 App::plugin('kql-client/kql-test', [
 	'fieldMethods' => [
