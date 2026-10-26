@@ -1,7 +1,7 @@
 import type { KirbySchema } from './kirby-schema.ts'
 import type { Query } from './query.ts'
 import type { ExtendSchema, Schema, SchemaExtension } from './schema.ts'
-import type { Result } from './types/result.ts'
+import type { Checked, Result } from './types/result.ts'
 
 export interface ClientConfig {
 	/** The full URL of the KQL endpoint, e.g. `https://example.com/api/query`. */
@@ -18,7 +18,8 @@ export interface ClientConfig {
 
 /** A client whose results are typed by the schema `S`. */
 export interface Client<S extends Schema = KirbySchema> {
-	query<const Q extends Query>(query: Q): Promise<Result<Q, S>>
+	/** A query KQL can never answer fails to compile, and its result type is `never`. */
+	query<const Q extends Query>(query: Checked<Q, S>): Promise<Result<Q, S>>
 }
 
 /** The schema for Kirby and KQL with a schema extension deep-merged into it. */

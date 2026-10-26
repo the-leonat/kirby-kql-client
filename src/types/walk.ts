@@ -4,13 +4,14 @@
  *
  * The first step starts at the surrounding object when it names that object's
  * class without arguments (in nested queries, `page.title` inside a select on a
- * page), and at a root of the schema otherwise (`page('home')`).
+ * page), and at a root of the schema otherwise (`page('home')`). A first step
+ * that names neither is Impossible: KQL answers 400.
  *
  * Rules for each further step:
  * - A method on `null` is an error (KQL answers 400), so a value that can be
  *   `null` loses its `null` when a step follows it with `.`.
  * - A step reached with `?.` on `null` ends the query string: the result is `null`.
- * - Unknown carries forward.
+ * - Unknown and Impossible carry forward.
  * - A known method gives its return value: the one for the step's argument
  *   count if the class has an overload for it, else the method's.
  * - An unknown key on a model (page, site, file, user, block, structure item)
@@ -26,6 +27,7 @@
  *   build a new collection without the pagination, so they drop it.
  */
 import type { ClassName, IsClass, Schema } from '../schema.ts'
+import type { Impossible } from './impossible.ts'
 import type { Step } from './parse.ts'
 
 /**
@@ -48,7 +50,7 @@ type Start<First extends Step, S extends Schema, Surrounding extends string> =
 		? First['name']
 		: First['name'] extends keyof S['roots']
 			? S['roots'][First['name']]
-			: unknown
+			: Impossible<`unknown root "${First['name']}"`>
 
 /** Follows `Steps` from the value `Current`. */
 export type Follow<Current, Steps extends Step[], S extends Schema> =
@@ -64,18 +66,23 @@ type Call<Current, Next extends Step, S extends Schema> = unknown extends Curren
 	? unknown
 	: CallEach<Current, Next, S>
 
-/** Distributes over a union such as `'page' | null`; the `null` member throws. */
-type CallEach<Current, Next extends Step, S extends Schema> = Current extends null
-	? never
-	: Current extends Paginated<infer C>
-		? Next['name'] extends NewCollection
-			? Call<C, Next, S>
-			: KeepPaginated<C, Call<C, Next, S>>
-		: IsClass<Current, S> extends true
-			? [Next['name'], S['classes'][Current & ClassName<S>]] extends ['paginate', { item: string }]
-				? Paginated<Current & string>
-				: CallMethod<Current & ClassName<S>, Next, S>
-			: unknown
+/**
+ * Distributes over a union such as `'page' | null`; the `null` member throws.
+ * Impossible stays impossible.
+ */
+type CallEach<Current, Next extends Step, S extends Schema> = Current extends Impossible
+	? Current
+	: Current extends null
+		? never
+		: Current extends Paginated<infer C>
+			? Next['name'] extends NewCollection
+				? Call<C, Next, S>
+				: KeepPaginated<C, Call<C, Next, S>>
+			: IsClass<Current, S> extends true
+				? [Next['name'], S['classes'][Current & ClassName<S>]] extends ['paginate', { item: string }]
+					? Paginated<Current & string>
+					: CallMethod<Current & ClassName<S>, Next, S>
+				: unknown
 
 /**
  * Methods of `pages` that build a new collection (the children, drafts or

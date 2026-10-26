@@ -8,6 +8,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { createClient, KqlError, type ClientConfig, type Query } from '../../src/index.ts'
+import * as impossible from '../impossible.ts'
 import { headlessTestSite, testSite, testSiteOrigin } from '../test-site.ts'
 
 /** Asserts that `query` rejects with a `KqlError` carrying exactly these values. */
@@ -53,6 +54,16 @@ test('an invalid query string throws KqlError 400', async () => {
 		status: 400,
 		code: 400,
 		message: 'Access to non-existing property "page(\'home\'" on array',
+	})
+})
+
+// Impossible queries: a compile error, so they are passed as a plain `Query`.
+
+test('an unknown root throws KqlError 400', async () => {
+	await assertThrowsKqlError(testSite, impossible.unknownRoot as Query, {
+		status: 400,
+		code: 400,
+		message: 'Access to non-existing property "nothing" on array',
 	})
 })
 

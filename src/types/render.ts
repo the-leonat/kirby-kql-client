@@ -1,7 +1,8 @@
 /**
  * Render: turns what a query string returns into its JSON type.
  *
- * - `null` renders as `null`, a JSON type as itself, Unknown as `unknown`.
+ * - `null` renders as `null`, a JSON type as itself, Unknown as `unknown`,
+ *   Impossible as itself.
  * - A select on a boolean, number or string gives `null` (e.g. on the `false`
  *   that `next` gives past the end of a collection).
  * - A class without a select renders as its render type, or else its default fields.
@@ -14,6 +15,7 @@
  */
 import type { ClassName, IsClass, Schema } from '../schema.ts'
 import type { Select } from '../query.ts'
+import type { Impossible } from './impossible.ts'
 import type { SelectShape } from './select.ts'
 import type { Paginated } from './walk.ts'
 
@@ -34,8 +36,8 @@ export type Render<R, Sel, S extends Schema, IsPaginated extends boolean = false
 	: RenderEach<R, Sel, S, IsPaginated>
 
 /** Distributes over a union such as `'page' | null`. */
-type RenderEach<R, Sel, S extends Schema, IsPaginated extends boolean> = R extends null
-	? null
+type RenderEach<R, Sel, S extends Schema, IsPaginated extends boolean> = R extends null | Impossible
+	? R
 	: R extends Paginated<infer C>
 		? RenderEach<C, Sel, S, true>
 		: IsClass<R, S> extends true
