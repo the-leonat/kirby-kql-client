@@ -128,9 +128,10 @@ export type StructureWrongId = AllMatch<
  * wrong only at a film video's `hls`, seven objects deep and inside the
  * `| null` of the page, the film and the video. TypeScript may give up
  * comparing nested types from one recursive generic type after about three
- * levels; whether it does depends on how the result type is built. Before
- * 02fc3e61 a single `Equal` of the whole type missed this, so `Mismatched`
- * compares key by key (`DeepEqual`).
+ * levels; whether it does depends on how the result type is built. Until a
+ * select checked its entries for impossible query strings, which changed how
+ * its shape is built, a single `Equal` of the whole type missed this, so
+ * `Mismatched` compares key by key (`DeepEqual`).
  */
 type CanaryQueries = { directorPage: typeof directorPage }
 type HlsPath = ['layouts', 'columns', 'blocks', 'content', 'film', 'videoFull', 'hls']
