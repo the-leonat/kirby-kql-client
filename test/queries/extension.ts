@@ -4,9 +4,9 @@
  *
  * The extension adds the plugin's root `pluginPage(…)`, the plugin's methods
  * to the `field`, `page` and `pages` classes, adds the plugin's own class
- * `stats`, and overrides the existing
- * method `file.width`: the base schema allows for the content field a
- * non-image gives, a site with only images knows it is a number.
+ * `stats`, and overrides the existing method `file.width`: the base schema
+ * allows for the content field a non-image gives, a site with only images
+ * knows it is a number.
  *
  * Content: as in test/queries/plugin.ts.
  */
