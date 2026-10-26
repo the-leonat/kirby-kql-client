@@ -9,6 +9,7 @@
  * observed type has one object per block type, each with its `type` as a
  * string literal.
  */
+import type { BlockShape } from '../src/types/blocks.ts'
 
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json }
 
@@ -62,7 +63,12 @@ function describe(value: Json, options: ObservedTypeOptions): Shape {
 	return { scalars: new Set([typeof value]) }
 }
 
-const blockKeys = ['content', 'id', 'isHidden', 'type']
+/**
+ * The keys of a block rendered without a select: those of `BlockShape`, the
+ * shape the result types give blocks (src/types/blocks.ts). Listed as a
+ * record of them, so this fails to compile when the two differ.
+ */
+const blockKeys = Object.keys({ content: true, id: true, isHidden: true, type: true } satisfies Record<keyof BlockShape, true>)
 
 function isBlock(value: { [key: string]: Json }): value is { [key: string]: Json; type: string } {
 	const keys = Object.keys(value).filter((key) => key !== 'isEmpty')

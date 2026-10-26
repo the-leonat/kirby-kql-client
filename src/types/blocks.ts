@@ -10,23 +10,30 @@
  */
 import type { KirbySchema } from '../kirby-schema.ts'
 
-/** The core blocks with the custom blocks merged in: a custom block replaces the core block of its block type. */
-export type SiteBlocks<Core, Custom> = {
-	[Type in keyof Core | keyof Custom]: Type extends keyof Custom
-		? Custom[Type]
-		: Type extends keyof Core
-			? Core[Type]
-			: never
-}
+/**
+ * The site's block map for the schema extension `Extension`: block type =>
+ * stored content, the core blocks `Core` with the custom blocks of its
+ * `blocks` key merged in (a custom block replaces the core block of its block
+ * type). `never` when `Extension` has no `blocks` key.
+ */
+export type SiteBlocks<Extension, Core = KirbySchema['blocks']> = Extension extends { blocks: infer Custom }
+	? {
+			[Type in keyof Core | keyof Custom]: Type extends keyof Custom
+				? Custom[Type]
+				: Type extends keyof Core
+					? Core[Type]
+					: never
+		}
+	: never
 
-/** The block types of `Blocks` that are not removed (`never`). */
-export type BlockTypeName<Blocks> = {
+/** The block types of the block map `Blocks`, without the removed ones (set to `never`). */
+export type KeptBlockType<Blocks> = {
 	[Type in keyof Blocks]: [Blocks[Type]] extends [never] ? never : Type
 }[keyof Blocks] &
 	string
 
-/** The block union of `Blocks`, or its members of the block types `Type`. */
-export type BlockUnion<Blocks, Type extends keyof Blocks = BlockTypeName<Blocks>> = {
+/** The block union of the block map `Blocks`, or its members of the block types `Type`. */
+export type BlockUnion<Blocks, Type extends keyof Blocks = KeptBlockType<Blocks>> = {
 	[T in Type]: { id: string; type: T; isHidden: boolean; content: StoredContent<Blocks[T]> }
 }[Type]
 
@@ -34,25 +41,27 @@ export type BlockUnion<Blocks, Type extends keyof Blocks = BlockTypeName<Blocks>
 type StoredContent<Content> = [keyof Content] extends [never] ? never[] : Content
 
 /**
+ * The keys every block renders with when it renders without a select. Kept
+ * in step with `blockKeys` in scripts/observed-type.ts, which tells blocks
+ * apart in fixtures by these keys (and fails to compile when they differ).
+ */
+export type BlockShape = { id: string; type: string; isHidden: boolean; content: unknown }
+
+/**
  * A class's render type with every block in it typed by the block union
- * `Union`: an object with the keys of a block (`id`, `type`, `isHidden`,
- * `content`) becomes one object per member of `Union`, with its other keys
- * (a single block's `isEmpty`) kept.
+ * `Union`: an object with the keys of a block (`BlockShape`) becomes one
+ * object per member of `Union`, with its other keys (a single block's
+ * `isEmpty`) kept.
  */
 export type WithBlockTypes<Render, Union> = Render extends readonly (infer Item)[]
 	? WithBlockTypes<Item, Union>[]
-	: Render extends { id: string; type: string; isHidden: boolean; content: unknown }
+	: Render extends BlockShape
 		? Union extends unknown
 			? { [K in keyof Render]: K extends keyof Union ? Union[K] : Render[K] }
 			: never
 		: Render extends object
 			? { [K in keyof Render]: WithBlockTypes<Render[K], Union> }
 			: Render
-
-/** The custom blocks of a schema extension's `blocks` key merged into Kirby's core blocks. */
-type ExtensionBlocks<Extension> = Extension extends { blocks: infer Custom }
-	? SiteBlocks<KirbySchema['blocks'], Custom>
-	: never
 
 /**
  * One block as it renders without a select, on a client created with the
@@ -64,13 +73,13 @@ type ExtensionBlocks<Extension> = Extension extends { blocks: infer Custom }
  *   type FilmBlock = Block<Site, 'film'>
  *   // { id: string; type: 'film'; isHidden: boolean; content: { film: string[]; autoplay: string } }
  */
-export type Block<Extension = {}, Type extends BlockType<Extension> = BlockType<Extension>> = Extension extends {
-	blocks: unknown
-}
-	? BlockUnion<ExtensionBlocks<Extension>, Type & keyof ExtensionBlocks<Extension>>
-	: KirbySchema['classes']['blocks']['render'][number]
+export type Block<Extension = {}, Type extends BlockType<Extension> = BlockType<Extension>> = [
+	SiteBlocks<Extension>,
+] extends [never]
+	? KirbySchema['classes']['blocks']['render'][number]
+	: BlockUnion<SiteBlocks<Extension>, Type & keyof SiteBlocks<Extension>>
 
 /** The block types of a site with the schema extension `Extension`; `string` without a `blocks` key. */
-export type BlockType<Extension = {}> = Extension extends { blocks: unknown }
-	? BlockTypeName<ExtensionBlocks<Extension>>
-	: string
+export type BlockType<Extension = {}> = [SiteBlocks<Extension>] extends [never]
+	? string
+	: KeptBlockType<SiteBlocks<Extension>>

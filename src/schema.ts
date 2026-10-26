@@ -101,20 +101,25 @@ export type ExtendSchema<Base extends Schema, Extension extends SchemaExtension>
 	? Base
 	: {
 			roots: Merge<Base['roots'], Part<Extension, 'roots'>>
-			classes: Extension extends { blocks: infer Custom }
-				? TypedBlocks<
-						MergeClasses<Base['classes'], Part<Extension, 'classes'>>,
-						BlockUnion<SiteBlocks<Part<Base, 'blocks'>, Custom>>
-					>
-				: MergeClasses<Base['classes'], Part<Extension, 'classes'>>
+			classes: TypedBlocks<
+				MergeClasses<Base['classes'], Part<Extension, 'classes'>>,
+				SiteBlocks<Extension, Part<Base, 'blocks'>>
+			>
 		}
 
-/** `Classes` with every block in their render types typed by the block union `Union`. */
-type TypedBlocks<Classes, Union> = {
-	[Name in keyof Classes]: {
-		[Key in keyof Classes[Name]]: Key extends 'render' ? WithBlockTypes<Classes[Name][Key], Union> : Classes[Name][Key]
-	}
-}
+/**
+ * `Classes` with every block in their render types typed by the block union
+ * of the block map `Blocks`; unchanged without one (`never`).
+ */
+type TypedBlocks<Classes, Blocks> = [Blocks] extends [never]
+	? Classes
+	: {
+			[Name in keyof Classes]: {
+				[Key in keyof Classes[Name]]: Key extends 'render'
+					? WithBlockTypes<Classes[Name][Key], BlockUnion<Blocks>>
+					: Classes[Name][Key]
+			}
+		}
 
 type MergeClasses<Base, Extension> = {
 	[Name in keyof Base | keyof Extension]: MergeClass<Part<Base, Name>, Part<Extension, Name>>
