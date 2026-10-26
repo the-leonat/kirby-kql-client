@@ -3,15 +3,53 @@
 A typed client for the [Kirby Query Language](https://github.com/getkirby/kql) (KQL): the result type of every query is derived from the query itself.
 
 ```ts
-import { createClient } from 'kirby-kql-client'
+import { createClient, type PaginationInfo } from 'kirby-kql-client'
 
 const client = createClient({ url: 'https://example.com/api/query' })
 
+// A page with a select. A missing page is `null`.
 const home = await client.query({
 	query: "page('home')",
 	select: { title: true, isListed: true, cover: 'page.cover.toFile.url' },
 })
 // typeof home: { title: string; isListed: boolean; cover: string } | null
+
+// A collection is an array. Methods are typed by what Kirby returns.
+const news = await client.query({
+	query: "page('news').children.listed.sortBy('date', 'desc')",
+	select: { title: true, url: true, readingMinutes: 'page.minutes.toInt' },
+})
+// typeof news: { title: string; url: string; readingMinutes: number }[]
+
+// A nested query, and a relation that can be empty.
+const project = await client.query({
+	query: "page('projects/alpha')",
+	select: {
+		title: true,
+		gallery: { query: 'page.images', select: ['url', 'alt'] },
+		author: { query: 'page.author.toUser', select: ['name'] },
+	},
+})
+// typeof project: { title: string; gallery: { url: string; alt: string }[]; author: { name: string } | null } | null
+
+// A single value, and a collection without a select (the ids of its items).
+const title = await client.query({ query: 'site.title' })
+// typeof title: string
+const ids = await client.query({ query: 'site.children' })
+// typeof ids: string[]
+
+// Pagination wraps the items.
+const posts = await client.query({
+	query: "page('blog').children.listed",
+	select: ['title'],
+	pagination: { limit: 10, page: 1 },
+})
+// typeof posts: { data: { title: string }[]; pagination: PaginationInfo }
+
+// A query KQL can never answer is a compile error at the query.
+// @ts-expect-error a method on a string: `slug` is a string, it has no `foo`
+const impossible = client.query({ query: "page('home').slug.foo" })
+// typeof impossible: Promise<never>
 ```
 
 No result types written by hand, no `as const`, no `any`. The types come from a schema generated from the Kirby and KQL source, and every one of them is checked against what a real KQL endpoint returns.
