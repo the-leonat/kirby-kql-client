@@ -22,10 +22,10 @@ export interface Schema {
 	/** Classes by their KQL alias. */
 	classes: { [name: string]: ClassDefinition }
 	/**
-	 * `true` makes an unknown method an impossible query instead of
-	 * `unknown`. Set by `createClient({ …, strict: true })`.
+	 * Makes an unknown method an impossible query instead of `unknown`. Set by
+	 * `createClient({ …, strict: true })`.
 	 */
-	strict?: boolean
+	strict?: true
 }
 
 /** `S` with `strict` on. */

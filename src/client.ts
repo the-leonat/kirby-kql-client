@@ -17,10 +17,10 @@ export interface ClientConfig {
 	/**
 	 * Makes an unknown method (on a class without content fields, described by
 	 * neither the schema nor the schema extension) a compile error at the
-	 * query, with the result type `never`, instead of `unknown`. Types only:
-	 * pass it as the literal `true`.
+	 * query, with the result type `never`, instead of `unknown`. Types only,
+	 * so it is `true` or left out.
 	 */
-	strict?: boolean
+	strict?: true
 }
 
 /** A client whose results are typed by the schema `S`. */

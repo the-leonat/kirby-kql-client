@@ -427,7 +427,7 @@ const stats = strict.query({ query: "page('blog').children.stats" })
 // typeof stats: Promise<never>
 ```
 
-`strict` changes types only. Pass it as the literal `true` in the `createClient` call: a `boolean` variable is not strict. It is off by default, so a site with undescribed plugin methods still type-checks. For a reusable query's result type on a strict client, use `Result<typeof query, StrictSchema<ExtendedSchema<YourExtension>>>`.
+`strict` changes types only. It is `true` or left out: a `boolean` is rejected, because the client's types can't depend on a value known only at runtime. It is off by default, so a site with undescribed plugin methods still type-checks. For a reusable query's result type on a strict client, use `Result<typeof query, StrictSchema<ExtendedSchema<YourExtension>>>`.
 
 ## Errors
 

@@ -50,6 +50,15 @@ export const withoutStrict: [
 	Equal<ResultOn<typeof plain, CollectionMethod>, unknown>,
 ] = [true, true]
 
+/**
+ * `strict` is the literal `true` or left out: a `boolean` could be either,
+ * and the client's types can't be both.
+ */
+export function strictAsBoolean(flag: boolean) {
+	// @ts-expect-error `strict` takes only `true`
+	return createClient({ ...testSite, strict: flag })
+}
+
 /** An unknown key on a page is a content field, with `strict` too. */
 export const contentField: Equal<
 	ResultOn<typeof strict, (typeof plugin.pageMethodAsContentField)[0]>,
