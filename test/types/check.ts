@@ -5,6 +5,51 @@ export type Equal<A, B> =
 	(<T>() => T extends A ? 1 : 2) extends (<T>() => T extends B ? 1 : 2) ? true : false
 
 /**
+ * `Equal`, compared key by key: one `Equal` of two deeply nested types may
+ * stop comparing a few levels down and report them identical (see ADR 0004).
+ *
+ * Objects must have the same keys, each optional and readonly alike, and
+ * each key's values deep-equal; lists must be alike and their items
+ * deep-equal. A union is split: its members that are no objects must be
+ * `Equal`, and every object member must deep-equal an object member on the
+ * other side, both ways. Everything else is compared with `Equal`.
+ */
+export type DeepEqual<A, B> = IsOpaque<A> | IsOpaque<B> extends false
+	? Equal<Exclude<A, object>, Exclude<B, object>> extends true
+		? AllTrue<EachMatched<Extract<A, object>, Extract<B, object>> | EachMatched<Extract<B, object>, Extract<A, object>>>
+		: false
+	: Equal<A, B>
+
+/** `any`, `unknown` and `never` can't be split, only compared whole. */
+type IsOpaque<T> = 0 extends 1 & T ? true : unknown extends T ? true : [T] extends [never] ? true : false
+
+/** For each member of `A`, whether it deep-equals a member of `B`. */
+type EachMatched<A, B> = A extends unknown ? (true extends MatchesOne<A, B> ? true : false) : never
+
+type MatchesOne<A, B> = B extends unknown ? DeepEqualObject<A, B> : never
+
+type DeepEqualObject<A, B> = Equal<Skeleton<A>, Skeleton<B>> extends true
+	? A extends readonly unknown[]
+		? B extends readonly unknown[]
+			? DeepEqual<A[number], B[number]>
+			: false
+		: AllTrue<ValueOf<{ [K in keyof A as Named<K>]-?: K extends keyof B ? DeepEqual<A[K], B[K]> : false }>>
+	: false
+
+/** The keys of an object, or the kind of a list, without their values: `0` in place of each. */
+type Skeleton<T> = { [K in keyof T]: 0 }
+
+/**
+ * Gives an index signature a key of its own, so that the keys named beside it
+ * (a structure item's `id`) are not hidden behind it when the values are read.
+ */
+type Named<K> = string extends K ? '[string]' : number extends K ? '[number]' : K
+
+type ValueOf<T> = T[keyof T]
+
+type AllTrue<T> = false extends T ? false : true
+
+/**
  * The names of the test queries whose result type differs from the observed
  * type of their fixture, or that have no fixture. `never` when all match.
  *
@@ -28,9 +73,9 @@ export type Mismatched<Queries, Observed, On extends Client<any> = Client> = {
 /** `true`, `false` or `boolean` (some cases match, some don't). */
 type EqualForEachCase<Observed, Q, On extends Client<any>> = Q extends readonly (infer Case)[]
 	? Case extends unknown
-		? Equal<WidenToIndex<Observed, ResultOn<On, Case>>, ResultOn<On, Case>>
+		? DeepEqual<WidenToIndex<Observed, ResultOn<On, Case>>, ResultOn<On, Case>>
 		: never
-	: Equal<WidenToIndex<Observed, ResultOn<On, Q>>, ResultOn<On, Q>>
+	: DeepEqual<WidenToIndex<Observed, ResultOn<On, Q>>, ResultOn<On, Q>>
 
 /** The result type the client `On` gives the query `Q`, e.g. `ResultOn<typeof client, typeof query>`. */
 export type ResultOn<On extends Client<any>, Q> = On extends Client<infer S> ? Result<Q, S> : never
