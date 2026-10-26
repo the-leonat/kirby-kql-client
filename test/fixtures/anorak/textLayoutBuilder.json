@@ -262,6 +262,46 @@
 							"type": "film",
 							"content": {
 								"film": {
+									"title": "Film C",
+									"customer": "",
+									"slug": "film-c",
+									"embedOnly": false,
+									"videoFull": null,
+									"videoTeaser": null,
+									"videoTeaserMobile": null,
+									"director": {
+										"slug": "john-roe",
+										"path": "anorak/directors/john-roe",
+										"name": "John Roe"
+									},
+									"awards": [
+										{
+											"alt": "An orange test image",
+											"src": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo.png",
+											"srcset": "http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-400x.webp 400w, http://kql-test-site.example/media/pages/anorak/media/7cf19d9da5-1767225600/photo-800x.webp 800w",
+											"width": 4,
+											"height": 3
+										}
+									]
+								},
+								"caption": "",
+								"images": [],
+								"customer": "Example Customer",
+								"text": "",
+								"align": "",
+								"level": "",
+								"link": "",
+								"heading": "",
+								"image": null,
+								"logo": null,
+								"author": "",
+								"playType": "click"
+							}
+						},
+						{
+							"type": "film",
+							"content": {
+								"film": {
 									"title": "Film B",
 									"customer": "Sample Customer",
 									"slug": "film-b",

@@ -485,7 +485,7 @@ export interface Observed {
 							posterTiny: string
 							preview: string
 							blurhash: string
-						}
+						} | null
 						videoTeaser: {
 							hls: string
 							poster: string
@@ -494,7 +494,7 @@ export interface Observed {
 							posterTiny: string
 							preview: string
 							blurhash: string
-						}
+						} | null
 						videoTeaserMobile: {
 							hls: string
 							poster: string
@@ -503,7 +503,7 @@ export interface Observed {
 							posterTiny: string
 							preview: string
 							blurhash: string
-						}
+						} | null
 						director: {
 							slug: string
 							path: string
@@ -764,7 +764,7 @@ export interface Observed {
 								posterTiny: string
 								preview: string
 								blurhash: string
-							}
+							} | null
 							videoTeaser: {
 								hls: string
 								poster: string
@@ -773,7 +773,7 @@ export interface Observed {
 								posterTiny: string
 								preview: string
 								blurhash: string
-							}
+							} | null
 							videoTeaserMobile: {
 								hls: string
 								poster: string
@@ -782,7 +782,7 @@ export interface Observed {
 								posterTiny: string
 								preview: string
 								blurhash: string
-							}
+							} | null
 							director: {
 								slug: string
 								path: string
@@ -832,7 +832,7 @@ export interface Observed {
 								posterTiny: string
 								preview: string
 								blurhash: string
-							}
+							} | null
 							videoTeaser: {
 								hls: string
 								poster: string
@@ -841,7 +841,7 @@ export interface Observed {
 								posterTiny: string
 								preview: string
 								blurhash: string
-							}
+							} | null
 							videoTeaserMobile: {
 								hls: string
 								poster: string
@@ -850,7 +850,7 @@ export interface Observed {
 								posterTiny: string
 								preview: string
 								blurhash: string
-							}
+							} | null
 							director: {
 								slug: string
 								path: string
@@ -1008,7 +1008,7 @@ export interface Observed {
 							posterTiny: string
 							preview: string
 							blurhash: string
-						}
+						} | null
 						videoTeaser: {
 							hls: string
 							poster: string
@@ -1017,7 +1017,7 @@ export interface Observed {
 							posterTiny: string
 							preview: string
 							blurhash: string
-						}
+						} | null
 						videoTeaserMobile: {
 							hls: string
 							poster: string
@@ -1026,7 +1026,7 @@ export interface Observed {
 							posterTiny: string
 							preview: string
 							blurhash: string
-						}
+						} | null
 						director: {
 							slug: string
 							path: string
