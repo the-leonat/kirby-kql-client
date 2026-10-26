@@ -64,11 +64,17 @@ export type Follow<Current, Steps extends Step[], S extends Schema> =
 
 type Call<Current, Next extends Step, S extends Schema> = unknown extends Current
 	? unknown
-	: CallEach<Current, Next, S>
+	: UnlessPossible<CallEach<Current, Next, S>>
+
+/**
+ * The possible members of `R`, or `R` if none is: a step is impossible only
+ * if it is for every member of the value before it.
+ */
+type UnlessPossible<R> = [Exclude<R, Impossible>] extends [never] ? R : Exclude<R, Impossible>
 
 /**
  * Distributes over a union such as `'page' | null`; the `null` member throws.
- * Impossible stays impossible.
+ * Impossible stays impossible, and a method on a JSON scalar is impossible.
  */
 type CallEach<Current, Next extends Step, S extends Schema> = Current extends Impossible
 	? Current
@@ -82,7 +88,13 @@ type CallEach<Current, Next extends Step, S extends Schema> = Current extends Im
 				? [Next['name'], S['classes'][Current & ClassName<S>]] extends ['paginate', { item: string }]
 					? Paginated<Current & string>
 					: CallMethod<Current & ClassName<S>, Next, S>
-				: unknown
+				: Current extends Scalar
+					? Impossible<`method "${Next['name']}" called on a ${ScalarName<Current>}`>
+					: unknown
+
+type Scalar = boolean | number | string
+
+type ScalarName<Value extends Scalar> = Value extends boolean ? 'boolean' : Value extends number ? 'number' : 'string'
 
 /**
  * Methods of `pages` that build a new collection (the children, drafts or

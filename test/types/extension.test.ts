@@ -29,7 +29,8 @@ type Shout = { query: "page('plugin/filled').title.shout.isEmpty" }
 
 export const separate: [
 	Equal<ResultOn<typeof client, Shout>, boolean>,
-	Equal<ResultOn<typeof other, Shout>, unknown>,
+	// A string has no methods: on `other`, the query is impossible.
+	Equal<ResultOn<typeof other, Shout>, never>,
 	Equal<ResultOn<typeof plain, Shout>, unknown>,
 	Equal<ResultOn<typeof other, { query: "page('plugin/filled').title.shout" }>, string>,
 ] = [true, true, true, true]

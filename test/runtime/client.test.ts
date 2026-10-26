@@ -67,6 +67,22 @@ test('an unknown root throws KqlError 400', async () => {
 	})
 })
 
+for (const [name, type] of [
+	['methodOnString', 'string'],
+	['methodOnBoolean', 'boolean'],
+	['methodOnNumber', 'integer'],
+] as const) {
+	test(`a method called on a JSON scalar throws KqlError 400 (${type})`, async () => {
+		const query = impossible[name] as Query
+		const method = query.query?.split('.').at(-1)
+		await assertThrowsKqlError(testSite, query, {
+			status: 400,
+			code: 400,
+			message: `Access to method/property "${method}" on ${type}`,
+		})
+	})
+}
+
 test('wrong Basic credentials throw KqlError 403', async () => {
 	await assertThrowsKqlError(
 		{ ...testSite, auth: { email: 'nobody@example.com', password: 'wrong-password' } },
