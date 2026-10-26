@@ -21,7 +21,7 @@ No result types written by hand, no `as const`, no `any`. The types come from a 
 - TypeScript 5.4 or later.
 - Kirby 5.6 with KQL 3.0.
 
-> **Status:** not published yet. The package is private until v1 is released; see [Development](#development).
+> **Status:** 0.x, not on npm yet. Install it from a release tag on GitHub; see [Install](#install).
 
 ## Contents
 
@@ -40,11 +40,13 @@ No result types written by hand, no `as const`, no `any`. The types come from a 
 
 ## Install
 
+Install it from a release tag on GitHub. Each tag holds the built package:
+
 ```sh
-npm install kirby-kql-client
+npm install github:the-leonat/kirby-kql-client#v0.1.1
 ```
 
-Until the package is published, build a tarball from this repo with `pnpm pack` and install that file.
+`pnpm add` and `bun add` take the same specifier. Use a tag, not a branch: only tags hold the build.
 
 ## Connect: endpoints and auth
 
@@ -511,7 +513,16 @@ Each test query's result type must equal the type observed in its fixture, exact
 
 ### Releasing
 
-`package.json` has `"private": true` so that nothing can be published by accident. Remove it only for a release, and only with the maintainer's explicit approval. The repo stays private until v1.
+A release is a tag on GitHub. Bump `version` on `main`, then build and commit `dist/` on a commit off `main`, tagged `v<version>`:
+
+```sh
+pnpm build && git switch --detach && git add -f dist && git commit -m "Build <version>" && git tag -a v<version> -m "kirby-kql-client <version>" && git switch main
+git push origin main v<version>
+```
+
+`main` never holds `dist/`. `v0.1.0` holds a build from before impossible queries; use `v0.1.1` or later.
+
+`package.json` has `"private": true` so that nothing can be published to npm by accident. Remove it only for an npm release, and only with the maintainer's explicit approval.
 
 ## License
 
