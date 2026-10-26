@@ -31,7 +31,7 @@
  *   build a new collection without the pagination, so they drop it.
  */
 import type { ClassName, IsClass, Schema } from '../schema.ts'
-import type { Impossible } from './impossible.ts'
+import type { Impossible, PossibleMembersOrAll } from './impossible.ts'
 import type { Step } from './parse.ts'
 
 /**
@@ -68,15 +68,10 @@ export type Follow<Current, Steps extends Step[], S extends Schema> =
 			: Follow<Call<Current, Next, S>, Rest, S>
 		: Current
 
+/** A step is impossible only if it is for every member of the value before it. */
 type Call<Current, Next extends Step, S extends Schema> = unknown extends Current
 	? unknown
 	: PossibleMembersOrAll<CallEach<Current, Next, S>>
-
-/**
- * The possible members of `R`, or `R` if none is: a step is impossible only
- * if it is for every member of the value before it.
- */
-type PossibleMembersOrAll<R> = [Exclude<R, Impossible>] extends [never] ? R : Exclude<R, Impossible>
 
 /**
  * Distributes over a union such as `'page' | null`; the `null` member throws.

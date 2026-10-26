@@ -20,3 +20,6 @@ export type Problem<R> = R extends Impossible<infer Message> ? Message : never
 
 /** `never` if `R` holds an impossible member, `R` otherwise. */
 export type Possible<R> = [Extract<R, Impossible>] extends [never] ? R : never
+
+/** The possible members of `R`, or `R` if it has none. */
+export type PossibleMembersOrAll<R> = [Exclude<R, Impossible>] extends [never] ? R : Exclude<R, Impossible>
