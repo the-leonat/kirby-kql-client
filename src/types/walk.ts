@@ -39,10 +39,12 @@ export interface Paginated<C extends string = string> {
 }
 
 /** The surrounding object's class in a nested query, or `never` at the top. */
-export type Walk<Steps extends Step[], S extends Schema, Surrounding extends string = never> =
+export type Walk<Steps extends Step[] | Impossible, S extends Schema, Surrounding extends string = never> =
 	Steps extends [infer First extends Step, ...infer Rest extends Step[]]
 		? Follow<Start<First, S, Surrounding>, Rest, S>
-		: unknown
+		: Steps extends Impossible
+			? Steps
+			: unknown
 
 /** With arguments, a name like `page('…')` is the root even inside a select on a page. */
 type Start<First extends Step, S extends Schema, Surrounding extends string> =

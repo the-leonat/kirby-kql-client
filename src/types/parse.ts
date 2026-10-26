@@ -10,7 +10,12 @@
  *
  * Dots and commas only separate steps and arguments outside brackets and quotes.
  * A step reached with `?.` instead of `.` is `optional`.
+ *
+ * A query string with a bracket or quote left open, or a closing bracket
+ * without an opening one, doesn't parse: it is Impossible (KQL answers 400).
+ * An empty query string gives no steps.
  */
+import type { Impossible } from './impossible.ts'
 
 export interface Step {
 	name: string
@@ -20,7 +25,15 @@ export interface Step {
 	optional: boolean
 }
 
-export type Parse<QueryString extends string> = ToSteps<SplitTopLevel<QueryString, '.'>>
+export type Parse<QueryString extends string> = Trim<QueryString> extends ''
+	? []
+	: SplitTopLevel<QueryString, '.'> extends infer Parts
+		? Parts extends string[]
+			? ToSteps<Parts>
+			: Parts extends Unbalanced<infer Problem>
+				? Impossible<`${Problem} in "${QueryString}"`>
+				: never
+		: never
 
 /** A part ending in `?` was followed by `?.`, which makes the next step optional. */
 type ToSteps<Parts extends string[], Optional extends boolean = false> = Parts extends [
@@ -42,20 +55,29 @@ type ToStep<Part extends string, Optional extends boolean> = Part extends `${inf
  */
 type CountArgs<Args extends string> = Trim<Args> extends ''
 	? 0
-	: SplitTopLevel<Args, ','> extends [infer Only extends string]
-		? Trim<Only> extends `[${string}]`
-			? number
-			: 1
-		: SplitTopLevel<Args, ','>['length']
+	: SplitTopLevel<Args, ','> extends infer Parts extends string[]
+		? Parts extends [infer Only extends string]
+			? Trim<Only> extends `[${string}]`
+				? number
+				: 1
+			: Parts['length']
+		: never
 
 type Open = '(' | '[' | '{'
 type Close = ')' | ']' | '}'
 type QuoteChar = "'" | '"'
 
+/** A query string that doesn't parse, and why. */
+interface Unbalanced<Problem extends string> {
+	unbalanced: Problem
+}
+
 /**
  * Splits `S` on `Separator` wherever the separator is outside brackets and quotes.
  * Walks one character at a time; `Depth` counts open brackets, `Quote` is the
  * quote character of the string literal currently open, or '' outside one.
+ * Gives Unbalanced if a bracket or quote is left open or a bracket closes
+ * none.
  */
 type SplitTopLevel<
 	S extends string,
@@ -75,16 +97,22 @@ type SplitTopLevel<
 				: Char extends Open
 					? SplitTopLevel<Rest, Separator, [...Depth, Char], '', `${Current}${Char}`, Parts>
 					: Char extends Close
-						? SplitTopLevel<Rest, Separator, Pop<Depth>, '', `${Current}${Char}`, Parts>
+						? Depth extends []
+							? Unbalanced<'unopened bracket'>
+							: SplitTopLevel<Rest, Separator, Pop<Depth>, '', `${Current}${Char}`, Parts>
 						: SplitTopLevel<Rest, Separator, Depth, '', `${Current}${Char}`, Parts>
 		: Char extends '\\'
 			? Rest extends `${infer Escaped}${infer AfterEscape}`
 				? SplitTopLevel<AfterEscape, Separator, Depth, Quote, `${Current}${Char}${Escaped}`, Parts>
-				: [...Parts, `${Current}${Char}`]
+				: Unbalanced<'unclosed quote'>
 			: Char extends Quote
 				? SplitTopLevel<Rest, Separator, Depth, '', `${Current}${Char}`, Parts>
 				: SplitTopLevel<Rest, Separator, Depth, Quote, `${Current}${Char}`, Parts>
-	: [...Parts, Current]
+	: Quote extends ''
+		? Depth extends []
+			? [...Parts, Current]
+			: Unbalanced<'unclosed bracket'>
+		: Unbalanced<'unclosed quote'>
 
 type Pop<List extends unknown[]> = List extends [...infer Init, unknown] ? Init : []
 

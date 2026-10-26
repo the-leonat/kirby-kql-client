@@ -59,6 +59,37 @@ test('an invalid query string throws KqlError 400', async () => {
 
 // Impossible queries: a compile error, so they are passed as a plain `Query`.
 
+test('a query string with a bracket left open throws KqlError 400', async () => {
+	await assertThrowsKqlError(testSite, impossible.unclosedBracket as Query, {
+		status: 400,
+		code: 400,
+		message: 'Access to non-existing property "page(\'home\'" on array',
+	})
+})
+
+test('a query string with a quote left open throws KqlError 400', async () => {
+	await assertThrowsKqlError(testSite, impossible.unclosedQuote as Query, {
+		status: 400,
+		code: 400,
+		message: 'Access to non-existing property "\'home" on array',
+	})
+})
+
+test('a query string with a bracket never opened throws KqlError 400', async () => {
+	await assertThrowsKqlError(testSite, impossible.unopenedBracket as Query, {
+		status: 400,
+		code: 400,
+		message: 'Access to non-existing property "itle" on array',
+	})
+})
+
+test('an empty query string does not throw', async () => {
+	// Not an impossible query: KQL answers it, though with no class's rendering.
+	assert.deepEqual(await createClient(testSite).query({ query: '' }), {
+		site: { blueprints: null, children: null, drafts: null, childrenAndDrafts: null },
+	})
+})
+
 test('an unknown root throws KqlError 400', async () => {
 	await assertThrowsKqlError(testSite, impossible.unknownRoot as Query, {
 		status: 400,

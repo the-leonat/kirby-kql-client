@@ -12,6 +12,21 @@ const client = createClient(testSite)
 /** What `client.query` accepts for the query `Q`: `Q` itself, or the problem when it is impossible. */
 type Accepted<Q extends Query> = Parameters<typeof client.query<Q>>[0]
 
+export function unclosedBracket() {
+	// @ts-expect-error the bracket of `page(` is never closed
+	return client.query(impossible.unclosedBracket)
+}
+
+export function unclosedQuote() {
+	// @ts-expect-error the quote of `'home` is never closed
+	return client.query(impossible.unclosedQuote)
+}
+
+export function unopenedBracket() {
+	// @ts-expect-error the last `)` closes no bracket
+	return client.query(impossible.unopenedBracket)
+}
+
 export function unknownRoot() {
 	// @ts-expect-error `nothing` is no root
 	return client.query(impossible.unknownRoot)
@@ -33,20 +48,36 @@ export function methodOnNumber() {
 }
 
 export const results: [
+	Equal<ResultOn<typeof client, typeof impossible.unclosedBracket>, never>,
+	Equal<Awaited<ReturnType<typeof unclosedBracket>>, never>,
+	Equal<ResultOn<typeof client, typeof impossible.unclosedQuote>, never>,
+	Equal<ResultOn<typeof client, typeof impossible.unopenedBracket>, never>,
 	Equal<ResultOn<typeof client, typeof impossible.unknownRoot>, never>,
 	Equal<Awaited<ReturnType<typeof unknownRoot>>, never>,
 	Equal<ResultOn<typeof client, typeof impossible.methodOnString>, never>,
 	Equal<Awaited<ReturnType<typeof methodOnString>>, never>,
 	Equal<ResultOn<typeof client, typeof impossible.methodOnBoolean>, never>,
 	Equal<ResultOn<typeof client, typeof impossible.methodOnNumber>, never>,
-] = [true, true, true, true, true, true]
+] = [true, true, true, true, true, true, true, true, true, true]
 
 export const problems: [
+	Equal<Accepted<typeof impossible.unclosedBracket>, `Impossible query: unclosed bracket in "page('home'.title"`>,
+	Equal<Accepted<typeof impossible.unclosedQuote>, `Impossible query: unclosed quote in "page('home).title"`>,
+	Equal<Accepted<typeof impossible.unopenedBracket>, `Impossible query: unopened bracket in "page('home').title)"`>,
 	Equal<Accepted<typeof impossible.unknownRoot>, 'Impossible query: unknown root "nothing"'>,
 	Equal<Accepted<typeof impossible.methodOnString>, 'Impossible query: method "upper" called on a string'>,
 	Equal<Accepted<typeof impossible.methodOnBoolean>, 'Impossible query: method "not" called on a boolean'>,
 	Equal<Accepted<typeof impossible.methodOnNumber>, 'Impossible query: method "round" called on a number'>,
-] = [true, true, true, true]
+] = [true, true, true, true, true, true, true]
+
+/**
+ * An empty query string is not impossible: KQL answers it, with an object
+ * that is no class's rendering (`{ site: { blueprints: null, … } }`), so its
+ * result type stays `unknown`.
+ */
+type Empty = { query: '' }
+
+export const empty: [Equal<ResultOn<typeof client, Empty>, unknown>, Equal<Accepted<Empty>, Empty>] = [true, true]
 
 /**
  * A method after a value that is a JSON scalar only sometimes is not

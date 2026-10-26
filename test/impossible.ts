@@ -8,6 +8,11 @@
  */
 import { kql } from '../src/index.ts'
 
+/** Query strings that don't parse: a bracket or a quote left open, a bracket never opened. */
+export const unclosedBracket = kql({ query: "page('home'.title" })
+export const unclosedQuote = kql({ query: "page('home).title" })
+export const unopenedBracket = kql({ query: "page('home').title)" })
+
 /** `nothing` is no root of the schema. */
 export const unknownRoot = kql({ query: 'nothing.title' })
 
