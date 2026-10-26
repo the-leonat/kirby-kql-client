@@ -55,6 +55,7 @@ const impossible = client.query({ query: "page('home').slug.foo" })
 No result types written by hand, no `as const`, no `any`. The types come from a schema generated from the Kirby and KQL source, and every one of them is checked against what a real KQL endpoint returns.
 
 - Framework independent: runs wherever `fetch` does (Node 18+, browsers, Bun, Deno, edge runtimes). Pass your own `fetch` for SvelteKit loaders or tests.
+- Blocks typed by block type: the client knows Kirby's core blocks, and you add your custom blocks in the schema extension; see [Block types](#block-types).
 - No runtime dependencies, ESM only.
 - TypeScript 5.4 or later.
 - Kirby 5.6 with KQL 3.0.
@@ -82,7 +83,7 @@ No result types written by hand, no `as const`, no `any`. The types come from a 
 Install it from a release tag on GitHub. Each tag holds the built package:
 
 ```sh
-npm install github:the-leonat/kirby-kql-client#v0.1.1
+npm install github:the-leonat/kirby-kql-client#v0.2.0
 ```
 
 `pnpm add` and `bun add` take the same specifier. Use a tag, not a branch: only tags hold the build.
