@@ -22,17 +22,17 @@ export type SelectShape<C extends ClassName<S>, Sel extends Select, S extends Sc
 	C,
 	AsRecord<Sel>,
 	S
-> extends infer Object
-	? [ImpossibleEntries<Object>] extends [never]
-		? EmptyAsArray<Object>
-		: ImpossibleEntries<Object>
+> extends infer Selected
+	? [ImpossibleEntries<Selected>] extends [never]
+		? EmptyAsArray<Selected>
+		: ImpossibleEntries<Selected>
 	: never
 
 /** An impossible entry makes the whole select impossible: KQL rejects the whole request. */
-type ImpossibleEntries<Object> = Extract<Object[keyof Object], Impossible>
+type ImpossibleEntries<Selected> = Extract<Selected[keyof Selected], Impossible>
 
 /** KQL builds the object as a PHP array, so one without keys is `[]` in JSON. */
-type EmptyAsArray<Object> = [keyof Object] extends [never] ? never[] : Object
+type EmptyAsArray<Selected> = [keyof Selected] extends [never] ? never[] : Selected
 
 type Shape<C extends ClassName<S>, Entries, S extends Schema> = {
 	-readonly [Key in keyof Entries as Entries[Key] extends false ? never : Key]: Entry<

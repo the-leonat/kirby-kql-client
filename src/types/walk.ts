@@ -70,13 +70,13 @@ export type Follow<Current, Steps extends Step[], S extends Schema> =
 
 type Call<Current, Next extends Step, S extends Schema> = unknown extends Current
 	? unknown
-	: UnlessPossible<CallEach<Current, Next, S>>
+	: PossibleMembersOrAll<CallEach<Current, Next, S>>
 
 /**
  * The possible members of `R`, or `R` if none is: a step is impossible only
  * if it is for every member of the value before it.
  */
-type UnlessPossible<R> = [Exclude<R, Impossible>] extends [never] ? R : Exclude<R, Impossible>
+type PossibleMembersOrAll<R> = [Exclude<R, Impossible>] extends [never] ? R : Exclude<R, Impossible>
 
 /**
  * Distributes over a union such as `'page' | null`; the `null` member throws.
