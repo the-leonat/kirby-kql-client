@@ -32,6 +32,7 @@ No result types written by hand, no `as const`, no `any`. The types come from a 
 - [Reusable queries and query builders](#reusable-queries-and-query-builders)
 - [Pagination](#pagination)
 - [Plugins: schema extensions](#plugins-schema-extensions)
+- [Impossible queries](#impossible-queries)
 - [Errors](#errors)
 - [Known limitations](#known-limitations)
 - [API](#api)
@@ -86,6 +87,9 @@ const client = createClient({
 	headers: { 'X-Requested-With': 'my-app' },
 	// Defaults to the platform's `fetch`, e.g. SvelteKit's `fetch` in a load function.
 	fetch: globalThis.fetch,
+	// Types only: an unknown method is a compile error instead of `unknown`.
+	// See "Strict: unknown methods as errors".
+	strict: true,
 })
 ```
 
@@ -303,15 +307,17 @@ Prefer the `pagination` key. If you use `paginate()`, filter and sort **before**
 
 ## Plugins: schema extensions
 
-Plugins add methods and classes that the generated schema doesn't know. A **schema extension** describes them. It has the shape of the schema, with every part optional, and is deep-merged into it: a new class is added, and a method on an existing class is added or overrides the schema's.
+Plugins add roots, methods and classes that the generated schema doesn't know. A **schema extension** describes them. It has the shape of the schema, with every part optional, and is deep-merged into it: a new root or class is added, and a method on an existing class is added or overrides the schema's.
 
-A method returns either a class name as a string literal (`'page'`, `'field'`, `'stats'`) or a JSON type written as the TypeScript type itself (`number`, `string[]`), optionally `| null`.
+A root or method returns either a class name as a string literal (`'page'`, `'field'`, `'stats'`) or a JSON type written as the TypeScript type itself (`number`, `string[]`), optionally `| null`.
 
 ```ts
 // kirby.ts
 import { createClient } from 'kirby-kql-client'
 
 export type SiteExtension = {
+	// A root the plugin registers in `Kirby\Query\Query::$entries`: `featured('blog')`.
+	roots: { featured: 'page' | null }
 	classes: {
 		// A field method that gives a field.
 		field: { methods: { shout: 'field' } }
@@ -346,6 +352,9 @@ const post = await kirby.query({
 })
 // typeof post: { readingTime: number; loud: string; longest: { title: string } | null } | null
 
+const featured = await kirby.query({ query: "featured('blog')", select: ['title'] })
+// typeof featured: { title: string } | null
+
 // A reusable query's result type on the extended schema:
 const blog = kql({ query: "page('blog').children", select: { readingTime: true } })
 type Blog = Result<typeof blog, ExtendedSchema<SiteExtension>>
@@ -355,7 +364,8 @@ const posts: Blog = await kirby.query(blog)
 - The extension is a type parameter only: nothing changes at runtime.
 - Each client carries its own extension, so one app can query several sites.
 - A class that is a collection needs `item: '<class of its items>'`. A new class without `defaultFields` or `render` renders `unknown` without a select.
-- You can use the client without any extension. A method the schema doesn't know is typed `unknown`, and so is everything after it in the query string; a select on it still gives its known keys, with `unknown` values.
+- You can use the client without any extension. A method the schema doesn't know is typed `unknown`, and so is everything after it in the query string; a select on it still gives its known keys, with `unknown` values. With [`strict`](#strict-unknown-methods-as-errors), it is a compile error instead.
+- A root the schema doesn't know is a compile error: KQL rejects it (see [Impossible queries](#impossible-queries)). Declare a plugin's roots in `roots`.
 
 **The content field limitation.** On a page, site, file or user (and a block or structure item), a key the schema doesn't know reads a content field, so it is typed `string`. A plugin's page method that returns a number or an object is therefore typed `string` until you describe it in an extension. Describe every plugin method on these classes that doesn't return a field.
 
@@ -371,6 +381,53 @@ const posts: Blog = await kirby.query(blog)
 	},
 ],
 ```
+
+## Impossible queries
+
+Some queries KQL can never answer, whatever the content: it rejects them with a 400. Such a query is a compile error at the query, and its result type is `never`:
+
+- a query string that doesn't parse: a bracket or quote left open, or a bracket that closes none,
+- a root that neither the schema nor your schema extension declares (`nothing.title`),
+- a method on a string, number or boolean (`page.slug.upper`: `slug` is a string).
+
+```ts
+import { client } from './client.js'
+
+// @ts-expect-error `nothing` is no root
+const nothing = client.query({ query: 'nothing.title' })
+// typeof nothing: Promise<never>
+```
+
+The error names the problem:
+
+```
+Property ''Impossible query'' is missing in type '{ query: "nothing.title"; }'
+but required in type '{ 'Impossible query': "unknown root \"nothing\""; }'.
+```
+
+Why both: `never` alone is assignable to everything, so `const title: string = await client.query(…)` would compile without a word. The error makes the mistake show at the query, and `never` is the result type behind it.
+
+- An impossible query string anywhere in a select makes the whole query impossible: KQL rejects the whole request. (KQL only notices when it evaluates it, so a select on a missing page still gives `null`; the query fails on every page it was written for.)
+- `Result<typeof query>` is `never` for an impossible query, but only `client.query` reports the error: a query defined with `kql()` is checked where it is sent.
+- A method on a value that is a string or number only sometimes, such as a file's `width` (a number for an image, a field otherwise), is not impossible.
+
+Not impossible, because KQL answers them: an unknown key on a page, site, file, user, block or structure item (a content field, typos included), a select on a string, number or boolean (`null`), and an empty query string.
+
+### Strict: unknown methods as errors
+
+By default, a method that neither the schema nor your schema extension describes, on a class other than page, site, file, user, block or structure item, is typed `unknown`: it may be a plugin's. With `strict: true`, it is an impossible query instead, so a typo or a forgotten extension shows at the query.
+
+```ts
+import { createClient } from 'kirby-kql-client'
+
+const strict = createClient({ url: 'https://example.com/api/query', strict: true })
+
+// @ts-expect-error `stats` is an unknown method of `pages`
+const stats = strict.query({ query: "page('blog').children.stats" })
+// typeof stats: Promise<never>
+```
+
+`strict` changes types only. Pass it as the literal `true` in the `createClient` call: a `boolean` variable is not strict. It is off by default, so a site with undescribed plugin methods still type-checks. For a reusable query's result type on a strict client, use `Result<typeof query, StrictSchema<ExtendedSchema<YourExtension>>>`.
 
 ## Errors
 
@@ -413,14 +470,15 @@ The original error, where there is one, is the error's `cause`.
 
 | Export | |
 | --- | --- |
-| `createClient<Extension>(config)` | Creates a client. `config`: `url`, `auth?`, `fetch?`, `headers?`, `language?`. |
-| `client.query(query)` | Sends a query, resolves to its typed result, throws `KqlError`. |
+| `createClient<Extension>(config)` | Creates a client. `config`: `url`, `auth?`, `fetch?`, `headers?`, `language?`, `strict?`. |
+| `client.query(query)` | Sends a query, resolves to its typed result, throws `KqlError`. An impossible query fails to compile. |
 | `kql(query)` | Defines a query outside `query()` with its exact type. |
 | `KqlError` | The error every failed query throws: `status`, `code`, `message`, `cause`. |
 | `Result<Q, S?>` | The result type of the query `Q`, on the schema `S` (default: Kirby's). |
 | `Query` | What a query may contain. |
 | `Schema`, `SchemaExtension` | The shape of the schema and of an extension. |
 | `ExtendedSchema<Extension>` | Kirby's schema with an extension merged in, for `Result<Q, ExtendedSchema<E>>`. |
+| `StrictSchema<S>` | The schema `S` with `strict` on, for `Result<Q, StrictSchema<ExtendedSchema<E>>>`. |
 | `Client<S?>`, `ClientConfig` | The client's type and its config. |
 | `PaginationInfo` | The `pagination` of a paginated result. |
 
