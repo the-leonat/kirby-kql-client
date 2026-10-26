@@ -26,6 +26,13 @@ import { observedType, observedTypeOfCases } from './observed-type.ts'
 const queriesDir = new URL('../test/queries/', import.meta.url)
 const fixturesDir = new URL('../test/fixtures/', import.meta.url)
 
+/**
+ * The groups of test queries checked on a client with block types (a `blocks`
+ * key in its schema extension): their observed types tell blocks apart by
+ * block type. Other groups see every block as one generic shape.
+ */
+const groupsWithBlockTypes = new Set(['blocks'])
+
 const contentDir = new URL('../test/site/content/', import.meta.url)
 const contentMtime = new Date('2026-01-01T00:00:00Z')
 
@@ -43,13 +50,15 @@ for (const file of (await readdir(queriesDir)).filter((name) => name.endsWith('.
 	const groupDir = new URL(`${group}/`, fixturesDir)
 	await mkdir(groupDir, { recursive: true })
 
+	const options = { blockTypes: groupsWithBlockTypes.has(group) }
+
 	const types: string[] = []
 	for (const [name, query] of Object.entries(queries)) {
 		const cases = Array.isArray(query)
 		const fixture = cases
 			? await Promise.all(query.map((single) => client.query(single)))
 			: await client.query(query)
-		const type = cases ? observedTypeOfCases(fixture as unknown[]) : observedType(fixture)
+		const type = cases ? observedTypeOfCases(fixture as unknown[], options) : observedType(fixture, options)
 		await writeFile(new URL(`${name}.json`, groupDir), `${JSON.stringify(fixture, null, '\t')}\n`)
 		types.push(`\t${name}: ${type.replaceAll('\n', '\n\t')}`)
 	}

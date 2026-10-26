@@ -16,11 +16,18 @@
  *     }
  *   }
  */
+import type { BlockUnion, SiteBlocks, WithBlockTypes } from './types/blocks.ts'
+
 export interface Schema {
 	/** Names a query string may start with, such as `site` or `page(…)`. */
 	roots: { [name: string]: ReturnValue }
 	/** Classes by their KQL alias. */
 	classes: { [name: string]: ClassDefinition }
+	/**
+	 * The core blocks: block type => stored content, `never[]` for a block
+	 * without fields. Used only once a schema extension has a `blocks` key.
+	 */
+	blocks?: { [type: string]: unknown }
 	/**
 	 * Makes an unknown method an impossible query instead of `unknown`. Set by
 	 * `createClient({ …, strict: true })`.
@@ -69,6 +76,13 @@ export interface ClassDefinition {
 export interface SchemaExtension {
 	roots?: { [name: string]: ReturnValue }
 	classes?: { [name: string]: Partial<ClassDefinition> }
+	/**
+	 * Block types: block type => stored content, as Kirby stores it. Adds a
+	 * custom block, replaces a core block of the same block type, or removes
+	 * a core block with `never`. With this key, every block that renders
+	 * without a select is typed by the site's block union.
+	 */
+	blocks?: { [type: string]: unknown }
 }
 
 /**
@@ -76,6 +90,10 @@ export interface SchemaExtension {
  * and inside a class its methods, default fields and overloads by name. A
  * method the extension describes drops the base's overloads for it. Any other
  * part of a class the extension gives replaces the base's.
+ *
+ * With a `blocks` key, the extension's custom blocks are merged into the
+ * base's core blocks by block type, and every block in a render type is
+ * typed by the resulting block union.
  */
 export type ExtendSchema<Base extends Schema, Extension extends SchemaExtension> = [
 	keyof Extension,
@@ -83,8 +101,20 @@ export type ExtendSchema<Base extends Schema, Extension extends SchemaExtension>
 	? Base
 	: {
 			roots: Merge<Base['roots'], Part<Extension, 'roots'>>
-			classes: MergeClasses<Base['classes'], Part<Extension, 'classes'>>
+			classes: Extension extends { blocks: infer Custom }
+				? TypedBlocks<
+						MergeClasses<Base['classes'], Part<Extension, 'classes'>>,
+						BlockUnion<SiteBlocks<Part<Base, 'blocks'>, Custom>>
+					>
+				: MergeClasses<Base['classes'], Part<Extension, 'classes'>>
 		}
+
+/** `Classes` with every block in their render types typed by the block union `Union`. */
+type TypedBlocks<Classes, Union> = {
+	[Name in keyof Classes]: {
+		[Key in keyof Classes[Name]]: Key extends 'render' ? WithBlockTypes<Classes[Name][Key], Union> : Classes[Name][Key]
+	}
+}
 
 type MergeClasses<Base, Extension> = {
 	[Name in keyof Base | keyof Extension]: MergeClass<Part<Base, Name>, Part<Extension, Name>>

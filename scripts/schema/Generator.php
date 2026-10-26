@@ -45,6 +45,7 @@ class KqlSchemaGenerator
 		$schema = $this->schema();
 		$ts     = "// $header\n\nexport type KirbySchema = {\n";
 		$ts    .= "\troots: " . $this->tsRecord($schema['roots'], 1) . "\n";
+		$ts    .= "\tblocks: " . $this->tsRecord($schema['blocks'], 1) . "\n";
 		$ts    .= "\tclasses: {\n";
 
 		foreach ($schema['classes'] as $alias => $class) {
@@ -120,8 +121,68 @@ class KqlSchemaGenerator
 
 		return [
 			'roots'   => $this->roots(),
+			'blocks'  => $this->blocks(),
 			'classes' => $classes,
 		];
+	}
+
+	/**
+	 * What each field type stores in a block's content, as Kirby's blocks field
+	 * stores it (`Form::toStoredValues()`, the path every Panel save takes).
+	 * Only the field types of the core blocks: a new one fails the generator
+	 * until a test query proves what it stores.
+	 *
+	 * Test query: blocks/blocksWithoutSelect (every core block, filled and
+	 * empty, stored through Kirby's blocks field).
+	 */
+	protected const STORED_VALUES = [
+		'list'     => 'string',
+		'radio'    => 'string',
+		'select'   => 'string',
+		'text'     => 'string',
+		'textarea' => 'string',
+		// the toggles field: one of its options, or ''
+		'toggles'  => 'string',
+		'url'      => 'string',
+		'writer'   => 'string',
+		// `'true'` or `'false'` (the toggle field's `save`), not a boolean
+		'toggle'   => 'string',
+		// the UUIDs of the picked files, e.g. `file://…`
+		'files'    => 'string[]',
+	];
+
+	/**
+	 * The core blocks: block type => stored content, from the blueprints Kirby
+	 * itself registers (`kirby/config/blocks/*`), not the site's own. A block
+	 * without fields stores an empty PHP array: `[]` in JSON.
+	 */
+	protected function blocks(): array
+	{
+		$blocks = [];
+
+		foreach ($this->kirby->core()->blueprints() as $name => $file) {
+			if (str_starts_with($name, 'blocks/') === false) {
+				continue;
+			}
+
+			$type    = substr($name, strlen('blocks/'));
+			$content = [];
+
+			foreach (Kirby\Data\Data::read($file)['fields'] ?? [] as $field => $props) {
+				$fieldType = $props['type'] ?? $field;
+
+				if (isset(self::STORED_VALUES[$fieldType]) === false) {
+					throw new RuntimeException("The core block `$type` has a `$fieldType` field, whose stored value the generator doesn't know");
+				}
+
+				$content[] = $this->tsKey($field) . ': ' . self::STORED_VALUES[$fieldType];
+			}
+
+			$blocks[$type] = $content === [] ? 'never[]' : '{ ' . implode('; ', $content) . ' }';
+		}
+
+		ksort($blocks, SORT_STRING);
+		return $blocks;
 	}
 
 	protected function roots(): array

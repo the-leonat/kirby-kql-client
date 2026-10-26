@@ -1,0 +1,81 @@
+[
+	[
+		{
+			"id": "f0000000-0000-4000-8000-000000000001",
+			"columns": [
+				{
+					"width": "1/2",
+					"blocks": [
+						{
+							"type": "code",
+							"text": ""
+						},
+						{
+							"type": "gallery",
+							"text": ""
+						},
+						{
+							"type": "heading",
+							"text": "A heading"
+						},
+						{
+							"type": "image",
+							"text": ""
+						},
+						{
+							"type": "line",
+							"text": ""
+						},
+						{
+							"type": "list",
+							"text": "<ul><li>One</li><li>Two</li></ul>"
+						},
+						{
+							"type": "markdown",
+							"text": "# Markdown"
+						}
+					]
+				},
+				{
+					"width": "1/2",
+					"blocks": [
+						{
+							"type": "quote",
+							"text": "A quote"
+						},
+						{
+							"type": "table",
+							"text": ""
+						},
+						{
+							"type": "text",
+							"text": "<p>A text</p>"
+						},
+						{
+							"type": "video",
+							"text": ""
+						},
+						{
+							"type": "film",
+							"text": ""
+						},
+						{
+							"type": "divider",
+							"text": ""
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "f0000000-0000-4000-8000-000000000002",
+			"columns": [
+				{
+					"width": "1/1",
+					"blocks": []
+				}
+			]
+		}
+	],
+	[]
+]

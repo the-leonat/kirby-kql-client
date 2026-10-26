@@ -1,0 +1,168 @@
+[
+	{
+		"attrs": {
+			"theme": "intro"
+		},
+		"columns": [
+			{
+				"blocks": [
+					{
+						"content": {
+							"code": "echo \"hi\";",
+							"language": "php"
+						},
+						"id": "d0000000-0000-4000-8000-000000000028",
+						"isHidden": false,
+						"type": "code"
+					},
+					{
+						"content": {
+							"images": [
+								"file://richphoto0000001",
+								"file://anorakphoto00001"
+							],
+							"caption": "A gallery",
+							"ratio": "16/9",
+							"crop": "true"
+						},
+						"id": "d0000000-0000-4000-8000-000000000029",
+						"isHidden": false,
+						"type": "gallery"
+					},
+					{
+						"content": {
+							"level": "h2",
+							"text": "A heading"
+						},
+						"id": "d0000000-0000-4000-8000-000000000030",
+						"isHidden": false,
+						"type": "heading"
+					},
+					{
+						"content": {
+							"location": "kirby",
+							"image": [
+								"file://richphoto0000001"
+							],
+							"src": "",
+							"alt": "An image",
+							"caption": "A caption",
+							"link": "https://example.com",
+							"ratio": "1/1",
+							"crop": "true"
+						},
+						"id": "d0000000-0000-4000-8000-000000000031",
+						"isHidden": false,
+						"type": "image"
+					},
+					{
+						"content": [],
+						"id": "d0000000-0000-4000-8000-000000000032",
+						"isHidden": false,
+						"type": "line"
+					},
+					{
+						"content": {
+							"text": "<ul><li>One</li><li>Two</li></ul>"
+						},
+						"id": "d0000000-0000-4000-8000-000000000033",
+						"isHidden": false,
+						"type": "list"
+					},
+					{
+						"content": {
+							"text": "# Markdown"
+						},
+						"id": "d0000000-0000-4000-8000-000000000034",
+						"isHidden": false,
+						"type": "markdown"
+					}
+				],
+				"id": "e0000000-0000-4000-8000-000000000001",
+				"width": "1/2"
+			},
+			{
+				"blocks": [
+					{
+						"content": {
+							"text": "A quote",
+							"citation": "Someone"
+						},
+						"id": "d0000000-0000-4000-8000-000000000035",
+						"isHidden": false,
+						"type": "quote"
+					},
+					{
+						"content": [],
+						"id": "d0000000-0000-4000-8000-000000000036",
+						"isHidden": false,
+						"type": "table"
+					},
+					{
+						"content": {
+							"text": "<p>A text</p>"
+						},
+						"id": "d0000000-0000-4000-8000-000000000037",
+						"isHidden": false,
+						"type": "text"
+					},
+					{
+						"content": {
+							"location": "kirby",
+							"url": "",
+							"video": [
+								"file://anorakclip000001"
+							],
+							"poster": [
+								"file://richphoto0000001"
+							],
+							"caption": "A video",
+							"autoplay": "true",
+							"muted": "true",
+							"loop": "false",
+							"controls": "true",
+							"preload": "metadata"
+						},
+						"id": "d0000000-0000-4000-8000-000000000038",
+						"isHidden": false,
+						"type": "video"
+					},
+					{
+						"content": {
+							"film": [
+								"page://alpha00000000001"
+							],
+							"autoplay": "true"
+						},
+						"id": "d0000000-0000-4000-8000-000000000039",
+						"isHidden": false,
+						"type": "film"
+					},
+					{
+						"content": [],
+						"id": "d0000000-0000-4000-8000-000000000040",
+						"isHidden": false,
+						"type": "divider"
+					}
+				],
+				"id": "e0000000-0000-4000-8000-000000000002",
+				"width": "1/2"
+			}
+		],
+		"id": "f0000000-0000-4000-8000-000000000001",
+		"isEmpty": false
+	},
+	{
+		"attrs": [],
+		"columns": [
+			{
+				"blocks": [],
+				"id": "e0000000-0000-4000-8000-000000000003",
+				"width": "1/1"
+			}
+		],
+		"id": "f0000000-0000-4000-8000-000000000002",
+		"isEmpty": true
+	},
+	null
+]

@@ -12,6 +12,19 @@ export type KirbySchema = {
 		user: 'user' | null
 		users: 'users'
 	}
+	blocks: {
+		code: { code: string; language: string }
+		gallery: { images: string[]; caption: string; ratio: string; crop: string }
+		heading: { level: string; text: string }
+		image: { location: string; image: string[]; src: string; alt: string; caption: string; link: string; ratio: string; crop: string }
+		line: never[]
+		list: { text: string }
+		markdown: { text: string }
+		quote: { text: string; citation: string }
+		table: never[]
+		text: { text: string }
+		video: { location: string; url: string; video: string[]; poster: string[]; caption: string; autoplay: string; muted: string; loop: string; controls: string; preload: string }
+	}
 	classes: {
 		block: {
 			model: true

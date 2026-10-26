@@ -1,0 +1,4 @@
+# A custom block without fields, for the block type test queries
+# (test/queries/blocks.ts): its content renders as `[]`.
+name: Divider
+icon: divider

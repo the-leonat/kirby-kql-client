@@ -1,0 +1,148 @@
+[
+	{
+		"content": {
+			"code": "echo \"hi\";",
+			"language": "php"
+		},
+		"id": "d0000000-0000-4000-8000-000000000001",
+		"isEmpty": false,
+		"isHidden": false,
+		"type": "code"
+	},
+	{
+		"content": {
+			"images": [
+				"file://richphoto0000001",
+				"file://anorakphoto00001"
+			],
+			"caption": "A gallery",
+			"ratio": "16/9",
+			"crop": "true"
+		},
+		"id": "d0000000-0000-4000-8000-000000000003",
+		"isEmpty": false,
+		"isHidden": false,
+		"type": "gallery"
+	},
+	{
+		"content": {
+			"level": "h2",
+			"text": "A heading"
+		},
+		"id": "d0000000-0000-4000-8000-000000000005",
+		"isEmpty": false,
+		"isHidden": false,
+		"type": "heading"
+	},
+	{
+		"content": {
+			"location": "kirby",
+			"image": [
+				"file://richphoto0000001"
+			],
+			"src": "",
+			"alt": "An image",
+			"caption": "A caption",
+			"link": "https://example.com",
+			"ratio": "1/1",
+			"crop": "true"
+		},
+		"id": "d0000000-0000-4000-8000-000000000007",
+		"isEmpty": false,
+		"isHidden": false,
+		"type": "image"
+	},
+	{
+		"content": [],
+		"id": "d0000000-0000-4000-8000-000000000009",
+		"isEmpty": true,
+		"isHidden": false,
+		"type": "line"
+	},
+	{
+		"content": {
+			"text": "<ul><li>One</li><li>Two</li></ul>"
+		},
+		"id": "d0000000-0000-4000-8000-000000000011",
+		"isEmpty": false,
+		"isHidden": false,
+		"type": "list"
+	},
+	{
+		"content": {
+			"text": "# Markdown"
+		},
+		"id": "d0000000-0000-4000-8000-000000000013",
+		"isEmpty": false,
+		"isHidden": false,
+		"type": "markdown"
+	},
+	{
+		"content": {
+			"text": "A quote",
+			"citation": "Someone"
+		},
+		"id": "d0000000-0000-4000-8000-000000000015",
+		"isEmpty": false,
+		"isHidden": false,
+		"type": "quote"
+	},
+	{
+		"content": [],
+		"id": "d0000000-0000-4000-8000-000000000017",
+		"isEmpty": true,
+		"isHidden": false,
+		"type": "table"
+	},
+	{
+		"content": {
+			"text": "<p>A text</p>"
+		},
+		"id": "d0000000-0000-4000-8000-000000000019",
+		"isEmpty": false,
+		"isHidden": false,
+		"type": "text"
+	},
+	{
+		"content": {
+			"location": "kirby",
+			"url": "",
+			"video": [
+				"file://anorakclip000001"
+			],
+			"poster": [
+				"file://richphoto0000001"
+			],
+			"caption": "A video",
+			"autoplay": "true",
+			"muted": "true",
+			"loop": "false",
+			"controls": "true",
+			"preload": "metadata"
+		},
+		"id": "d0000000-0000-4000-8000-000000000021",
+		"isEmpty": false,
+		"isHidden": false,
+		"type": "video"
+	},
+	{
+		"content": {
+			"film": [
+				"page://alpha00000000001"
+			],
+			"autoplay": "true"
+		},
+		"id": "d0000000-0000-4000-8000-000000000023",
+		"isEmpty": false,
+		"isHidden": false,
+		"type": "film"
+	},
+	{
+		"content": [],
+		"id": "d0000000-0000-4000-8000-000000000026",
+		"isEmpty": true,
+		"isHidden": false,
+		"type": "divider"
+	},
+	null
+]

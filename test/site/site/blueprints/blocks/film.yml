@@ -1,0 +1,8 @@
+# A custom block, for the block type test queries (test/queries/blocks.ts).
+name: Film
+icon: video
+fields:
+  film:
+    type: pages
+  autoplay:
+    type: toggle

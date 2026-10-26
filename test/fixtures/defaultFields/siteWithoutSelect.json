@@ -1,6 +1,7 @@
 {
 	"children": [
 		"anorak",
+		"blocks",
 		"collections",
 		"home",
 		"pagination",
