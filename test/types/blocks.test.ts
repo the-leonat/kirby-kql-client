@@ -4,7 +4,7 @@
  * blocks and the extension's custom blocks.
  */
 import { createClient, type Block, type BlockType } from '../../src/index.ts'
-import type * as queries from '../queries/blocks.ts'
+import type * as blocksModule from '../queries/blocks.ts'
 import type { BlocksExtension } from '../queries/blocks.ts'
 import type * as richQueries from '../queries/rich.ts'
 import type { PluginExtension } from '../queries/extension.ts'
@@ -15,11 +15,14 @@ import type { AllMatch, Equal, Mismatched, ResultOn } from './check.ts'
 
 const client = createClient<BlocksExtension>(testSite)
 
-export type Blocks = AllMatch<Mismatched<typeof queries, Observed, typeof client>>
+/** The test queries, without the module's `blockTypes` flag. */
+type Queries = Omit<typeof blocksModule, 'blockTypes'>
+
+export type Blocks = AllMatch<Mismatched<Queries, Observed, typeof client>>
 
 export type WithoutBlockTypes = AllMatch<
 	// @ts-expect-error a client without block types renders every block as the generic shape
-	Mismatched<typeof queries, Observed>
+	Mismatched<Queries, Observed>
 >
 
 /** The generic shape of a block, the same on every client without a `blocks` key. */

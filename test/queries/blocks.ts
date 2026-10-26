@@ -1,7 +1,7 @@
 /**
  * Block types: blocks and layouts on a client WITH a `blocks` key in its schema
  * extension (`BlocksExtension`, used in test/types/blocks.test.ts). Their
- * fixtures tell blocks apart by block type (see scripts/record.ts).
+ * fixtures tell blocks apart by block type (`blockTypes`).
  *
  * Content: `blocks/filled` has
  * - `text`: one block of every core block and of the custom blocks `film` (a
@@ -26,6 +26,9 @@ export type BlocksExtension = {
 		divider: {}
 	}
 }
+
+/** Records this group's fixtures with blocks told apart by block type (see scripts/record.ts). */
+export const blockTypes = true
 
 const filled = "page('blocks/filled')"
 const empty = "page('blocks/empty')"

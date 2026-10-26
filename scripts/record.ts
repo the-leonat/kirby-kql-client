@@ -27,11 +27,13 @@ const queriesDir = new URL('../test/queries/', import.meta.url)
 const fixturesDir = new URL('../test/fixtures/', import.meta.url)
 
 /**
- * The groups of test queries checked on a client with block types (a `blocks`
- * key in its schema extension): their observed types tell blocks apart by
- * block type. Other groups see every block as one generic shape.
+ * A module of test queries: its test queries by name, and maybe the flag
+ * `blockTypes`. A group checked on a client with block types (a `blocks` key
+ * in its schema extension) exports `blockTypes = true`: its observed types
+ * tell blocks apart by block type. Other groups see every block as one
+ * generic shape.
  */
-const groupsWithBlockTypes = new Set(['blocks'])
+type QueryModule = { blockTypes?: boolean } & { [name: string]: Query | Query[] }
 
 const contentDir = new URL('../test/site/content/', import.meta.url)
 const contentMtime = new Date('2026-01-01T00:00:00Z')
@@ -45,12 +47,12 @@ for (const entry of await readdir(contentDir, { recursive: true, withFileTypes: 
 
 for (const file of (await readdir(queriesDir)).filter((name) => name.endsWith('.ts')).sort()) {
 	const group = file.replace(/\.ts$/, '')
-	const queries: Record<string, Query | Query[]> = await import(new URL(file, queriesDir).href)
+	const { blockTypes = false, ...queries }: QueryModule = await import(new URL(file, queriesDir).href)
 	const client = createClient(testSiteByGroup[group] ?? testSite)
 	const groupDir = new URL(`${group}/`, fixturesDir)
 	await mkdir(groupDir, { recursive: true })
 
-	const options = { blockTypes: groupsWithBlockTypes.has(group) }
+	const options = { blockTypes }
 
 	const types: string[] = []
 	for (const [name, query] of Object.entries(queries)) {
