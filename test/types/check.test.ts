@@ -6,7 +6,10 @@
 import type { homeBasics } from '../queries/fields.ts'
 import type { toPageWithSelect } from '../queries/relations.ts'
 import type { blocksWithoutSelect, structureWithoutSelect } from '../queries/rich.ts'
-import { kql } from '../../src/index.ts'
+import { createClient, kql } from '../../src/index.ts'
+import type { Observed as AnorakObserved } from '../fixtures/anorak.ts'
+import type { AnorakExtension, directorPage } from '../queries/anorak.ts'
+import { headlessTestSite } from '../test-site.ts'
 import type { AllMatch, Mismatched } from './check.ts'
 
 type Queries = { homeBasics: typeof homeBasics }
@@ -119,3 +122,35 @@ export type StructureWrongId = AllMatch<
 	// @ts-expect-error the observed `id` is a number
 	Mismatched<StructureQueries, { structureWithoutSelect: { id: number; title: string }[] }>
 >
+
+/**
+ * The canary: anorak's `directorPage` fixture type, correct as recorded, made
+ * wrong only at a film video's `hls`, seven objects deep and inside the
+ * `| null` of the page, the film and the video. TypeScript may give up
+ * comparing nested types from one recursive generic type after about three
+ * levels; whether it does depends on how the result type is built. Before
+ * 02fc3e61 a single `Equal` of the whole type missed this, so `Mismatched`
+ * compares key by key (`DeepEqual`).
+ */
+type CanaryQueries = { directorPage: typeof directorPage }
+type HlsPath = ['layouts', 'columns', 'blocks', 'content', 'film', 'videoFull', 'hls']
+type Director = AnorakObserved['directorPage']
+const anorak = createClient<AnorakExtension>(headlessTestSite)
+
+export type CanaryAsRecorded = AllMatch<
+	Mismatched<CanaryQueries, { directorPage: SetAt<Director, HlsPath, string> }, typeof anorak>
+>
+
+export type Canary = AllMatch<
+	// @ts-expect-error a film video's `hls` observed as `string | null` does not match `string`
+	Mismatched<CanaryQueries, { directorPage: SetAt<Director, HlsPath, string | null> }, typeof anorak>
+>
+
+/** `T` with the value at `Path` set to `V`, through unions and lists. */
+type SetAt<T, Path extends string[], V> = Path extends [infer Key, ...infer Rest extends string[]]
+	? T extends readonly (infer Item)[]
+		? SetAt<Item, Path, V>[]
+		: T extends object
+			? { [K in keyof T]: K extends Key ? SetAt<T[K], Rest, V> : T[K] }
+			: T
+	: V
