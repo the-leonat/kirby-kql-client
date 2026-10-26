@@ -17,6 +17,7 @@ A method on a value that is a scalar only sometimes (`'field' | number`) is not 
 ## Consequences
 
 - A typo in a root, an unbalanced bracket or a method on a string fails to compile. Content fields still take any key, typos included, because KQL answers them.
+- This changes default results, without `strict`: a method on a string, number or boolean was typed `unknown` and compiled; it is now `never` with an error at the query.
 - A query whose impossible part sits under a missing page or an empty collection is typed `never` although KQL answers `null` or `[]` there: it fails for every value it was written for.
 - `Result` is `never` for an impossible query, but only `client.query` reports the error; a query defined with `kql()` is checked where it is sent.
 - Knowing whether a query is possible means walking every nested query string when the query is sent, where before nested results were only computed when read. Over the test queries this costs about 30% more type instantiations (610k to 787k) and about 0.05 s of check time on TypeScript 7. Checking in the return type instead of the parameter would not help: the parameter check itself costs under 1%; the cost is in finding out.

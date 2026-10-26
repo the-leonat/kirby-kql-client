@@ -390,6 +390,8 @@ Some queries KQL can never answer, whatever the content: it rejects them with a 
 - a root that neither the schema nor your schema extension declares (`nothing.title`),
 - a method on a string, number or boolean (`page.slug.upper`: `slug` is a string).
 
+This holds for every client, with or without [`strict`](#strict-unknown-methods-as-errors), and it changes default results: these queries used to be typed `unknown`. A method on a string, number or boolean, which compiled before with the result `unknown`, is now a compile error with the result `never`.
+
 ```ts
 import { client } from './client.js'
 
