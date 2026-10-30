@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "81afc6935d474e0b060fe345857dbbd1",
+    "content-hash": "691fe69e1574ac87f7d7bf7e62368705",
     "packages": [
         {
             "name": "christian-riesen/base32",
@@ -67,16 +67,16 @@
         },
         {
             "name": "claviska/simpleimage",
-            "version": "4.4.0",
+            "version": "4.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/claviska/SimpleImage.git",
-                "reference": "6d928c779e343100cef40f75bac3e301c32c3741"
+                "reference": "f2397d67a06ed3334e5cfc22df55e55fb5f8bae1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/claviska/SimpleImage/zipball/6d928c779e343100cef40f75bac3e301c32c3741",
-                "reference": "6d928c779e343100cef40f75bac3e301c32c3741",
+                "url": "https://api.github.com/repos/claviska/SimpleImage/zipball/f2397d67a06ed3334e5cfc22df55e55fb5f8bae1",
+                "reference": "f2397d67a06ed3334e5cfc22df55e55fb5f8bae1",
                 "shasum": ""
             },
             "require": {
@@ -108,7 +108,7 @@
             "description": "A PHP class that makes working with images as simple as possible.",
             "support": {
                 "issues": "https://github.com/claviska/SimpleImage/issues",
-                "source": "https://github.com/claviska/SimpleImage/tree/4.4.0"
+                "source": "https://github.com/claviska/SimpleImage/tree/4.4.2"
             },
             "funding": [
                 {
@@ -116,20 +116,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-11-20T16:58:37+00:00"
+            "time": "2026-10-23T20:35:49+00:00"
         },
         {
             "name": "composer/semver",
-            "version": "3.5.1",
+            "version": "3.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "528948210cc46f967a4b98e83b19e76f2b504993"
+                "reference": "9dfce66f1e97360ea5e6d3e38ab14277e4cc591e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/528948210cc46f967a4b98e83b19e76f2b504993",
-                "reference": "528948210cc46f967a4b98e83b19e76f2b504993",
+                "url": "https://api.github.com/repos/composer/semver/zipball/9dfce66f1e97360ea5e6d3e38ab14277e4cc591e",
+                "reference": "9dfce66f1e97360ea5e6d3e38ab14277e4cc591e",
                 "shasum": ""
             },
             "require": {
@@ -181,7 +181,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.5.1"
+                "source": "https://github.com/composer/semver/tree/3.5.2"
             },
             "funding": [
                 {
@@ -193,7 +193,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-05T13:12:12+00:00"
+            "time": "2026-10-22T15:37:26+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -314,16 +314,16 @@
         },
         {
             "name": "fabianmichael/kirby-meta",
-            "version": "3.0.1",
+            "version": "3.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fabianmichael/kirby-meta.git",
-                "reference": "7c0129e14178c6d987537e219b4cb7525c6b2a26"
+                "reference": "1c3193de30a3e7d53636b07d2afe5a2359614db6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabianmichael/kirby-meta/zipball/7c0129e14178c6d987537e219b4cb7525c6b2a26",
-                "reference": "7c0129e14178c6d987537e219b4cb7525c6b2a26",
+                "url": "https://api.github.com/repos/fabianmichael/kirby-meta/zipball/1c3193de30a3e7d53636b07d2afe5a2359614db6",
+                "reference": "1c3193de30a3e7d53636b07d2afe5a2359614db6",
                 "shasum": ""
             },
             "require": {
@@ -358,7 +358,7 @@
             "homepage": "https://github.com/fabianmichael/kirby-meta",
             "support": {
                 "issues": "https://github.com/fabianmichael/kirby-meta/issues",
-                "source": "https://github.com/fabianmichael/kirby-meta/tree/3.0.1"
+                "source": "https://github.com/fabianmichael/kirby-meta/tree/3.1.0"
             },
             "funding": [
                 {
@@ -366,20 +366,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-22T19:01:10+00:00"
+            "time": "2026-10-26T18:05:25+00:00"
         },
         {
             "name": "filp/whoops",
-            "version": "2.18.6",
+            "version": "2.18.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filp/whoops.git",
-                "reference": "7d0a2cde892089bb09372f4366e9b960eb3001a9"
+                "reference": "50670ba239926c50f2073e868f6672f775cd57ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filp/whoops/zipball/7d0a2cde892089bb09372f4366e9b960eb3001a9",
-                "reference": "7d0a2cde892089bb09372f4366e9b960eb3001a9",
+                "url": "https://api.github.com/repos/filp/whoops/zipball/50670ba239926c50f2073e868f6672f775cd57ec",
+                "reference": "50670ba239926c50f2073e868f6672f775cd57ec",
                 "shasum": ""
             },
             "require": {
@@ -429,7 +429,7 @@
             ],
             "support": {
                 "issues": "https://github.com/filp/whoops/issues",
-                "source": "https://github.com/filp/whoops/tree/2.18.6"
+                "source": "https://github.com/filp/whoops/tree/2.18.7"
             },
             "funding": [
                 {
@@ -437,26 +437,26 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-10-03T17:03:57+00:00"
+            "time": "2026-10-18T13:17:38+00:00"
         },
         {
             "name": "getkirby/cms",
-            "version": "5.6.1",
+            "version": "5.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/getkirby/kirby.git",
-                "reference": "93e40c14c249783fe30268f356b2d24f4a52d2e0"
+                "reference": "8735b12b7f5dea10149d34a6666b37cb0c9cb0a3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/getkirby/kirby/zipball/93e40c14c249783fe30268f356b2d24f4a52d2e0",
-                "reference": "93e40c14c249783fe30268f356b2d24f4a52d2e0",
+                "url": "https://api.github.com/repos/getkirby/kirby/zipball/8735b12b7f5dea10149d34a6666b37cb0c9cb0a3",
+                "reference": "8735b12b7f5dea10149d34a6666b37cb0c9cb0a3",
                 "shasum": ""
             },
             "require": {
                 "christian-riesen/base32": "1.6.0",
-                "claviska/simpleimage": "4.4.0",
-                "composer/semver": "3.5.1",
+                "claviska/simpleimage": "4.4.2",
+                "composer/semver": "3.5.2",
                 "erusev/parsedown": "1.8.0",
                 "erusev/parsedown-extra": "0.9.0",
                 "ext-ctype": "*",
@@ -470,7 +470,7 @@
                 "ext-mbstring": "*",
                 "ext-openssl": "*",
                 "ext-simplexml": "*",
-                "filp/whoops": "2.18.6",
+                "filp/whoops": "2.18.7",
                 "getkirby/composer-installer": "^1.2.1",
                 "laminas/laminas-escaper": "2.18.0",
                 "michelf/php-smartypants": "1.8.1",
@@ -478,7 +478,7 @@
                 "phpmailer/phpmailer": "7.1.1",
                 "symfony/polyfill-intl-idn": "1.43.0",
                 "symfony/polyfill-mbstring": "1.43.0",
-                "symfony/yaml": "7.4.20"
+                "symfony/yaml": "7.4.21"
             },
             "replace": {
                 "symfony/polyfill-php72": "*"
@@ -539,7 +539,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-10-06T08:22:59+00:00"
+            "time": "2026-10-26T16:28:37+00:00"
         },
         {
             "name": "getkirby/composer-installer",
@@ -1437,16 +1437,16 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v7.4.20",
+            "version": "v7.4.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "0222bf4dfaa1e3ceb8fff579635d655f2950d5a7"
+                "reference": "044907929c7999814378be22da34722c7a86bad4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/0222bf4dfaa1e3ceb8fff579635d655f2950d5a7",
-                "reference": "0222bf4dfaa1e3ceb8fff579635d655f2950d5a7",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/044907929c7999814378be22da34722c7a86bad4",
+                "reference": "044907929c7999814378be22da34722c7a86bad4",
                 "shasum": ""
             },
             "require": {
@@ -1489,7 +1489,7 @@
             "description": "Loads and dumps YAML files",
             "homepage": "https://symfony.com",
             "support": {
-                "source": "https://github.com/symfony/yaml/tree/v7.4.20"
+                "source": "https://github.com/symfony/yaml/tree/v7.4.21"
             },
             "funding": [
                 {
@@ -1509,7 +1509,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-26T06:31:10+00:00"
+            "time": "2026-10-12T12:34:30+00:00"
         }
     ],
     "packages-dev": [],
