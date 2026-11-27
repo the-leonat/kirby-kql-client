@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "81afc6935d474e0b060fe345857dbbd1",
+    "content-hash": "80ecdb57963a7db698c741b832f8638c",
     "packages": [
         {
             "name": "christian-riesen/base32",
@@ -658,16 +658,16 @@
         },
         {
             "name": "johannschopplich/kirby-headless",
-            "version": "8.2.0",
+            "version": "8.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johannschopplich/kirby-headless.git",
-                "reference": "d4b8d3a64a2382bc5a4f43d6396a1004d505dd2d"
+                "reference": "037fcf0f7453f6a967fc54159bca07127a2ead1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johannschopplich/kirby-headless/zipball/d4b8d3a64a2382bc5a4f43d6396a1004d505dd2d",
-                "reference": "d4b8d3a64a2382bc5a4f43d6396a1004d505dd2d",
+                "url": "https://api.github.com/repos/johannschopplich/kirby-headless/zipball/037fcf0f7453f6a967fc54159bca07127a2ead1f",
+                "reference": "037fcf0f7453f6a967fc54159bca07127a2ead1f",
                 "shasum": ""
             },
             "require": {
@@ -675,14 +675,14 @@
                 "php": ">=8.2"
             },
             "require-dev": {
-                "getkirby/cms": "^5",
+                "getkirby/cms": "^5 || ^6",
                 "getkirby/kql": "^3",
                 "phpunit/phpunit": "^12"
             },
             "type": "kirby-plugin",
             "extra": {
                 "kirby": {
-                    "compatible": "^5.0"
+                    "compatible": "^5.0 || ^6.0"
                 },
                 "kirby-cms-path": false,
                 "kirby-plugin-path": "vendor/kirby-plugins"
@@ -698,15 +698,19 @@
                     "homepage": "https://johannschopplich.com"
                 }
             ],
-            "description": "KQL, JSON templates, and API routes for Kirby CMS",
-            "homepage": "https://kirby.tools/docs/headless",
+            "description": "JSON pages and KQL queries, served behind one bearer token",
+            "homepage": "https://kirby.tools/headless",
             "keywords": [
                 "headless",
-                "kirby"
+                "headless-cms",
+                "kirby",
+                "kirby-cms",
+                "kirby-plugin",
+                "kql"
             ],
             "support": {
                 "issues": "https://github.com/johannschopplich/kirby-headless/issues",
-                "source": "https://github.com/johannschopplich/kirby-headless/tree/v8.2.0"
+                "source": "https://github.com/johannschopplich/kirby-headless/tree/v8.3.0"
             },
             "funding": [
                 {
@@ -714,7 +718,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2026-10-09T06:02:52+00:00"
+            "time": "2026-11-24T07:50:33+00:00"
         },
         {
             "name": "laminas/laminas-escaper",
